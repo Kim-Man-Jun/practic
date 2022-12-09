@@ -14,10 +14,32 @@ private AudioSource playerAudio;
 
 private void Start()
 {
+    playerRigidbody = GetComponent<Rigidbody2D>();
+    animator = GetComponent<Animator>();
+    playerAudio = GetCompnent<AudioSource>();
 }
 
 private void Update()
 {
+    if(isDead)
+    {
+        return;
+        //사망시 처리를 진행하지 않게 만듦
+    }
+    
+    if(Input.GetMouseButtonDown(0) && jumpCount < 2)  // 0:왼쪽 클릭  1:오른쪽 클릭  2:마우스 휠 스크롤
+    {
+        jumpCount++;
+        playerRigidbody.velocity = Vector2.zero;  //점프 직전 속도를 (0, 0)으로 변경
+        playerRigidbody.AddForce(new Vector2(0, jumpForce));  //playerRigidbody에 jumpforce만큼 힘을 준다
+        playerAudio.Play(); //오디오 재생
+    }
+    else if(Input.GetMouseButtonDown(0) && playerRigidbody.velocity.y > 0)  //속도의 y값이 양수라면
+    {
+        playerRigidbody.velocity = playerRigidbody.velocity * 0.5f; //속도 절반 감소
+    }
+    
+    animator.SetBool("Grounded", isGrounded); //애니메이터 Grounded를 isGrounded로 갱신함
 }
 
 private void Die()
