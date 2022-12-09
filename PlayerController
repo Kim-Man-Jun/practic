@@ -30,7 +30,7 @@ private void Update()
     if(Input.GetMouseButtonDown(0) && jumpCount < 2)  // 0:왼쪽 클릭  1:오른쪽 클릭  2:마우스 휠 스크롤
     {
         jumpCount++;
-        playerRigidbody.velocity = Vector2.zero;  //점프 직전 속도를 (0, 0)으로 변경
+        playerRigidbody.velocity = Vector2.zero;  //점프 직전 속도를 (0, 0)으로 변경, 2단 점프의 상승하는 힘이 낙하 속도에 영향
         playerRigidbody.AddForce(new Vector2(0, jumpForce));  //playerRigidbody에 jumpforce만큼 힘을 준다
         playerAudio.Play(); //오디오 재생
     }
