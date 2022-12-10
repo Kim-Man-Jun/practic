@@ -42,7 +42,7 @@ private void Update()
     animator.SetBool("Grounded", isGrounded); //애니메이터 Grounded를 isGrounded로 갱신함
 }
 
-private void Die()
+ private void Die()
 {
     animator.SetTrigger("Die"); //애니메이터 Die 트리거 셋
     playerAudio.clip = deathClip;   //애니메이션 먼저 재생 후 죽는 효과음
