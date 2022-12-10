@@ -44,16 +44,32 @@ private void Update()
 
 private void Die()
 {
+    animator.SetTrigger("Die"); //애니메이터 Die 트리거 셋
+    playerAudio.clip = deathClip;   //애니메이션 먼저 재생 후 죽는 효과음
+    playerAudio.Play();
+    
+    playerRigidbody.Velocity = Vector2.Zero;    //playerRigidbody의 속도를 0으로 조절
+    isDead = true;  //사망 상태를 true로 변경
 }
 
 private void OnTriggerEnter2D(Collider2D other)
 {
+    if(other.tag == "Dead" && !isDead)  //닿은 대상의 태그가 "Dead" and 아직 사망한 상태가 아닐 경우 발동
+    {
+        Die();
+    }
 }
 
 private void OnCollisionEnter2D(Collision2D collision)
 {
+    if(collision.contacts[0].normal.y > 0.7f)
+    {
+        isGrounded = true;
+        jumpCount = 0;  //jumpCount 초기화
+    }   
 }
 
 private void OnCollisionExit2D(Collision2D collision)
 {
+    isGrounded = false; //콜라이더에서 떨어진 경우 isGrounded를 false로 처리
 }
