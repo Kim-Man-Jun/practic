@@ -14,9 +14,21 @@ public class PlayerController: MonoBehaviour
   bool goJump = false;
   bool onGround = false;
   
+  Animator animator;
+  public string stopAnime = "PlayerStop";
+  public string moveAnime = "PlayerMove";
+  public string jumpAnime = "PlayerJump";
+  public string goalAnime = "PlayerGoal";
+  public string deadAnime = "PlayerDead";
+  string nowAnime = "";
+  string oldAnime = "";
+  
   void Start()
   {
     rbody = this.GetComponent<Rigidbody2D>(); //this는 자기자신을 나타내지만 생략 가능함
+    animator = GetComponent<Animator>();
+    nowAnime = stopAnime;
+    oldAnime = stopAnime;
   }
   
   void Update() //수평 방향 입력 체크
@@ -56,6 +68,27 @@ public class PlayerController: MonoBehaviour
       rbody.AddForce(jumpPw, ForceMode2D.Impulse);  // 순간적인 힘 가하기
       goJump = false;
     }
+    
+    if(onGround)
+    {
+      if(axisH == 0)  //지면 위일때
+      {
+        nowAnime = stopAnime; //stopanime 재생 둘중 하나
+      }
+      else
+      {
+        nowAnime = moveAnime; //moveanime 재생 둘중 하나
+      }
+     else
+     {
+        nowAnime = jumpAnime; //지면이 아닐 경우 jumpanime 실행
+     }
+     
+     if(nowAnime != oldAnime)
+     {
+        oldAnime = nowAnime;
+        animator.Play(nowAnime);
+     }
     
   }
 
