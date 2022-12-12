@@ -23,16 +23,25 @@ public class PlayerController: MonoBehaviour
   string nowAnime = "";
   string oldAnime = "";
   
+  public static string gameState = "playing";
+  
   void Start()
   {
     rbody = this.GetComponent<Rigidbody2D>(); //this는 자기자신을 나타내지만 생략 가능함
     animator = GetComponent<Animator>();
     nowAnime = stopAnime;
     oldAnime = stopAnime;
+    gameState = "playing";
   }
   
   void Update() //수평 방향 입력 체크
   {
+  
+    if(gameState != "playing")
+    {
+      return;
+    }
+    
     axisH = Input.GetAxisRaw("Horizontal");
     
     if(axisH > 0.0f)  //오른쪽으로 이동
@@ -49,11 +58,16 @@ public class PlayerController: MonoBehaviour
     {
       Jump();
     }
-      
+    
   }
   
   void FixedUpdate()  //속도 갱신 메서드
   {
+  
+    if(gameState != "playing")
+    {
+      return;
+    }
     onGround = Physics2D.Linecast(transform.position, transform.position - (transform.up * 0.1f), groundLayer);
     //  착지 판정
     
@@ -112,11 +126,25 @@ public class PlayerController: MonoBehaviour
   public void Goal()
   {
     animator.Play(goalAnime);
+    gameState = "gameclear";
+    GameStop();
   }
   
   public void GameOver()
   {
     animator.Play(deadAnime);
-  }  
+    
+    gameState = "gameover";
+    GameStop(); //게임 오버 후 중지 연출 실행
+    
+    GetComponent<CapsuleCollider2D>().enabled = false;  //충돌 판정 비활성
+    rbody.AddForce(new Vector2(0,5), ForceMode2D.Impulse); //캐릭터를 위로 튀어오르게 만드는 연출
+  } 
+  
+  void GameStop()
+  {
+    Rigidbody2D rbody = getComponent<Rigidbody2D>();  //Rigidbody 2D 가져오기
+    rbody.velocity = new Vector2(0,0);  //속도를 0으로 강제 
+  }
   
 }
