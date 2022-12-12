@@ -1,0 +1,26 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerController: MonoBehaviour
+{
+
+  Rigidbody2D rbody;
+  float axisH = 0.0f
+  
+  void Start()
+  {
+    rbody = this.GetComponent<Rigidbody2D>(); //this는 자기자신을 나타내지만 생략 가능함
+  }
+  
+  void Update() //수평 방향 입력 체크
+  {
+    axisH = Input.GetAxisRaw("Horizontal");
+  }
+  
+  void FixedUpdate()  //속도 갱신 메서드
+  {
+    rbody.velocity = new Vector2(axisH * 3.0f, rbody.velocity.y);
+  }
+
+}
