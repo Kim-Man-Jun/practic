@@ -9,6 +9,11 @@ public class PlayerController: MonoBehaviour
   float axisH = 0.0f;
   public float speed = 3.0f;
   
+  public float jump = 9.0f
+  public LayerMask groundLayer;
+  bool goJump = false;
+  bool onGround = false;
+  
   void Start()
   {
     rbody = this.GetComponent<Rigidbody2D>(); //this는 자기자신을 나타내지만 생략 가능함
@@ -27,11 +32,36 @@ public class PlayerController: MonoBehaviour
     {
       transform.localScale = new Vector2(-1,1);
     }
+    
+    if(Input.GetButtonDown("Jump")
+    {
+      Jump();
+    }
+      
   }
   
   void FixedUpdate()  //속도 갱신 메서드
   {
-    rbody.velocity = new Vector2(axisH * speed, rbody.velocity.y);
+    onGround = Physics2D.Linecast(transform.position, transform.position - (transform.up * 0.1f), groundLayer);
+    //  착지 판정
+    
+    if(onGround || axisH != 0)
+    {
+      rbody.velocity = new Vector2(axisH * speed, rbody.velocity.y);
+    }
+    
+    if(onGround && goJump)
+    {
+      Vector2 jumpPw = new Vectro2(0, jump);  //점프를 위한 벡터 생성
+      rbody.AddForce(jumpPw, ForceMode2D.Impulse);  // 순간적인 힘 가하기
+      goJump = false;
+    }
+    
   }
 
+  public void Jump()
+  {
+    goJump = true;
+  }
+  
 }
