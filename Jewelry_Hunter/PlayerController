@@ -97,4 +97,26 @@ public class PlayerController: MonoBehaviour
     goJump = true;
   }
   
+  private void OnTriggerEnter2D(Collider2D collision)
+  {
+    if(collision.gameObject.tag == "Goal")
+    {
+      Goal();
+    }
+    else if(collision.gameObject.tag == "Dead")
+    {
+      GameOver();
+    }
+  }
+  
+  public void Goal()
+  {
+    animator.Play(goalAnime);
+  }
+  
+  public void GameOver()
+  {
+    animator.Play(deadAnime);
+  }  
+  
 }
