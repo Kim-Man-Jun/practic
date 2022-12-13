@@ -51,6 +51,7 @@ public class VirtualPad : MonoBehaviour
         GetComponent<RectTransform>().localPosition = newTabPos;
         PlayerController plcnt = player.GetComponent<PlayerController>();
         plcnt.SetAxis(axis.x, axis.y);
+        //현재 가상패드 안 먹히는 상태
     }
 
     public void PadUp()
