@@ -42,7 +42,7 @@ public class PlayerController: MonoBehaviour
       return;
     }
     
-    axisH = Input.GetAxisRaw("Horizontal");
+    axisH = Input.GetAxisRaw("Horizontal"); //오른쪽 방향키를 누를시 1을 반환, 왼쪽 방향키를 누를시 -1을 반환
     
     if(axisH > 0.0f)  //오른쪽으로 이동
     {
