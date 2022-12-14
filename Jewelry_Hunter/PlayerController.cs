@@ -13,8 +13,8 @@ public class PlayerController : MonoBehaviour
     bool goJump = false;
     bool onGround = false;
 
-    //¾Ö´Ï¸ŞÀÌ¼Ç Ã³¸®¿ë
-    Animator animator;  //¾Ö´Ï¸ŞÀÌÅÍ Ã³¸®
+    //ì• ë‹ˆë©”ì´ì…˜ ì²˜ë¦¬ìš©
+    Animator animator;  //ì• ë‹ˆë©”ì´í„° ì²˜ë¦¬
     public string stopAnime = "PlayerStop";
     public string moveAnime = "PlayerMove";
     public string jumpAnime = "PlayerJump";
@@ -27,12 +27,12 @@ public class PlayerController : MonoBehaviour
 
     public int score = 0;
 
-    bool isMoving = false;
+    bool isMoving = false;  //í„°ì¹˜ìŠ¤í¬ë¦° ì¡°ì‘ìš©
 
     void Start()
     {
         rbody = this.GetComponent<Rigidbody2D>();
-        // Rigidbody2D ±Ü¾î¿À±â
+        // Rigidbody2D ê¸ì–´ì˜¤ê¸°
         animator = GetComponent<Animator>();
         nowAnime = stopAnime;
         oldAnime = stopAnime;
@@ -53,8 +53,8 @@ public class PlayerController : MonoBehaviour
             axisH = Input.GetAxisRaw("Horizontal");
         }
 
-        axisH = Input.GetAxisRaw("Horizontal");
-        // ¼öÆò ¹æÇâ ÀÔ·Â
+        axisH = Input.GetAxisRaw("Horizontal"); //ì§‘ ê°€ì„œ ì´ê±° ì‚­ì œí•´ë´ë¼ ì•„ë§ˆ ë ê±° ê°™ì€ë° ì´ì¤‘ìœ¼ë¡œ ì¡í˜”ë„¤ 
+        // ìˆ˜í‰ ë°©í–¥ ì…ë ¥
         if (axisH > 0.0f)
         {
             transform.localScale = new Vector2(1, 1);
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButtonDown("Jump"))
         {
-            Jump(); //Á¡ÇÁÅ°
+            Jump(); //ì í”„í‚¤
         }
     }
     void FixedUpdate()
@@ -148,10 +148,10 @@ public class PlayerController : MonoBehaviour
         gameState = "gameover";
         GameStop();
 
-        // ÇÃ·¹ÀÌ¾îÀÇ Ãæµ¹ ÆÇÁ¤ ºñÈ°¼º
+        // í”Œë ˆì´ì–´ì˜ ì¶©ëŒ íŒì • ë¹„í™œì„±
         GetComponent<CapsuleCollider2D>().enabled = false;
 
-        // °ÔÀÓ¿À¹ö ½Ã À§·Î Æ¢¾î¿À¸£´Â ¿¬Ãâ
+        // ê²Œì„ì˜¤ë²„ ì‹œ ìœ„ë¡œ íŠ€ì–´ì˜¤ë¥´ëŠ” ì—°ì¶œ
         rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
 
     }
