@@ -1,0 +1,52 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class GameManager : MonoBehaviour
+{
+  public GameObject mainImage;
+  public Sprite gameOverSpr;
+  public Sprite gameClearSpr;
+  public GameObject panel;
+  public GameObject restartButton;
+  public GameObject nextButton;
+  
+  Image titleImage;
+  
+  void Start()
+  {
+    Invoke("InactiveImage", 1.0f);
+    panel.SetActive(false);
+  }
+  
+  void Update()
+  {
+    if(PlayerController.gameState == "gameclear")
+    {
+      mainImage.SetActive(ture);
+      panel.SetActive(true);
+      Button bt = restartButton.GetComponent<Button>(); //restart button을 불러서
+      bt.interactable = false;  //restart button을 비활성화 처리
+      mainImage.GetComponent<Image>().sprite = gameClearSpr;
+      PlayerController.gameState = "gameend";
+    }
+    else if(PlayerController.gameState == "gameover")
+    {
+      mainImage.SetActive(ture);
+      panel.SetActive(true);
+      Button bt = nextButton.GetComponent<Button>();  //next button을 불러서
+      bt.interactable = false;  //next button을 비활성화 처리
+      mainImage.GetComponent<Image>().sprite = gameOverSpr;
+      PlayerController.gameState = "gameend";
+    }
+    else if (PlayerController.gameState == "playing")
+    {
+    }
+  }
+  
+  void InactiveImage()
+  {
+    mainImage.SetActive(false);
+  }
+}
