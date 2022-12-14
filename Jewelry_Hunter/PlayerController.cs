@@ -50,11 +50,12 @@ public class PlayerController : MonoBehaviour
 
         if (isMoving == false)
         {
-            axisH = Input.GetAxisRaw("Horizontal");
+            axisH = Input.GetAxisRaw("Horizontal"); // 수평 방향 입력
         }
 
         axisH = Input.GetAxisRaw("Horizontal"); //집 가서 이거 삭제해봐라 아마 될거 같은데 이중으로 잡혔네 
-        // 수평 방향 입력
+        
+
         if (axisH > 0.0f)
         {
             transform.localScale = new Vector2(1, 1);
@@ -63,6 +64,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale = new Vector2(-1, 1);
         }
+        
         if (Input.GetButtonDown("Jump"))
         {
             Jump(); //점프키
