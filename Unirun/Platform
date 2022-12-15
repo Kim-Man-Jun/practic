@@ -5,7 +5,7 @@ public class Platform : MonoBehaviour
   public GameObject[] obstacles;  //장애물 오브젝트
   private bool stepped = false; //지면에 닿았는가 아닌가
   
-  private void OnEnable()
+  private void OnEnable() //OnEnable : 유니티 이벤트 메서드, 컴포넌트가 활성화 될 때마다 매번 다시 실행됨
   {
   }
   
