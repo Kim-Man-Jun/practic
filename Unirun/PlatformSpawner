@@ -1,0 +1,30 @@
+using UnityEngine;
+
+public class PlatformSpawner : MonoBehaviour
+{
+  public GameObject platformPrefab;
+  public int count = 3;
+  
+  public float timeBetSpawnMin = 1.25f;
+  public float timeBetSpawnMax = 2.25f;
+  private float timeBetSpawn;
+  
+  public float yMin = -3.5f;
+  public float yMax = 1.5f;
+  private float xPos = 20f;
+  
+  private GameObject[] platforms;
+  private int currentIndex = 0;
+  
+  private Vector2 poolPosition = new Vectro2(0, -25);
+  private float lastSpawnTime;
+  
+  void Start()
+  {
+  }
+  
+  void Update()
+  {
+  }
+  
+}
