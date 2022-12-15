@@ -34,7 +34,7 @@ public class PlatformSpawner : MonoBehaviour
   
   void Update()
   {
-    if(GameManager.instance.isGameover)
+    if(GameManager.instance.isGameover) //gamemanager상에서 게임오버일시 밑쪽 처리를 못하게 return을 넣음
     {
       return;
     }
