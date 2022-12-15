@@ -34,6 +34,27 @@ public class PlatformSpawner : MonoBehaviour
   
   void Update()
   {
+    if(GameManager.instance.isGameover)
+    {
+      return;
+    }
+    
+    if(Time.time>lastSpawnTime + timeBetSpawn)
+    {
+      lastSpawnTime = Time.time;
+      timeBetSpawn = Random.Range(timeBetSpawnMin, timeBetSpawnMax);
+      float yPos = Random.Ranbge(yMin, yMax);
+      
+      platforms[currentIndex].SetActive(flase);
+      platforms[currentIndex].SetActive(true);
+      
+      platforms[currentIndex].transform.position = new Vector2(xPos, yPos);
+      currentIndex++;
+      
+      if(currenIndex>=count)
+      {
+        currentIndex = 0;
+      }
   }
   
 }
