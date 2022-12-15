@@ -50,6 +50,8 @@ private void Update()
     
     playerRigidbody.Velocity = Vector2.Zero;    //playerRigidbody의 속도를 0으로 조절
     isDead = true;  //사망 상태를 true로 변경
+    
+    GameManager.instance.OnPlayerDead();    //GameManager에 있는 OnPlayerDead
 }
 
 private void OnTriggerEnter2D(Collider2D other)
