@@ -1,0 +1,15 @@
+using UnityEngeine;
+
+public class Platform : MonoBehaviour
+{
+  public GameObject[] obstacles;  //장애물 오브젝트
+  private bool stepped = false; //지면에 닿았는가 아닌가
+  
+  private void OnEnable()
+  {
+  }
+  
+  void OnCollisionEnter2D(Collision2D collision)
+  {
+  }
+}
