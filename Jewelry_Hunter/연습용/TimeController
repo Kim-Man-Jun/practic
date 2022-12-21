@@ -1,0 +1,46 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TimeController : MonoBehaviour
+{
+  public bool isCountDown = true;
+  public float gameTime = 0;
+  public bool isTimeOver = false;
+  public float displayTime = 0;
+  
+  float times = 0;
+  
+  void Start()
+  {
+    if(isCountDown)
+    {
+      displayTime = gameTime; //카운트다운, 스타트에 집어넣어서 반복적으로 표시하게 만든것
+    }
+  }
+  
+  void Update()
+  {
+    if(isTimeOver == false)
+    {
+      times += Time.deltaTime;
+      if(isCountDown)
+      {
+        displayTime = gameTime - times;
+        if(displayTime <= 0.0f)
+        {
+          displayTime = 0.0f;
+          isTimeOver = true;
+        }
+      }
+      else
+      {
+        displayTime = times;
+        if(displayTime >= gameTime)
+        {
+          displayTime = gameTime;
+          isTimeOver = true;
+        }
+      }
+   }
+}
