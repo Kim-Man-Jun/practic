@@ -11,6 +11,11 @@ public class CameraManager: MonoBehaviour
   
   public GameObject subScreen;
   
+  public bool isForceScrollX = false;
+  public float forceScrollSpeedX = 0.5f
+  public bool isForceScrollY = false;
+  public float forceScrollSpeedY = 0.5f
+  
   void start()
   {
   }
@@ -25,6 +30,11 @@ public class CameraManager: MonoBehaviour
       float y = player.transform.position.y;
       float z = transform.position.z;
       
+      if(isForceScrollX)
+      {
+        x = transform.position.x + (forceScrollSpeedX * Time.deltaTime);  //가로 강제 스크롤
+      }
+      
       //양 끝에 이동 제한 적용
       if(x < leftLimit)
       {
@@ -33,6 +43,11 @@ public class CameraManager: MonoBehaviour
       else if(x > rightLimit)
       {
         x = rightLimit;
+      }
+      
+      if(isForceScrollY)
+      {
+        y = transform.position.y + (forceScrollSpeedY * Time.deltaTime);  //세로 강제 스크롤
       }
       
       //위아래에 이동 제한 적용
