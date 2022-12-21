@@ -40,7 +40,8 @@ public class TimeController : MonoBehaviour
         {
           displayTime = gameTime;
           isTimeOver = true;
-        }
-      }
+         }
+       }
+     }
    }
 }
