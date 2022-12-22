@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
   public GameObject timeText;
   TimeController timeCnt;
   
+  public GameObject scoreText;
+  public static int totalScore;
+  public int stageScore = 0;
+  
   void Start()
   {
     Invoke("InactiveImage", 1.0f);
@@ -31,6 +35,8 @@ public class GameManager : MonoBehaviour
         timeBar.SetActive(false);
       }
     }
+    
+    UpdateScore();
   }
   
   void Update()
@@ -47,7 +53,13 @@ public class GameManager : MonoBehaviour
       if(timeCnt != null)
       {
         timeCnt.isTimeOver = true;
+        int time = (int)timeCnt.displayTime;
+        totalScore += time * 10;
       }
+      
+      totalScore += stageScore;
+      stageScore = 0;
+      UpdateScore();
     }
     else if(PlayerController.gameState == "gameover")
     {
@@ -79,11 +91,24 @@ public class GameManager : MonoBehaviour
           }
         }
       }
+      
+      if(playerCnt.score != 0)
+      {
+        stageScore += playerCnt.score;
+        playerCnt.score = 0;
+        UpdateScore();
+      }
     }
   }
   
   void InactiveImage()
   {
     mainImage.SetActive(false);
+  }
+  
+  void UpdateScore()
+  {
+    int score = stageScore + totalScore;
+    scoreText.GetComponent<Text>().text = score.ToString();
   }
 }
