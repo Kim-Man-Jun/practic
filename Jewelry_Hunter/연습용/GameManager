@@ -14,10 +14,23 @@ public class GameManager : MonoBehaviour
   
   Image titleImage;
   
+  public GameObject timeBar;
+  public GameObject timeText;
+  TimeController timeCnt;
+  
   void Start()
   {
     Invoke("InactiveImage", 1.0f);
     panel.SetActive(false);
+    
+    timeCnt = GetComponent<TimeController>();
+    if(timeCnt != null)
+    {
+      if(timeCnt.gameTime == 0.0f)
+      {
+        timeBar.SetActive(false);
+      }
+    }
   }
   
   void Update()
@@ -30,6 +43,11 @@ public class GameManager : MonoBehaviour
       bt.interactable = false;  //restart button을 비활성화 처리
       mainImage.GetComponent<Image>().sprite = gameClearSpr;
       PlayerController.gameState = "gameend";
+      
+      if(timeCnt != null)
+      {
+        timeCnt.isTimeOver = true;
+      }
     }
     else if(PlayerController.gameState == "gameover")
     {
@@ -39,9 +57,28 @@ public class GameManager : MonoBehaviour
       bt.interactable = false;  //next button을 비활성화 처리
       mainImage.GetComponent<Image>().sprite = gameOverSpr;
       PlayerController.gameState = "gameend";
+      
+      if(timeCnt != null)
+      {
+        timeCnt.isTimeOver = true;  //시간 카운트 중지
+      }
     }
     else if (PlayerController.gameState == "playing")
     {
+      GameObject player = GameObject.FindGameObjectWithTag("Player")
+      PlayerController playerCnt = player.GetComponent<PlayerController>();
+      if(timeCnt != null)
+      {
+        if(timeCnt.gameTime > 0.0f)
+        {
+          int time = (int)timeCnt.displayTime;  //int형 자료로 정의함으로써 정수 외 소숫점을 버림
+          timeText.GetComponent<Text>().text = time.ToString();
+          if(time == 0)
+          {
+            PlayerCnt.GameOver();
+          }
+        }
+      }
     }
   }
   
