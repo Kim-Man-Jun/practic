@@ -121,6 +121,13 @@ public class PlayerController: MonoBehaviour
     {
       GameOver();
     }
+    
+    else if (collision.gameObject.tag == "ScoreItem")
+    {
+      ItemData item = collision.gameOject.GetComponent<ItemData>(); //ItemData 긁어오기
+      score = item.value; //점수 얻기
+      Destroy(collision.gameObject);  //아이템 제거
+    }
   }
   
   public void Goal()
