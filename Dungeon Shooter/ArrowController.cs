@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class ArrowController : MonoBehaviour
 {
-    public float deleteTime = 2;    //È­»ì Á¦°Å ½Ã°£
+    public float deleteTime = 2;    //í™”ì‚´ ì œê±° ì‹œê°„
 
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, deleteTime);    // deleteTime ÈÄ¿¡ gameObject Á¦°ÅÇÏ±â
+        Destroy(gameObject, deleteTime);    // deleteTime í›„ì— gameObject ì œê±°í•˜ê¸°
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        transform.SetParent(collision.transform);   //Á¢ÃËÇÑ °ÔÀÓ ¿ÀºêÁ§Æ®ÀÇ ÀÚ½ÄÀ¸·Î ¼³Á¤
-        GetComponent<CircleCollider2D>().enabled = false;   //Ãæµ¹ ÆÇÁ¤ ºñÈ°¼ºÈ­
+        transform.SetParent(collision.transform);   //ì ‘ì´‰í•œ ê²Œì„ ì˜¤ë¸Œì íŠ¸ì˜ ìì‹ìœ¼ë¡œ ì„¤ì •
+        GetComponent<CircleCollider2D>().enabled = false;   //ì¶©ëŒ íŒì • ë¹„í™œì„±í™”
         GetComponent<Rigidbody2D>().simulated = false;
     }
 
