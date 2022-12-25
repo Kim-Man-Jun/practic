@@ -21,8 +21,8 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rbody;
     bool isMoving = false;
 
-    public static int hp = 3;   //ÇÃ·¹ÀÌ¾î hp
-    public static string gameState; //°ÔÀÓ »óÅÂ
+    public static int hp = 3;   //í”Œë ˆì´ì–´ hp
+    public static string gameState; //ê²Œì„ ìƒíƒœ
     bool inDamage = false;
 
     // Start is called before the first frame update
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
             GetComponent<Animator>().Play(nowAnimation);
         }
 
-        if (gameState != "playing" || inDamage)  //°ÔÀÓ ÁßÀÌ ¾Æ´Ï°Å³ª µ¥¹ÌÁö¸¦ ¹Ş´Â µµÁß¿¡´Â ¾Æ¹«°Íµµ ¾ÈÇÔ
+        if (gameState != "playing" || inDamage)  //ê²Œì„ ì¤‘ì´ ì•„ë‹ˆê±°ë‚˜ ë°ë¯¸ì§€ë¥¼ ë°›ëŠ” ë„ì¤‘ì—ëŠ” ì•„ë¬´ê²ƒë„ ì•ˆí•¨
         {
             return;
         }
@@ -81,18 +81,18 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        if (inDamage)   //µ¥¹ÌÁö ¹Ş´Â »óÅÂÀÏ¶§
+        if (inDamage)   //ë°ë¯¸ì§€ ë°›ëŠ” ìƒíƒœì¼ë•Œ
         {
-            float val = Mathf.Sin(Time.time * 50);  //µ¥¹ÌÁö ¹ŞÀ»¶§ Á¡¸ê½ÃÅ°±â
+            float val = Mathf.Sin(Time.time * 50);  //ë°ë¯¸ì§€ ë°›ì„ë•Œ ì ë©¸ì‹œí‚¤ê¸°
             if (val > 0)
             {
-                gameObject.GetComponent<SpriteRenderer>().enabled = true;   //½ºÇÁ¶óÀÌÆ® Ç¥½Ã
+                gameObject.GetComponent<SpriteRenderer>().enabled = true;   //ìŠ¤í”„ë¼ì´íŠ¸ í‘œì‹œ
             }
             else
             {
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
             }
-            return; //µ¥¹ÌÁö¸¦ ¹Ş´Â µµÁß¿¡´Â Á¶ÀÛ ºÒ°¡´É »óÅÂ ¸¸µé±â
+            return; //ë°ë¯¸ì§€ë¥¼ ë°›ëŠ” ë„ì¤‘ì—ëŠ” ì¡°ì‘ ë¶ˆê°€ëŠ¥ ìƒíƒœ ë§Œë“¤ê¸°
         }
 
         rbody.velocity = new Vector2(axisH, axisV) * speed;
@@ -166,11 +166,11 @@ public class PlayerController : MonoBehaviour
     void GameOver()
     {
         gameState = "gameover";
-        //¿©±â¼­ºÎÅÍ °ÔÀÓ¿À¹ö ¿¬Ãâ
-        GetComponent<CircleCollider2D>().enabled = false;   //ÇÃ·¹ÀÌ¾î Ãæµ¹ ÆÇÁ¤ ºñÈ°¼º
-        rbody.velocity = new Vector2(0, 0); //ÇÃ·¹ÀÌ¾î ÀÌµ¿ ÁßÀÌ
-        rbody.gravityScale = 1; //ÇÃ·¹ÀÌ¾î¿¡°Ô Áß·ÂÀ» Àû¿ë ÈÄ¿¡
-        rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse); //Áß·Â Àû¿ë ÈÄ¿¡ À§·Î Æ¢¾î¿À¸£°Ô ÇÏ´Â ¿¬Ãâ
+        //ì—¬ê¸°ì„œë¶€í„° ê²Œì„ì˜¤ë²„ ì—°ì¶œ
+        GetComponent<CircleCollider2D>().enabled = false;   //í”Œë ˆì´ì–´ ì¶©ëŒ íŒì • ë¹„í™œì„±
+        rbody.velocity = new Vector2(0, 0); //í”Œë ˆì´ì–´ ì´ë™ ì¤‘ì´
+        rbody.gravityScale = 1; //í”Œë ˆì´ì–´ì—ê²Œ ì¤‘ë ¥ì„ ì ìš© í›„ì—
+        rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse); //ì¤‘ë ¥ ì ìš© í›„ì— ìœ„ë¡œ íŠ€ì–´ì˜¤ë¥´ê²Œ í•˜ëŠ” ì—°ì¶œ
         GetComponent<Animator>().Play(deadAnime);
         Destroy(gameObject, 1.0f);
     }
