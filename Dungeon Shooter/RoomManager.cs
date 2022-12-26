@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;  //씬이동시에 scenemanagement 필수
 
 public class RoomManager : MonoBehaviour
 {
-    public static int doorNumber = 0;
+    public static int doorNumber = 0;   //static 방넘버 변수 설정
 
     // Start is called before the first frame update
     void Start()
@@ -36,9 +36,11 @@ public class RoomManager : MonoBehaviour
                 {
                     x += 2;
                 }
+                //인스펙터 창에서 exitdirection을 어디로 정하면 그 좌표보다 2만큼 멀리 내려줌
+                
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
                 player.transform.position = new Vector3(x, y);
-                break;
+                break;  //반복구문 해제
 
             }
         }
