@@ -67,7 +67,49 @@ public class MovingBlock : MonoBehaviour
         transform.Translate(v);
       }
       
+      if(endX && endY)
+      {
+        if(isReverse)
+        {
+          transform.position = defPos;
+        }
+        isReverse = !isReverse;
+        isCanMove = false;
+        if(isMoveWhenOn == false)
+        {
+          Invoke("Move", weight);
+        }
+      }
     }
-    
+  }
+  
+  public void Move()
+  {
+    isCanMove = true;
+  }
+  
+  public void Stop()
+  {
+    isCanMove = false;
+  }
+  
+  private void OnCollisionEnter2D(Collision2D collision)
+  {
+    if(collision.gameObject.tag == "Player")
+    {
+      collision.transform.SetParent(transform);
+      if(isMoveWhenOn)
+      {
+        isCanMove = true;
+      }
+    }
+  }
+  
+  private void OnCollisionExit2D(Collision2D collision)
+  {
+    if(collision.gameObject.tag == "Player")
+    {
+      collision.transform.SetParent(null);
+    }
   }
 }
