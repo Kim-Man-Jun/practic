@@ -30,9 +30,22 @@ public class ConnonController : MonoBehaviour
       {
         passedTimes = 0;  //발사
         Vector3 pos = new Vector3(gateObj.transform.position.x, gateObj.transform.position.y, transform.position.z);  //발사위치
-        
+        GameObject obj = Instantiate(objPrefab, pos, Quaternion.identity);  //프리펩으로 게임 오브젝트 만들기
+        Rigidbody2D rbody = obj.GetComponent<Rigidbody2D>();  //발사방향
+        Vector2 v = new Vector2(fireSpeedX, fireSpeedY);
+        rbody.AddForce(v, ForceMode2D.Impulse);        
       }
     }
   }
-
+  
+  bool CheckLength(Vector2 targetPos) //거리 확인 메서드
+  {
+    bool ret = false;
+    float d = Vector2.Distance(transform.position, targetPos);
+    if(length >= d)
+    {
+      ret = true;
+    }
+    return ret;
+  }
 }
