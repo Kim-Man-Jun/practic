@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ConnonController : MonoBehaviour
+{
+  public GameObject objPrefab;  //포대에서 발사되는 포탄 프리펩
+  public float delayTime = 3.0f;  //지연 시간
+  public float fireSpeedX = -4.0f;  //발사 벡터 X
+  public float fireSpeedY = 0.0f; //발사 벡터 Y
+  public float length = 8.0f;
+  
+  GameObject player;
+  GameObject gateObj; //포대 발사구
+  float passedTimes = 0;  //경과 시간
+  
+  void Start()
+  {
+    Transform tr = transform.Find("gate");
+    gateObj = tr.gameObjcet;
+    player = GameObject.FindGameObjectWithTag("Player");
+  }
+  
+  void Update()
+  {
+    passedTimes += Time.deltaTime;
+    if(CheckLength(player.transform.position))
+    {
+      if(passedTimes > delayTime)
+      {
+        passedTimes = 0;  //발사
+        Vector3 pos = new Vector3(gateObj.transform.position.x, gateObj.transform.position.y, transform.position.z);  //발사위치
+        
+      }
+    }
+  }
+
+}
