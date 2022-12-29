@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     playerRigidbody.velocity = newVelocity; //playerRigidbody.velocity 속도는 newVelocity의 값으로
   }
   
-  public void Die() //자산의 게임 오브젝트를 비활성화 하는 메서드
+  public void Die() //자산의 게임 오브젝트를 비활성화
   {
     this.gameObject.SetActive(false);
   }
