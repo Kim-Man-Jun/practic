@@ -9,5 +9,9 @@ public class Bullet : MonoBehaviour
   
   void Statr()
   {
+    bulletRigidbody = GetComponent<Rigidbody>();
+    bulletRigidbody.velocity = transform.forward * speed;
+    
+    Destroy(this.gameObject, 5.0f);
   }
 }
