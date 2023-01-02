@@ -14,21 +14,21 @@ public class BulletSpawner : MonoBehaviour
   
   void Start()
   {
-    timeAfterSpawn = 0.0f;  //스폰 후 지난 시간을 계속 0으로 초기화 
+    timeAfterSpawn = 0.0f;  //스폰 후 지난 시간을 0으로 초기화 
     spawnRate = Random.Range(spawnRateMin, SpawnRateMax); //spawnrate를 최소, 최대값 사이 랜덤값으로 
     target = FindObjectOfType<PlayerController>().transform;  //playercontroller을 조준 대상으로
   }
   
   void Update()
   {
-    timeAfterSpawn += Time.deltaTime;
+    timeAfterSpawn += Time.deltaTime; //timeAfterSpawn 갱신
     
     if(timeAfterSpawn >= spawnRate)
     {
-      timeAfterSpawn = 0.0f;
+      timeAfterSpawn = 0.0f;  //누적된 시간을 초기화
       
-      GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
-      bullet.transform.LookAt(target);
+      GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);  //bulletPrefab 생성
+      bullet.transform.LookAt(target);  //게임 오브젝트의 정면 방향이 target으로 향하도록 지정
       spawnRate = Random.Range(spawnRateMin, spwanRateMax);
     }
   }
