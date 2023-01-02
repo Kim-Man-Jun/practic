@@ -14,6 +14,8 @@ public class BulletSpawner : MonoBehaviour
   
   void Start()
   {
-    
+    timeAfterSpawn = 0.0f;  //스폰 후 지난 시간을 계속 0으로 초기화 
+    spawnRate = Random.Range(spawnRateMin, SpawnRateMax); //spawnrate를 최소, 최대값 사이 랜덤값으로 
+    target = FindObjectOfType<PlayerController>().transform;  //playercontroller을 조준 대상으로
   }
 }
