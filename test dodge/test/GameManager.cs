@@ -21,6 +21,11 @@ public class GameManager : MonoBehaviour
   
   void Update()
   {
+    if(!isGameover)
+    {
+      surviveTime += Time.deltatime;  //생존 시간 갱신(deltatime)
+      timeText.text = "Time : " + (int) surviveTime;  //갱신한 시간을 timeText를 이용해 표시
+    }
   }
   
   public void EndGame()
