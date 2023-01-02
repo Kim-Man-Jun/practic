@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     {
     if(Input.GetKeyDown(KeyCode.R)
     {
-      SceneManager.LoadScene("SampleScene")
+      SceneManager.LoadScene("SampleScene") //r키를 누를 경우 sampleScene를 불러옴
     }
   }
   
@@ -38,5 +38,15 @@ public class GameManager : MonoBehaviour
   {
     isGameover = true;
     gameoverText.SetActive(true);
+    
+    float bestTime = PlayerPrefs.GetFloat("BestTime");
+    
+    if(surviveTime > bestTime)  //surviveTime이 bestTime보다 클 경우
+    {
+      bestTime = surviveTime; //베스트타임을 변경
+      PlayerPrefs.SetFloat("BestTime", bestTime); //변경된 베스트타임을 BestTime 키로 저장함
+    }
+    
+    recordText.text = "Best Time : " + (int) bestTime;
   }
 }
