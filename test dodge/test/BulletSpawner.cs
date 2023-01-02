@@ -18,4 +18,18 @@ public class BulletSpawner : MonoBehaviour
     spawnRate = Random.Range(spawnRateMin, SpawnRateMax); //spawnrate를 최소, 최대값 사이 랜덤값으로 
     target = FindObjectOfType<PlayerController>().transform;  //playercontroller을 조준 대상으로
   }
+  
+  void Update()
+  {
+    timeAfterSpawn += Time.deltaTime;
+    
+    if(timeAfterSpawn >= spawnRate)
+    {
+      timeAfterSpawn = 0.0f;
+      
+      GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+      bullet.transform.LookAt(target);
+      spawnRate = Random.Range(spawnRateMin, spwanRateMax);
+    }
+  }
 }
