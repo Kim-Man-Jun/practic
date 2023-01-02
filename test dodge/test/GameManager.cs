@@ -26,6 +26,12 @@ public class GameManager : MonoBehaviour
       surviveTime += Time.deltatime;  //생존 시간 갱신(deltatime)
       timeText.text = "Time : " + (int) surviveTime;  //갱신한 시간을 timeText를 이용해 표시
     }
+    else
+    {
+    if(Input.GetKeyDown(KeyCode.R)
+    {
+      SceneManager.LoadScene("SampleScene")
+    }
   }
   
   public void EndGame()
