@@ -24,5 +24,8 @@ public class PlayerController : MonoBehaviour
   public void Die() //자산의 게임 오브젝트를 비활성화
   {
     this.gameObject.SetActive(false);
+    
+    GameManager gameManager = FindObjectOfType<GameManager>();
+    gameManager.EndGame();
   }
 }
