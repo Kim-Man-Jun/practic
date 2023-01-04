@@ -14,6 +14,9 @@ public class PlayerMovement : MonoBehaviour
   
   private void Start()        //사용할 컴포넌트 긁어오기
   {
+    playInput = GetComponent<PlayerInput>();
+    playerRigidbody = GetComponent<Rigidbody>();
+    playerAnimator = GetComponent<Animator>();
   }
   
   private void FixedUpdate()  //물리 갱신 주기마다 움직임, 회전, 애니메이션 처리 실행
