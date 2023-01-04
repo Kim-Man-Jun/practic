@@ -21,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
   
   private void FixedUpdate()  //물리 갱신 주기마다 움직임, 회전, 애니메이션 처리 실행
   {
+    Move();
+    Rotate();
+    
+    playerAnimator.SetFloat("Move", plaerInput.move);   //입력값에 따라 애니메이터의 Move 값 변경
   }
   
   private void Move()         //입력값에 따라 캐릭을 앞뒤로 움직임
