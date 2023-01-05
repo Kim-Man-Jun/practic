@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Scriptable/GunData", fileName = "Gun Data")]
 public class GunData : MonoBehaviour
 {
   public AudioClip shotClip;                //발사 소리
