@@ -48,14 +48,23 @@ public class Gun : MonoBehaviour
   
   private Ienumerator ShotEffect(Vector3 hitPosition)
   {
+    bulletLineRenderer.enabled = true;
+    
+    yield return new WaitForSeconds(0.0f);
+    
+    bulletLineRenderer.enabled = false;
   }
   
   public bool Reload()
   {
+    return false;
   }
   
   private IEnumerator ReloadRoutine()
   {
+    state = State.Reloading;
+    yield return new WaitForSeconds(gunData.reloadTime);
+    state = State.Ready;
   }
   
 }
