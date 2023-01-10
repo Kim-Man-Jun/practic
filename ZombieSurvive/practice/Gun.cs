@@ -42,6 +42,11 @@ public class Gun : MonoBehaviour
   
   private void OnEnable()                           //총 상태 초기화 메서드
   {
+    ammoRemain = gunData.startAmmoRemain;           //전체 예비 탄알 양을 초기화
+    magAmmo = GunData.magCapacity;                  //현재 탄창을 가득 채우기
+    
+    state = State.Ready;
+    lastFireTime = 0;
   }
   
   public void Fire()                                //총 발사 시도하는 메서드
