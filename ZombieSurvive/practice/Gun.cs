@@ -59,6 +59,14 @@ public class Gun : MonoBehaviour
   
   private Ienumerator ShotEffect(Vector3 hitPosition) //발사 이펙트와 소리를 재생하고 탄알 궤적을 그림
   {
+    muzzleFlashEffect.Play();                         //머즐 플래시 효과 재생
+    shellEjectEffect.Play();                          //탄피 배출 효과 재생
+    
+    gunAudioPlayer.PlayOneShot(gunData.shotClip);     //총 쏘는 소리 재생
+    
+    bulletLineRenderer.SetPosition(0, fireTransform.position);    //렌더러 선 시작점은 총구의 위치
+    bulletLineRenderer.SetPosition(1,hitPosition);                //선 끝점은 충돌 위치
+    
     bulletLineRenderer.enabled = true;               //라인 렌더러 재생, 탄알 궤적 그리기
     
     yield return new WaitForSeconds(0.0f);           //0.03초 동안 처리를 잠깐 대기
