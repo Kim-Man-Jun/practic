@@ -33,6 +33,11 @@ public class Gun : MonoBehaviour
   
   private void Awake()                              //사용할 컴포넌트 긁어오기
   {
+    gunAudioPlayer = GetComponent<AudioSource>();
+    bulletLineRenderer = GetComponent<LineRenderer>();
+
+    bulletLineRenderere.positionCount = 2;          //사용할 점을 두개로 변경
+    bulletLineRenderer.enabled = false;             //라인 렌더러를 비활성화
   }
   
   private void OnEnable()                           //총 상태 초기화 메서드
