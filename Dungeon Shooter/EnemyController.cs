@@ -30,4 +30,61 @@ public class EnemyController : MonoBehaviour
   {
     rbody = GetComponent<Rigidbody2D>();              //컴포넌트 긁어오기
   }
+  
+  void Update()
+  {
+    GameObject player = GameObject.FindGameObjectWithTag("Player");   //태그 Player 게임 오브젝트 가져오기
+    if (player != null)
+    {
+      if (isActive)
+      {
+        float dx = player.transform.position.x - transform.position.x;
+        float dy = player.transform.position.y - transform.position.y;
+        float rad = Mathf.Atan2(dy,dx);
+        float angle = rad * Mathf.Rad2Deg;
+        
+        if(angle > -45.0f && angle <= 45.0f)
+        {
+          nowAnimation = rightAnime;
+        }
+        else if(angle > 45.0f && angle <= 135.0f)
+        {
+          nowAnimation = upAnime;
+        }
+        else if(angle >= -135.0f && angle <= -45.0f)
+        {
+          nowAnimation = downAnime;
+        }
+        else
+        {
+          nowAnimation = leftAnime;
+        }
+        axisH = Mathf.Cos(rad) * speed;
+        axisV = Mathf.Sin(rad) * speed;                                 //이동할 벡터 만들기
+      }
+      else
+      {
+        float dist = Vector2Distance(transform.position, player.transform.position);    //플레이어와의 거리 확인용
+        if(dist < reactionDistance)
+        {
+          isActive = true;
+        }
+      }
+    }
+    else if(isActive)
+    {
+      isActive = false;
+      rbody.velocity = Vector2.zero;
+    }
+  }
+  
+  void FixedUpdate()
+  {
+  
+  }
+  
+  private void OnCollisionEnter2D(Collision2D collision)
+  {
+    
+  }
 }
