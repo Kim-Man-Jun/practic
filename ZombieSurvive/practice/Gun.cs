@@ -105,7 +105,13 @@ public class Gun : MonoBehaviour
   
   public bool Reload()
   {
-    return false;                                     //재장전 시도
+    if(state == State.Reloading || ammoRemain <= 0 || magAmmo >= gunData.magCapacity)     //상태가 재장전 중이나 탄알이 0 이하, 탄알이 가득 찼을 때의 경우 재장전 불가능
+    {
+    return false;
+    }
+    
+    StartCoroutine(ReloadRoutine());              //위 경우가 아닐 경우 재장전 처리 시작
+    return true;
   }
   
   private IEnumerator ReloadRoutine()                 //실제 재장전 처리를 진행
