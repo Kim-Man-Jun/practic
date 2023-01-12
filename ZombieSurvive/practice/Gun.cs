@@ -60,6 +60,23 @@ public class Gun : MonoBehaviour
   
   private void Shot()                               //실제 발사 처리 메서드
   {
+    RaycastHIt hit;                                 //레이캐스트에 의한 충돌 정보를 저장하는 변수
+    Vector3 hitPosition = Vector3.zero;             //탄알이 맞은 곳을 저장할 변수
+    
+    if(Physics.Raycast(fireTransform.posijtion, fireTrasnform.forward, out hit, fireDistance))    //시작 지점, 방향, 충돌 정보 변수, 사정거리
+    {
+      IDamageable target = hit.collider.GetComponent<IDamagealbe>();          //레이가 충돌할 때, 충돌한 상대방으로부터 IDamageable 오브젝트 가져오기
+      if(target != null)                                                      //가져오기 성공했을 경우
+      {
+        target.OnDamage(gunDAta.damage, hit.point, hit.normal);               //상대방의 OnDamage 함수를 실행해 상대방에 데미지 주기
+      }
+      hitPosition = hit.point;                                                //레이가 충돌한 위치를 저장
+    }
+    else
+    {
+      
+    }
+    
   }
   
   private Ienumerator ShotEffect(Vector3 hitPosition) //발사 이펙트와 소리를 재생하고 탄알 궤적을 그림
