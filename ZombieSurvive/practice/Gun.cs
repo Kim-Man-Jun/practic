@@ -72,11 +72,18 @@ public class Gun : MonoBehaviour
       }
       hitPosition = hit.point;                                                //레이가 충돌한 위치를 저장
     }
-    else
+    else                                                                      //레이가 충돌을 안했을때
     {
-      
+      hitPosition = fireTransform.position + fireTransform.forward * fireDistance;      //탄알의 최대 사정거리를 충돌 위치로 사용
     }
     
+    StartCoroutine(ShotEffect(hitPosition));                                  //발사 이펙트 재생 시작
+    
+    magAmmo--;                                                                //남은 탄알 수를 -1 처리
+    if(magAmmo <= 0)                                                          //남은 탄알 수가 0 이하일때
+    {
+      state = State.Empty;                                                    //상태를 Empty로 갱신함
+    }
   }
   
   private Ienumerator ShotEffect(Vector3 hitPosition) //발사 이펙트와 소리를 재생하고 탄알 궤적을 그림
