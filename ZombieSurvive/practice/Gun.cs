@@ -51,6 +51,11 @@ public class Gun : MonoBehaviour
   
   public void Fire()                                //총 발사 시도하는 메서드
   {
+    if(state == State.Ready && Time.time >= lastFireTime + gunData.timeBetFire)     //현재 발사 가능 상태 and 마지막 발사에서 timeBetFire 시간이 지남
+    {
+      lastFireTime = Time.time;                 //마지막 총 발사 시점 갱신
+      Shot();                                   //Shot 메서드 실행
+    }
   }
   
   private void Shot()                               //실제 발사 처리 메서드
