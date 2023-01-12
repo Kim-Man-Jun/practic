@@ -128,8 +128,8 @@ public class Gun : MonoBehaviour
       ammoTiFill = ammoRemain;                        //채워야 할 탄알 수를 남은 탄알 수에 맞춰 줄임
     }
     
-    magAmmo += ammoToFill;
-    ammoRemain -= ammoToFill;
+    magAmmo += ammoToFill;                            //탄창을 채움
+    ammoRemain -= ammoToFill;                         //남은 탄알에서 탄창에 채운만큼 탄알 아웃
     
     state = State.Ready;                              //총의 현재 상태를 발사 가능한 상태로 변경
   }
