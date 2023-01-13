@@ -9,8 +9,8 @@ public class PlayerShooter : MonoBehaviour
   public Transform leftHandMount;                     //왼손이 위치할 지점
   public Transform rightHandMount;                    //오른손이 위치할 지점
   
-  private PlayerInput playerInput;
-  private Animator playerAnimator;
+  private PlayerInput playerInput;                    //플레이어의 입력
+  private Animator playerAnimator;                    //애니메이터 컴포넌트
   
   void Start()
   {
@@ -20,10 +20,28 @@ public class PlayerShooter : MonoBehaviour
   
   private void OnEnable()
   {
-    gun.gameObject.SetActive(false);
+    gun.gameObject.SetActive(true);                  //슈터가 활성화될 때 총도 같이 on
+  }
+  
+  private void OnDisable
+  {
+    gun.gameObject.SetActive(false);                 //슈터가 활성화될 때 총도 같이 off
   }
   
   void Update()
+  {
+    
+  }
+  
+  private void UpdateUI()
+  {
+    if(gun != null && UIManager.instance != null)
+    {
+      UIManager.instance.UpdateAmmoText(gun.magAmmo, gun.ammoRemain);
+    }
+  }
+  
+  private void OnAnbimatorIK(int layerIndex)
   {
     
   }
