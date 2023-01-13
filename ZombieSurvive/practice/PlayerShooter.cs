@@ -30,7 +30,19 @@ public class PlayerShooter : MonoBehaviour
   
   void Update()
   {
+    if(playerInput.fire)                             //플레이어가 fire 버튼을 누를때 gun에 있는 fire 메서드 실행
+    {
+      gun.Fire();
+    }
+    else if(playerInput.reload)                      //그 외에 플레이어가 reload를 누를때
+    {
+      if(gun.Reload())
+      {
+        playerAnimator.SetTrigger("Reload");         //재장전 성공 시 애니메이션 실행
+      }
+    }
     
+    UpdateUI();                                       //그 후 남은 탄알 UI 갱신
   }
   
   private void UpdateUI()
