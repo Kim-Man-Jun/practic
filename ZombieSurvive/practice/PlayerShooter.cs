@@ -37,7 +37,7 @@ public class PlayerShooter : MonoBehaviour
   {
     if(gun != null && UIManager.instance != null)
     {
-      UIManager.instance.UpdateAmmoText(gun.magAmmo, gun.ammoRemain);
+      UIManager.instance.UpdateAmmoText(gun.magAmmo, gun.ammoRemain);       //UI매니저 탄알 텍스트에 탄창의 탄알과 남은 탄알 표시
     }
   }
   
