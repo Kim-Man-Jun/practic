@@ -25,6 +25,8 @@ public class PlayerController: MonoBehaviour
   
   public static string gameState = "playing";
   
+  bool isMoving = "false";
+  
   void Start()
   {
     rbody = this.GetComponent<Rigidbody2D>(); //this는 자기자신을 나타내지만 생략 가능함
@@ -40,6 +42,11 @@ public class PlayerController: MonoBehaviour
     if(gameState != "playing")
     {
       return;
+    }
+    
+    if(isMoving == false)
+    {
+      axisH = Input.GetAxisRaw("Horizontal");
     }
     
     axisH = Input.GetAxisRaw("Horizontal"); //오른쪽 방향키를 누를시 1을 반환, 왼쪽 방향키를 누를시 -1을 반환
@@ -154,4 +161,16 @@ public class PlayerController: MonoBehaviour
     rbody.velocity = new Vector2(0,0);  //속도를 0으로 강제 
   }
   
+  public void SetAxis(float h, float v)
+  {
+    axisH = h;
+    if(axisH == 0)
+    {
+      isMoving = false;
+    }
+    else
+    {
+      isMoving = true;
+    }
+  }
 }
