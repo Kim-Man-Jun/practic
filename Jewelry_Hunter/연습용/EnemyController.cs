@@ -37,10 +37,29 @@ public class EnemyController : MonoBehaviour
   
   void FixedUpdate()
   {
+    Rigidbody2D rbody = GetComponent<Rigidbody2D>();
+    if(direction == "right")
+    {
+      rbody.velocity = new Vector2(speed, rbody.velocity.y);
+    }
+    else
+    {
+      rbody.velocity = new Vector2(-speed, rbody.velocity.y);
+    }
   }
   
   private void OnTriggerEnter2D(Collider2D collision)
   {
+    if(direction == "right")
+    {
+      direction = "left";
+      transform.loclaScale = new Vector2(1, 1);
+    }
+    else
+    {
+      direction = "right";
+      transform.loclaScale = new Vector2(-1, 1);
+    }
   }
 
 }
