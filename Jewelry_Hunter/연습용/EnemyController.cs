@@ -20,6 +20,27 @@ public class EnemyController : MonoBehaviour
   
   void Update()
   {
+    if(range > 0.0f)
+    {
+      if(transform.position.x < defPos.x - (range / 2))
+      {
+        direction = "right";
+        transform.localScale = new Vector2(-1, 1);        //방향 변경
+      }
+
+      if(transform.position.x > defPos.x - (range / 2))
+      {
+        direction = "left";
+        transform.localScale = new Vector2(1, 1);        //방향 변경      
+    }
   }
   
+  void FixedUpdate()
+  {
+  }
+  
+  private void OnTriggerEnter2D(Collider2D collision)
+  {
+  }
+
 }
