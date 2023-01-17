@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
   public AudioClip meGameOver;
   public AudioClip meGameClear;
   
+  public GameObject inputUi;
+  
   void Start()
   {
     Invoke("InactiveImage", 1.0f);
@@ -70,6 +72,8 @@ public class GameManager : MonoBehaviour
         soudPlayer.Stop();
         spundPlayer.PlayOneShot(meGameClear);
       }
+      
+      inputUI.SetActive(false);
     }
     else if(PlayerController.gameState == "gameover")
     {
@@ -91,6 +95,8 @@ public class GameManager : MonoBehaviour
         soudPlayer.Stop();
         spundPlayer.PlayOneShot(meGameOver);
       }
+      
+      inputUI.SetActive(false);
     }
     else if (PlayerController.gameState == "playing")
     {
@@ -127,5 +133,12 @@ public class GameManager : MonoBehaviour
   {
     int score = stageScore + totalScore;
     scoreText.GetComponent<Text>().text = score.ToString();
+  }
+  
+  public void Jump()
+  {
+    GameObject player = GameObject.FindGameObjectWithTag("Player");
+    PlayerController playerCnt = player.GetComponent<PlayerController>();
+    playerCnt.Jump();
   }
 }
