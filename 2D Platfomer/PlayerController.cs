@@ -36,4 +36,31 @@ public class PlayerController : MonoBehaviour
     }
   }
   
+  private void Die()
+  {
+    playerRigidbody.Velocity = Vector2.Zero;
+    isDead = true;
+  }
+  
+  private void OnTriggerEnter2D(Collider2D other)
+  {
+    if(other.tag == "Dead" && !isDead)
+    {
+      Die();
+    }
+  }
+  
+  private void OnCollisionEnter2D(Collision2D collision)
+  {
+    if(collision.contacts[0].noraml.y > 0.7f;
+    {
+      isGrounded = true;
+      jumpCount = 0;
+    }
+  }
+  
+  private void OncollisionExit2D(Collision2D collision)
+  {
+    isGrounded = false;
+  }
 }
