@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {  
   private Rigidbody2D playerRigidbody;
   private float axisH = 0.0f;
-  public float spped = 4.0f;
+  public float speed = 4.0f;
   
   public float jump = 9.0f;
   public LayerMask groundLayer;
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
   
   void FixedUpdate()
   {
-    
+    playerRigidbody.velocity = new Vector2(axisH * speed, playerRigidbody.velocity.y);
   }
 
 }
