@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     }
     if(onGround && goJump)
     {
-      Vector2 jumpPw = new Vector2(0. jump);
+      Vector2 jumpPw = new Vector2(0, jump);
       playerRigidbody.AddForce(jumpPw, ForceMode2D.Impulse);
       goJump = false;
     }
