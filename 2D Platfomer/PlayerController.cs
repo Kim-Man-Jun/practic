@@ -43,7 +43,17 @@ public class PlayerController : MonoBehaviour
   
   void FixedUpdate()
   {
-    playerRigidbody.velocity = new Vector2(axisH * speed, playerRigidbody.velocity.y);
+    onGround = Physics2D.Linecast(transform.position, transform.position - (transform.up * 0.1f), groundLayer);
+    if(onGround || axisH != 0)  //지면 위 또는 속도가 0이 아닐때
+    {
+      playerRigidbody.velocity = new Vector2(axisH * speed, playerRigidbody.velocity.y);
+    }
+    if(onGround && goJump)
+    {
+      Vector2 jumpPw = new Vector2(0. jump);
+      playerRigidbody.AddForce(jumpPw, ForceMode2D.Impulse);
+      goJump = false;
+    }
   }
 
 }
