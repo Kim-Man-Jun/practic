@@ -25,11 +25,25 @@ public class PlayerController : MonoBehaviour
     {
       transform.localScale = new Vector2(1,1);
     }
-    
-    if(axisH < 0.0f)
+    else if(axisH < 0.0f)
     {
       transform.localScale = new Vector2(-1,1);
     }
+    
+    if(Input.GetButtonDwon("Jump"))
+    {
+      Jump();
+    }
+  }
+  
+  public Jump();
+  {
+    goJump = true;
+  }
+  
+  void FixedUpdate()
+  {
+    
   }
 
 }
