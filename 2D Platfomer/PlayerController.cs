@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-  public float jumpForce = 500f;
-  
-  private int jumpCount = 0;
-  private bool isGround = false;
   private bool isDead = false;
   
   private Rigidbody2D playerRigidbody;
+  private float axisH = 0.0f;
+  public float spped = 4.0f;
+  
+  public float jump = 9.0f;
+  public LayerMask groundLayer;
+  private bool onGround = false;  
   
   void Start()
   {
