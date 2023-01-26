@@ -20,6 +20,23 @@ public class GameManager : MonoBehaviour
   
   void Update()
   {
+    if(PlaerController.gameState == "gameover")
+    {
+      mainImage.SetActive(true);
+      panel.SetActive(true);
+      Button bt = nextButton.GetComponent<Button>();
+      bt.interactable = false;
+      mainImage.GetComponent<Image>().sprite = gameOverSpr;
+      PlayerController.gameState = "gameend";
+      else if(PlayerController.gameState == "playing")
+      {
+      }
+    }
+    
+    void InactiveImage()
+    {
+      mainImage.SetActive(false);
+    }
   }
   
 }
