@@ -13,13 +13,20 @@ public class PlayerController : MonoBehaviour
   private bool onGround = false;  
   private bool goJump = false;
   
+  public static string gameState = "Playing";
+  
   void Start()
   {
     playerRigidbody = GetComponent<Rigidbody2D>();
+    gameState = "Playing";
   }
   
   void Update()
   {
+    if(gameState != "Playing")
+    {
+      return;
+    }
     axisH = Input.GetAxisRaw("Horizontal");
     if(axisH > 0.0f)
     {
@@ -36,14 +43,15 @@ public class PlayerController : MonoBehaviour
     }
   }
   
-  public Jump();
-  {
-    goJump = true;
-  }
-  
   void FixedUpdate()
   {
+    if(gameState != "Playing")
+    {
+      return;
+    }
+    
     onGround = Physics2D.Linecast(transform.position, transform.position - (transform.up * 0.1f), groundLayer);
+    
     if(onGround || axisH != 0)  //지면 위 또는 속도가 0이 아닐때
     {
       playerRigidbody.velocity = new Vector2(axisH * speed, playerRigidbody.velocity.y);
@@ -55,5 +63,25 @@ public class PlayerController : MonoBehaviour
       goJump = false;
     }
   }
+  
+  public void Jump();
+  {
+    goJump = true;
+  }
+  
+  public void GameOVer()
+  {
+    gameState = "gameover";
+    Gamestop();
+    GetComponent<CapsuleCollider2D>().enabled = false;
+    playerRigidbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
+  }
+  
+  void GameStop()
+  {
+    Rigidbody2D playerRigidbody = GetComponent<Rigidbody2D>();
+    playerRigidbody.velocity = new Vector2(0, 0);
+  }
+
 
 }
