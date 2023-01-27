@@ -28,10 +28,21 @@ public class GameManager : MonoBehaviour
       bt.interactable = false;
       mainImage.GetComponent<Image>().sprite = gameOverSpr;
       PlayerController.gameState = "gameend";
-      else if(PlayerController.gameState == "playing")
-      {
-      }
     }
+    else if(PlayerController.gameState == "playing")
+    {
+      mainImage.SetActive(true);
+      panel.SetActive(true);
+      Button bt = nextButton.GetComponent<Button>();
+      bt.interactable = false;
+      mainImage.GetComponent<Image>().sprite = gameOverSpr;
+      PlayerController.gameState = "gameend";
+    }
+    else if(PlayerController.gameState == "playing")
+    {
+    }
+      
+  }
     
     void InactiveImage()
     {
