@@ -18,6 +18,18 @@ public class GimmickObject : MonoBehaviour
   
   void Update()
   {
-    
+    GameObject player=GameObject.FindGameObjectWithTag("Player");
+    if(player != null)
+    {
+      float d = Vectro2.Distance(transform.position, player.transform.position);      //플레이어와의 거리 계산
+      if(length >= d)         //위 계산한 거리가 탐지 거리보다 작거나 같을 경우에
+      {
+        Rigidbody rbody = GetComponent<Rigidbody2D>();
+        if(rbody.bodyType = RigidbodyType2D.Static)
+        {
+          rbody.bodyType = RigidbodyType2D.Dynamic;     //물리 현상 고정 해제
+        }
+      }
+    }
   }
 }
