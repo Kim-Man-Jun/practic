@@ -12,9 +12,12 @@ public class GimmickObject : MonoBehaviour
   
   void start()
   {
+    Rigidbody2D rbody = GetComponent<Rigidbody2D>();
+    rbody.bodyType = RigidbodyType2D.Static;            //물리 현상 고정
   }
   
   void Update()
   {
+    
   }
 }
