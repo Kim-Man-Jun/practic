@@ -44,4 +44,12 @@ public class GimmickObject : MonoBehaviour
       }
     }
   }
+  
+  void OnCollisionEnter2D(Collision2D collision)
+  {
+    if(isDelete)
+    {
+      isFell = true;
+    }
+  }
 }
