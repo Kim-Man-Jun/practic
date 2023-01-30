@@ -31,5 +31,17 @@ public class GimmickObject : MonoBehaviour
         }
       }
     }
+    
+    if(isFell)
+    {
+      fadeTime -= Time.deltaTime;
+      Color col = GetComponent<SpriteRenderer>().color;   //컬러값을 가져옴
+      col.a = fadeTime;                                   //투명도 변경
+      GetComponent<SpriteRenderer>().color = col;         //컬러값 재설정
+      if(fadeTime <= 0.0f)                                //fadeTime이 0보다 작아졌을때
+      {
+        Destroy(gameObject);                              //이 오브젝트를 없애버림
+      }
+    }
   }
 }
