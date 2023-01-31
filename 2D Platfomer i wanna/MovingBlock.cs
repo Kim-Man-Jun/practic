@@ -58,6 +58,20 @@ public class MovingBlock : MonoBehaviour
       }
       else
       {
+        if((perDX >= 0.0f && x >= defPos.X + moveX) || (perDX < 0.0f && x <= defPos.X + moveX))
+        {
+          endX = true;
+        }
+        if((perDY >= 0.0f && y >= defPos.y + moveY) || (perDY < 0.0f && y <= defPos.y + moveY))
+        {
+          endY = true;
+        }
+        Vector3 v= new Vector3(perDX, perDY, defPos.z);
+        transform.Translate(v);
+      }
+      
+      if(endX && endY)
+      {
         
       }
     }
