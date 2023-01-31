@@ -86,6 +86,8 @@ public class MovingBlock : MonoBehaviour
     }
   }
   
+  //발판 이동부분은 여러번 
+  
   public void Move()
   {
     isCanMove = true;
