@@ -36,7 +36,7 @@ public class MovingBlock : MonoBehaviour
   
   void FixedUpdate()
   {
-    if(isCanMove)
+    if(isCanMove)                   //이동중일때
     {
       float x = transform.position.x;
       float y = transform.position.y;
@@ -45,10 +45,11 @@ public class MovingBlock : MonoBehaviour
       if(isReverse)
       {
         if((perDX >= 0.0f && x <= defPos.x) || (perDX < 0.0f && x >= defPos.x)
+        //반대 방향으로 이동
         //이동량이 양수고 이동 위치가 초기 위치보다 작고나 같을 경우
         //이동량이 음수고 이동 위치가 초기 위치보다 크거가 같을 경우
         {
-          endX = true;
+          endX = true;        //X방향 이동 종료
         }
         if((perDY >= 0.0f && y <= defPos.y) || (perDY < 0.0f && y >= defPos.y)
         {
@@ -59,8 +60,11 @@ public class MovingBlock : MonoBehaviour
       else
       {
         if((perDX >= 0.0f && x >= defPos.X + moveX) || (perDX < 0.0f && x <= defPos.X + moveX))
+        //정방향 이동
+        //이동량이 양수고 이동 위치가 초기 위치보다 크거나
+        //이동량이 음수고 이동 위치가 초기 + 이동거리 보다 작은 경우
         {
-          endX = true;
+          endX = true;        //X 방향 이동 종료
         }
         if((perDY >= 0.0f && y >= defPos.y + moveY) || (perDY < 0.0f && y <= defPos.y + moveY))
         {
@@ -70,9 +74,10 @@ public class MovingBlock : MonoBehaviour
         transform.Translate(v);
       }
       
-      if(endX && endY)
+      if(endX && endY)          //이동 종료
       {
         if(isReverse)
+        //위치가 어긋나는 것을 방지하고자 정면 방향 이동으로 돌아가기 전에 초기위치로 돌리는 메서드
         {
           transform.position = defPos;
         }
@@ -80,7 +85,7 @@ public class MovingBlock : MonoBehaviour
         isCanMove = false;
         if(isMoveWhenOn == false)
         {
-          Invoke("Move", weight);
+          Invoke("Move", weight);                   //weight만큼 지연 후 move 시작
         }
       }
     }
@@ -90,30 +95,31 @@ public class MovingBlock : MonoBehaviour
   
   public void Move()
   {
-    isCanMove = true;
+    isCanMove = true;                               //이동 가능하게 만들기
   }
   
   public void Stop()
   {
-    isCanMove = false;
+    isCanMove = false;                               //이동 불가능하게 만들기
   }
   
   private void OnCollisionEnter2D(Collision2D collision)
   {
-    if(collision.gameObject.tag == "Player")
+    if(collision.gameObject.tag == "Player")          // 접촉한 것이 플레이어라면 
     {
-      collision.transform.SetParent(transform);
-      if(isMoveWhenOn)
+      collision.transform.SetParent(transform);       //이동 블록의 자식으로 만들어버림
+      
+      if(isMoveWhenOn)                                //올라갔을 때 움직일 수 있으면
       {
-        isCanMove = true;
+        isCanMove = true;                             //이동하게 만들어버림
       }
     }
   }
   
-  private void OnCollisionExit2D(Collision2D collision)
+  private void OnCollisionExit2D(Collision2D collision)        //접촉 종료 했을 때
   {
     if(collision.gameObject.tag == "Player")
     {
-      collision.transform.SetParent(nul);
+      collision.transform.SetParent(null);                     //플레이어일 경우 이동 블록의 자식에서 아웃
   }
 }
