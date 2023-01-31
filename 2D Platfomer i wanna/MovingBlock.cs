@@ -34,11 +34,47 @@ public class MovingBlock : MonoBehaviour
     
   }
   
+  void FixedUpdate()
+  {
+    if(isCanMove)
+    {
+      float x = transform.position.x;
+      float y = transform.position.y;
+      bool endX = false;
+      bool endY = false;
+      if(isReverse)
+      {
+        
+      }
+    }
+  }
+  
+  public void Move()
+  {
+    isCanMove = true;
+  }
+  
+  public void Stop()
+  {
+    isCanMove = false;
+  }
+  
   private void OnCollisionEnter2D(Collision2D collision)
   {
+    if(collision.gameObject.tag == "Player")
+    {
+      collision.transform.SetParent(transform);
+      if(isMoveWhenOn)
+      {
+        isCanMove = true;
+      }
+    }
   }
   
   private void OnCollisionExit2D(Collision2D collision)
   {
+    if(collision.gameObject.tag == "Player")
+    {
+      collision.transform.SetParent(nul);
   }
 }
