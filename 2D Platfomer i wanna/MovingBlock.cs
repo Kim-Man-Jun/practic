@@ -18,12 +18,12 @@ public class MovingBlock : MonoBehaviour
   
   void Start()
   {
-    defPos = transform.position;
-    float timestep = Time.fixedDeltaTime;
-    perDx = moveX / (1.0f / timestep * times);
+    defPos = transform.position;                    //초기 위치
+    float timestep = Time.fixedDeltaTime;           //1프레임에 움직이는 시간 계산
+    perDx = moveX / (1.0f / timestep * times);      //1프레임의 X 이동 값 계산
     perDY = moveY / (1.0f / timestep * times);
     
-    if(isMoveWhenOn)
+    if(isMoveWhenOn)                                //처음에는 움직이지 않고 올라가면 움직임
     {
       isCanMove = false;
     }
