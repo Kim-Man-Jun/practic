@@ -72,7 +72,16 @@ public class MovingBlock : MonoBehaviour
       
       if(endX && endY)
       {
-        
+        if(isReverse)
+        {
+          transform.position = defPos;
+        }
+        isReverse = !isReverse;
+        isCanMove = false;
+        if(isMoveWhenOn == false)
+        {
+          Invoke("Move", weight);
+        }
       }
     }
   }
