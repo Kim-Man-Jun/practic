@@ -44,6 +44,20 @@ public class MovingBlock : MonoBehaviour
       bool endY = false;
       if(isReverse)
       {
+        if((perDX >= 0.0f && x <= defPos.x) || (perDX < 0.0f && x >= defPos.x)
+        //이동량이 양수고 이동 위치가 초기 위치보다 작고나 같을 경우
+        //이동량이 음수고 이동 위치가 초기 위치보다 크거가 같을 경우
+        {
+          endX = true;
+        }
+        if((perDY >= 0.0f && y <= defPos.y) || (perDY < 0.0f && y >= defPos.y)
+        {
+          endY = true;
+        }
+        transform.Translate(new Vector3(-perDx, -perDY, defPos.z))
+      }
+      else
+      {
         
       }
     }
