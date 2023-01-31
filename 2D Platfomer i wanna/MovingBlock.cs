@@ -86,7 +86,7 @@ public class MovingBlock : MonoBehaviour
     }
   }
   
-  //발판 이동부분은 여러번 
+  //발판 이동부분은 여러번 봐야할듯 vector고 invoke고 난리났네 이거
   
   public void Move()
   {
