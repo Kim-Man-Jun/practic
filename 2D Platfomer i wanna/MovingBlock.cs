@@ -6,15 +6,15 @@ public class MovingBlock : MonoBehaviour
 {
   public float moveX = 0.0f;
   public float moveY = 0.0f;
-  public float times = 0.0f;
-  public float weight = 0.0f;
-  public bool isMoveWhenOn = false;
+  public float times = 0.0f;                //시간
+  public float weight = 0.0f;               //정지 시간
+  public bool isMoveWhenOn = false;         //올라갔을 때 움직이기
   
-  public bool isCanMove = true;
-  float perDx;
+  public bool isCanMove = true;             //움직임 온오프
+  float perDx;                              //1프레임 당 X 이동 값
   float perDy;
-  Vector3 defPos;
-  bool isReverse = false;
+  Vector3 defPos;                           //초기 위치
+  bool isReverse = false;                   //반전 온오프
   
   void Start()
   {
