@@ -18,10 +18,20 @@ public class MovingBlock : MonoBehaviour
   
   void Start()
   {
+    defPos = transform.position;
+    float timestep = Time.fixedDeltaTime;
+    perDx = moveX / (1.0f / timestep * times);
+    perDY = moveY / (1.0f / timestep * times);
+    
+    if(isMoveWhenOn)
+    {
+      isCanMove = false;
+    }
   }
   
   void Update()
   {
+    
   }
   
   private void OnCollisionEnter2D(Collision2D collision)
