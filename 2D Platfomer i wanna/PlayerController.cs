@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
     public string JumpAnime = "PlayerJump";
     string nowAnime = "";
     string oldAnime = "";
+    
+    float Time = 0.0f;
+    public float FadeTime = 0.0f;
 
     void Start()
     {
@@ -65,6 +68,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isDead)
+        {
+            return;
+        }
+        
         if (isGround)
         {
             if (axisH == 0)
@@ -87,6 +95,7 @@ public class PlayerController : MonoBehaviour
             animator.Play(nowAnime);
         }
     }
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Dead" && !isDead)
@@ -97,8 +106,20 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
-        playerRigidbody.velocity = Vector2.zero;
         isDead = true;
+        playerRigidbody.velocity = Vector2.zero;
+        GetComponent<CapsuleCollider2D>().enabled = false;
+        
+        if(FadeTime < Time)
+        {
+            GetComponent<SpriteRenderer>().color = new Coloer(1, 1, 1, 1f - FadeTime/Time);
+        }
+        else
+        {
+            FadeTime = 0.0f;
+            this.gameObject.SetActive(false);
+        }
+        FadeTime += Time.deltaTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
