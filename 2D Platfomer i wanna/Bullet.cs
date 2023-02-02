@@ -4,9 +4,22 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-  void Update()
-  {
-    transform.Translate(Vector3.forward * 10.0f);
-    //프레임마다 오브젝트를 정면을 향해 발사
-  }
+    public float speed = 20.0f; //총알 속도
+    private Rigidbody2D bulletRigidbody; //이동에 사용할 rigidbody 컴포넌트
+
+    void Start()
+    {
+        bulletRigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+        bulletRigidbody.velocity = transform.right * speed;
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+    }
+
 }
