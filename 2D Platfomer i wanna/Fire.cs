@@ -9,7 +9,7 @@ public class Fire : MonoBehaviour
   
   void Update()
   {
-    if(Input.GetKeyButtonDown("fire1"))
+    if(Input.GetButtonDown("fire1"))
     {
       Instantiate(Bullet, FirePos.transform.position, FirePos.transform.rotation);
       //bullet를 FirePos.transform.position 위치에 FirePos.transform.rotation 회전값으로 복제한다
