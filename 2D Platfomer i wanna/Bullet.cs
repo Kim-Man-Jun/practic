@@ -13,11 +13,11 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        if (transform.rotation.y == 0)
+        if (transform.localScale.x == 0)
         {
             transform.Translate(transform.right * speed * Time.deltaTime);
         }
-        else if (transform.rotation.y == 180)
+        else if (transform.localScale.x == -1)
         {
             transform.Translate(transform.right * -1 * speed * Time.deltaTime);
         }
