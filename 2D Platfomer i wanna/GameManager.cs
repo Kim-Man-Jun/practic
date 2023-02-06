@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
   
   void Update()
   {
-    if(PlaerController.gameState == "gameover")
+    if(PlayerController.gameState == "gameover")
     {
       mainImage.SetActive(true);
       panel.SetActive(true);
@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
       mainImage.GetComponent<Image>().sprite = gameOverSpr;
       PlayerController.gameState = "gameend";
     }
+    
     else if(PlayerController.gameState == "playing")
     {
       mainImage.SetActive(true);
@@ -38,10 +39,15 @@ public class GameManager : MonoBehaviour
       mainImage.GetComponent<Image>().sprite = gameOverSpr;
       PlayerController.gameState = "gameend";
     }
+    
     else if(PlayerController.gameState == "playing")
     {
     }
-      
+    
+    if (isGameover && Input.GetKey(KeyCode.R))
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
   }
     
     void InactiveImage()
