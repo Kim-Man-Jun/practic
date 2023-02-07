@@ -22,12 +22,16 @@ public class GameManager2 : MonoBehaviour
       Destroy(gameObject);
     }
   }
-
-  void Start()
+  
+  void Update()         //게임오버 상태에서 재시작 가능하게 만들기
   {
+    if(isGameover = true)
+    {
+      
+    }
   }
   
-  void Update()
+  public void OnPlayerDead
   {
   }
   
