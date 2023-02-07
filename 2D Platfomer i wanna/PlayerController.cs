@@ -120,6 +120,8 @@ public class PlayerController : MonoBehaviour
             this.gameObject.SetActive(false);
         }
         FadeTime += Time.deltaTime;
+        
+        GameManager.instance.OnPlayerDead();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
