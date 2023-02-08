@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneManagement : MonoBehaviour
+public class StartScene : MonoBehaviour
 {
-  void Start()
+  public void ChangeStage1()
   {
-  }
-  
-  void Update()
-  {
+    SceneManager.LoadScene("Stage_1");
   }
 }
