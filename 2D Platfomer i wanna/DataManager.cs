@@ -30,17 +30,22 @@ public class DataManager : MonoBehaviour
     string filePath = Application.persistentDataPath + "/" + GameDataFileName;
     if(File.Exists(filePath))                     //저장된 게임이 있을 경우
     {
+      //저장된 파일을 읽어오고 Json을 클래스 형식으로 전환해서 할당
       string FromJsonData = File.ReadAllText(filePath);
       data = JsonUtility.FromJson<Data>(FromJsonData);
       print("불러오기 완료");
     }
   }
   
-  public void SaveGameData()
+  public void SaveGameData()                        //저장하기
   {
+    //클래스를 Json 형식으로 전환
     string ToJsonData = JsonUtility.ToJson(data, true);
     string filePath = Application.persistentDataPath + "/" + GameDataFileName;
+    
+    //이미 저장된 파일이 있다면 덮어쓰고, 없다면 새로 만들어서 저장
     File.WriteAllText(filePathm ToJsonData);
+    
     print("저장 완료");
   }
 }
