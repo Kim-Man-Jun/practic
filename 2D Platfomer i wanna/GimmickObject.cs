@@ -5,7 +5,6 @@ using UnityEngine;
 public class GimmickObject : MonoBehaviour
 {
     public float length = 0.0f;     //자동 낙하 탐지 거리
-    public bool isDelete = false;   //낙하 후 제거 여부
 
     void start()
     {
@@ -27,8 +26,6 @@ public class GimmickObject : MonoBehaviour
                 if (rbody.bodyType == RigidbodyType2D.Static)
                 {
                     rbody.bodyType = RigidbodyType2D.Dynamic;     //물리 현상 고정 해제
-
-                    Destroy(gameObject, 2.5f);
                 }
             }
         }
