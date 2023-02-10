@@ -30,4 +30,9 @@ public class GimmickObject : MonoBehaviour
             }
         }
     }
+    
+    void LateUpdate()
+    {
+        print("거리 : " + d);
+    }
 }
