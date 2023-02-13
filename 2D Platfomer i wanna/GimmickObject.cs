@@ -9,7 +9,7 @@ public class GimmickObject : MonoBehaviour
     void start()
     {
         Rigidbody2D rbody = GetComponent<Rigidbody2D>();
-        rbody.bodyType = RigidbodyType2D.Static;            //물리 현상 고정
+        rbody.bodyType = RigidbodyType2D.Static;            //물리 현상 고정, inspector에서 static으로 해야함
     }
 
     void Update()
@@ -26,13 +26,10 @@ public class GimmickObject : MonoBehaviour
                 if (rbody.bodyType == RigidbodyType2D.Static)
                 {
                     rbody.bodyType = RigidbodyType2D.Dynamic;     //물리 현상 고정 해제
+
+                    Destroy(this.gameObject, 2.5f);
                 }
             }
         }
-    }
-    
-    void LateUpdate()
-    {
-        print("거리 : " + d);
     }
 }
