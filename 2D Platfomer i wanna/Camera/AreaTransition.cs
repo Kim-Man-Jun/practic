@@ -20,4 +20,13 @@ public class AreaTransition : MonoBehaviour
   }
   
   private void OnTriggerEnter2D(Collider2D collision)
+  {
+    if(collision.tag == "Player")
+    {
+      cam.minCameraBoundary = new MinCameraBoundary;
+      cam.maxCameraBoundary = new MaxCameraBoundary;
+      
+      cam.player.position = exitPos.position + (Vector3)playerPosOffset;
+    }
+  }
 }
