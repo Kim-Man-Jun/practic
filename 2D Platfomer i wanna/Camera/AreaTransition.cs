@@ -29,4 +29,6 @@ public class AreaTransition : MonoBehaviour
       cam.player.position = exitPos.position + (Vector3)playerPosOffset;
     }
   }
+  
+  //사이트 주소 https://jjong-ga.tistory.com/104
 }
