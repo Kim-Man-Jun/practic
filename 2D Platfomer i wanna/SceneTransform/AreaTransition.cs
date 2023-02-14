@@ -30,5 +30,5 @@ public class AreaTransition : MonoBehaviour
     }
   }
   
-  //사이트 주소 https://jjong-ga.tistory.com/104
+  //사이트 주소 https://jjong-ga.tistory.com/104 topview 형식
 }
