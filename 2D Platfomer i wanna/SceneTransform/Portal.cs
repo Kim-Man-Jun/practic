@@ -24,4 +24,6 @@ public class Portal : MonoBehaviour
       SceneManager.LoadScene(transferMapName);
     }
   }
+  
+  //사이트 주소 https://medium.com/@qldrhqorhsh/unity-tutorial-6-scene-%EB%A7%B5-%EC%9D%B4%EB%8F%99-e92d05840c2d 
 }
