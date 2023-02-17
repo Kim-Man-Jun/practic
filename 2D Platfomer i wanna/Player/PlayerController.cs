@@ -102,6 +102,11 @@ public class PlayerController : MonoBehaviour
         {
             Die();
         }
+        
+        if(other.gameObject.tag == "Clear")
+        {
+            GameManager.ClearGame();
+        }
     }
 
     private void Die()
