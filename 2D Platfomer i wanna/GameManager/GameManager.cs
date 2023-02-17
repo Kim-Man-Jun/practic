@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
   public GameObject gameoverUI;
   
   /*------------추가부분
+  static bool isClear = false;
   
   Vector3 StartingPos;
   Quaternion StartingRotate;
@@ -50,6 +51,11 @@ public class GameManager : MonoBehaviour
   {
     isGameover = true;
     gameoverUI.SetActive(true);
+  }
+  
+  public static void clearGame()
+  {
+    isClear = true;
   }
   
 }
