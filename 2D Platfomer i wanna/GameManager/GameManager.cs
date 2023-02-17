@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
   void Start()
   {
     StartingPos = GameObject.FindGameObjectWithTag("Start").transform.position;
-    
+    StartingRotate = GameObject.FindGameObjectWithTag("Start").transform.rotation;
   }
   void Update()         //게임오버 상태에서 재시작 가능하게 만들기
   {
