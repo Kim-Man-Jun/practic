@@ -11,6 +11,12 @@ public class GameManager : MonoBehaviour
   public bool isGameover = false;
   public GameObject gameoverUI;
   
+  Vector3 StartingPos;
+  Quaternion StartingRotate;
+  bool isStarted = false;
+  
+  static int stageLevel = 0;
+  
   void Awake()
   {
     if(instance == null)
@@ -23,6 +29,11 @@ public class GameManager : MonoBehaviour
     }
   }
   
+  void Start()
+  {
+    StartingPos = GameObject.FindGameObjectWithTag("Start").transform.position;
+    
+  }
   void Update()         //게임오버 상태에서 재시작 가능하게 만들기
   {
     if (isGameover && Input.GetKey(KeyCode.R))
