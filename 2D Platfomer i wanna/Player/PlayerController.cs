@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 5.0f;
 
     public float jumpForce = 700f;
-    int jumpCount = 0;
+    public int jumpCount = 0;
 
     private bool isGround = false;
     private bool isDead = false;
