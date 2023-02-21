@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 5.0f;
 
     public float jumpForce = 700f;
-    int jumpCount = 0;
+    public int jumpCount = 0;
 
     private bool isGround = false;
     private bool isDead = false;
@@ -136,6 +136,14 @@ public class PlayerController : MonoBehaviour
             isGround = true;
             jumpCount = 0;
         }
+        
+        if(collision.gameObject.tag == "MoreJump")
+        {
+            MoreJump morejump = collision.gameObject.GetComponent<MoreJump>();
+            jumpCount = 1;
+            Destroy(collision.gameObject);
+        }
+        
     }
 
     private void OnCollisionExit2D(Collision2D collision)
