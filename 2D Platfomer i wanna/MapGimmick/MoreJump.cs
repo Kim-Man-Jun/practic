@@ -12,5 +12,7 @@ public class MoreJump : MonoBehaviour
   
   void Update()
   {
-  }      
+  }
+  
+  //circle collider 추가 - is trigger 체크
 }
