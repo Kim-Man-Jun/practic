@@ -15,4 +15,5 @@ public class MoreJump : MonoBehaviour
   }
   
   //circle collider 추가 - is trigger 체크
+  //prefab 처리
 }
