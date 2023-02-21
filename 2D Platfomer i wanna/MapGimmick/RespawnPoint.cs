@@ -4,12 +4,24 @@ using UnityEngine;
 
 public class RespawnPoint : MonoBehaviour
 {
-  void Start()
+  public GameObject MoreJump;
+  public float Interval;
+  
+  public void Start()
   {
+    if(Interval > 0)
+    {
+      InvokeRepeating("MoreJump", 0.0f, Interval);
+    }
   }
   
-  void Update()
+  public GameObject MoreJump()
   {
+    if(MoreJump != null)
+    {
+      return Instantiate(MoreJump, transform.position, Quaternion.identity);
+    }
+    
+    return null;
   }
-  
 }
