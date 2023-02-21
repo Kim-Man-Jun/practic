@@ -137,21 +137,19 @@ public class PlayerController : MonoBehaviour
             jumpCount = 0;
         }
         
-/* 02.21자 추가한 부분        
-        if(collision.gameObject.tag == "MoreJump")
+        else if (collision.gameObject.tag == "MoreJump")
         {
-            MoreJump morejump = collision.gameObject.GetComponent<MoreJump>();
-            if(jumpCount >= 1)
+            if (jumpCount >= 1)
             {
-                jumpcount--;
+                jumpCount--;
                 Destroy(collision.gameObject);
             }
-            else if(jumpCount = 0)
+
+            else if (jumpCount == 0)
             {
                 Destroy(collision.gameObject);
             }
         }
-*/
     }
 
     private void OnCollisionExit2D(Collision2D collision)
