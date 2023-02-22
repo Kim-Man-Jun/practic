@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoreJump : MonoBehaviour
 {
-  GameObject Player;
+  public GameObject Player;
   
   void Start()
   {
@@ -26,7 +26,7 @@ public class MoreJump : MonoBehaviour
       
       else if(Player.jumpCount ==0)
       {
-        Player.Destroy(this.gameObject);
+        Destroy(this.gameObject);
       }
     }
   }
