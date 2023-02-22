@@ -136,20 +136,6 @@ public class PlayerController : MonoBehaviour
             isGround = true;
             jumpCount = 0;
         }
-        
-        else if (collision.gameObject.tag == "MoreJump")
-        {
-            if (jumpCount >= 1)
-            {
-                jumpCount--;
-                Destroy(collision.gameObject);
-            }
-
-            else if (jumpCount == 0)
-            {
-                Destroy(collision.gameObject);
-            }
-        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
