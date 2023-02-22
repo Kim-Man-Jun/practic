@@ -32,4 +32,5 @@ public class MoreJump : MonoBehaviour
   }
   //circle collider 추가 - is trigger 체크
   //prefab 처리
+  //02.22 할일 morejump 체크 후 invokerepeating을 이용한 재생성 처리까지 
 }
