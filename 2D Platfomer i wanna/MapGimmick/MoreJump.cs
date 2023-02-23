@@ -41,5 +41,7 @@ public class MoreJump : MonoBehaviour
     //prefab 처리
     //02.22 할일 morejump 체크 후 = 해냈다! 기분 너무 좋다. playercontroller에 있는 jumpcount를 public static로 전역변수 선언
     //이럴 경우 굳이 제일 앞에 public Playercontroller를 선언해줄 필요가 없음.
+    //처음에 ontriggerenter가 아닌 oncollisionenter를 썼더니 기획했던 것과 달랐음
+    //trigger 물리적 충돌 없음, collision 
     //invokerepeating을 이용한 재생성 처리까지 
 }
