@@ -10,7 +10,7 @@ public class MoreJump : MonoBehaviour
     {
         if(this.gameObject = null)
         {
-            Instatiate(morejumpPre);
+            Instatiate(morejumpPre, Transform MoreJump);
         }
     }
     
