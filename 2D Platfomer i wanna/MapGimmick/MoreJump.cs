@@ -5,13 +5,11 @@ using UnityEngine;
 public class MoreJump : MonoBehaviour
 {
     public GameObject morejumpPre;
+    public float Interval;
     
     void Start()
     {
-        if(this.gameObject = null)
-        {
-            Instatiate(morejumpPre, Transform MoreJump);
-        }
+        InvokeRepeating("Respawn", 0.0f, Interval);
     }
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -30,7 +28,15 @@ public class MoreJump : MonoBehaviour
             }
         }
     }
-    
+   
+    private void Respawn()
+    {
+      if(this.gameObject = null)
+      {
+          Instatiate(morejumpPre, Transform MoreJump);
+      }
+    }
+
     //circle collider 추가 - is trigger 체크
     //prefab 처리
     //02.22 할일 morejump 체크 후 = 해냈다! 기분 너무 좋다. playercontroller에 있는 jumpcount를 public static로 전역변수 선언
