@@ -62,7 +62,7 @@ public class ReactionEnemy : MonoBehaviour
   //2초 동안 랜덤으로 설정된 movement에서 나온 값을 기반으로 행동하게 됨
   //그 후 yield 밑에 코루틴을 재시작 함으로써  계속 반복하게 만든다.
   
-  private void OnTriggerEnter2D(collider2D other)
+  private void OnTriggerEnter2D(collider2D other)   //일단 리액션용 몹을 만들고 서클 콜라이더를 범위만큼 설정한 다음 
   {
     if(other.gameObject.tag == "Player")
     {
