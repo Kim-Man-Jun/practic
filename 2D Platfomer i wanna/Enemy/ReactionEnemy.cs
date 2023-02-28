@@ -19,7 +19,7 @@ public class ReactionEnemy : MonoBehaviour
   
   void FixedUpdate()
   {
-    Move;
+    Move();
   }
   
   void Move()
