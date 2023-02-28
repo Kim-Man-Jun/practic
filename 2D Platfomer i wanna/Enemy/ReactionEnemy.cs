@@ -14,6 +14,8 @@ public class ReactionEnemy : MonoBehaviour
   
   bool isTracing = false;
   
+  string dist = "";
+    
   void Start()
   {
     animator = gameObject.GetComponentInChildren<animator>();
@@ -95,6 +97,34 @@ public class ReactionEnemy : MonoBehaviour
   
   void isTracing()
   {
+    Vectro3 playerPos = traceTarget.transform.position;
     
+    if(playerPos.x < transform.position.x)
+    {
+      dist = "Left";
+    }
+    else if(playerPos.x > transform.position.x)
+    {
+      dist = "Right";
+    }
+    
+    else
+    {
+      if(movementSet == 1)
+      {
+        dist = "Left";
+      }
+      else if(movementSet == 2)
+      {
+        dist = "Right";
+      }
+    }
+    
+    if(dist == "Left")
+    {
+    }
+    else if(dist == "Right")
+    {
+    }
   }
 }
