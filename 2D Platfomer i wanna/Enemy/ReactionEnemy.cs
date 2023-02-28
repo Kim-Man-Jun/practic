@@ -10,6 +10,10 @@ public class ReactionEnemy : MonoBehaviour
   Vector3 movement;
   int movementSet = 0;   //0 : Idle, 1 : Left, 2 : Right 
   
+  GameObject traceTarget;
+  
+  bool isTracing = false;
+  
   void Start()
   {
     animator = gameObject.GetComponentInChildren<animator>();
@@ -66,12 +70,31 @@ public class ReactionEnemy : MonoBehaviour
   {
     if(other.gameObject.tag == "Player")
     {
-      플레이어를 따라가는 메서드를 짬
+      traceTarget = other.gameObject;
+      StopCoroutine ("ChangeMovemnet");
     }
   }
   
-  private void OnTriggerEXit2D(collider2D Player)
+  private void OnTriggerStay2D (Collider2D other)
   {
-    StartCoroutine("ChangeMovement");   //플레이어가 나갔을 경우 일반 코루틴을 실행하도록 메서드 설정
+    if(other.gameObject.tag == "Player")
+    {
+      isTracing = true;
+      animator.SetBool ("isMoving", true);
+    }
+  }
+  
+  private void OnTriggerEXit2D(collider2D other)
+  {
+    if(other.gameObject.tag == "Player")
+    {
+      isTracing = false;
+      StartCoroutine("ChangeMovement");   //플레이어가 나갔을 경우 일반 코루틴을 실행하도록 메서드 설정
+    }
+  }
+  
+  void isTracing()
+  {
+    
   }
 }
