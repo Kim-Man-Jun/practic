@@ -122,9 +122,13 @@ public class ReactionEnemy : MonoBehaviour
     
     if(dist == "Left")
     {
+      moveVelocity = Vector3.left;
+      trnaform.localScale = new Vector3(1, 1, 1);
     }
     else if(dist == "Right")
     {
+      moveVelocity = Vector3.right;
+      trnaform.localScale = new Vector3(-1, 1, 1);
     }
   }
 }
