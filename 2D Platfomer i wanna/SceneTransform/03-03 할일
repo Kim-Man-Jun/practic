@@ -1,0 +1,10 @@
+https://medium.com/@qldrhqorhsh/unity-tutorial-6-scene-%EB%A7%B5-%EC%9D%B4%EB%8F%99-e92d05840c2d
+위 주소에 나와있는 씬전환용 포탈을 실험해볼 예정
+오브젝트는 에셋에서 적당한거 찾아서 골 지점을 만듦
+
+
+골은 box collider2d 설정 후 istrigger 설정해줌
+스타트지점은 empty object를 만들어서 맵 시작부분에 둘 예정임
+
+-----------------------------
+골지점 만드는거 끝나면 stage1 가이나 보시를 보고 맵 보강할 예정
