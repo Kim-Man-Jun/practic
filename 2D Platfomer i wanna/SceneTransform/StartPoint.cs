@@ -5,16 +5,18 @@ using UnityEngine;
 public class StartPoint : MonoBehaviour
 {
   public string startPoint;
+  private Player player;
   
   void Start()
   {
-    if(thePlayer == null)
+    if(player == null)
     {
-      thePlayer = FindObjectOfType<Player>();
+      player = FindObjectOfType<Player>();
     }
+    
     if(startPoint == thePlayer.currentMapName)
     {
-      thePlayer.transform.position = transform.position;
+      player.transform.position = transform.position;
     }
   }
 }
