@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 public class Portal : MonoBehaviour
 {
   public string transferMapName;
-  Private Player thePlayer;
+  private Player player;
   
   void Start()
   {
-    if(thePlayer == null)
+    if(player == null)
     {
-      thePlayer = FindObjectOfType<Player>();
+      player = FindObjectOfType<Player>();
     }
   }
   
@@ -20,7 +20,7 @@ public class Portal : MonoBehaviour
   {
     if(collision.CompareTag("Player"))
     {
-      thrPlayer.currentMapName = transferMapName;
+      player.currentMapName = transferMapName;
       SceneManager.LoadScene(transferMapName);
     }
   }
