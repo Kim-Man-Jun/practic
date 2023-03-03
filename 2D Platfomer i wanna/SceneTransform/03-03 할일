@@ -8,3 +8,6 @@ https://medium.com/@qldrhqorhsh/unity-tutorial-6-scene-%EB%A7%B5-%EC%9D%B4%EB%8F
 
 -----------------------------
 골지점 만드는거 끝나면 stage1 가이나 보시를 보고 맵 보강할 예정
+결국 못 끝냄
+왔다갔다는 성공했지만 캐릭터가 계속 사라짐
+destroyonload를 쓰면 얘가 맛이 감
