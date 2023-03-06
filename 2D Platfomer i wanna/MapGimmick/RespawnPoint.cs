@@ -6,15 +6,12 @@ public class RespawnPoint : MonoBehaviour
 {
     public GameObject MoreJumpPrefab;
 
-    public void Start()
+    void Start()
     {
-        if (MoreJumpPrefab == null)
-        {
-            Invoke("Respawn", 1.0f);
-        }
+        InvokeRepeating("Respawn", 0, 0.5f);
     }
 
-    public void Respawn()
+    void Respawn()
     {
         Instantiate(MoreJumpPrefab, transform.position, transform.rotation);
     }
