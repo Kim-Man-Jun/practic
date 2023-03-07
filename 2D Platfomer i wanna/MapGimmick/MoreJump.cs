@@ -11,12 +11,12 @@ public class MoreJump : MonoBehaviour
             if (PlayerController.jumpCount >= 1)
             {
                 PlayerController.jumpCount--;
-                Destroy(this.gameObject);
+                MoreJumpPrefab.SetActive(false);
             }
 
             else if (PlayerController.jumpCount == 0)
             {
-                Destroy(this.gameObject);
+                MoreJumpPrefab.SetActive(false);
             }
         }
     }
