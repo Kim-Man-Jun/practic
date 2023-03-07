@@ -21,3 +21,4 @@ public class RespawnPoint : MonoBehaviour
 }
 
 //https://solution94.tistory.com/10 활성화 비활성화 방법 이건 좋은 방법이 아닌듯?
+//https://overworks.github.io/unity/2019/07/16/null-of-unity-object.html null 체크
