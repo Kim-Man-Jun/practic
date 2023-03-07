@@ -13,6 +13,9 @@ public class RespawnPoint : MonoBehaviour
 
     void Respawn()
     {
-        Instantiate(MoreJumpPrefab, transform.position, transform.rotation);
+        if(MoreJumpPrefab != null)
+        {
+            Instantiate(MoreJumpPrefab, transform.position, transform.rotation);
+        }
     }
 }
