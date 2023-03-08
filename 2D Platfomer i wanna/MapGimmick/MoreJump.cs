@@ -13,8 +13,8 @@ public class MoreJump : MonoBehaviour
     {
         if(MJOnOff == false)
         {
-            MoreJumpObject.SetActive(true);
             StartCoroutine(Respawn());
+            MoreJumpObject.SetActive(true);
         }
     }
     
