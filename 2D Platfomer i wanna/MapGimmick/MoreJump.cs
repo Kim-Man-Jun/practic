@@ -13,7 +13,8 @@ public class MoreJump : MonoBehaviour
     {
         if(MJOnOff == false)
         {
-            
+            MoreJumpObject.SetActive(true);
+            StartCoroutine(Respawn());
         }
     }
     
@@ -38,7 +39,8 @@ public class MoreJump : MonoBehaviour
     
     IEnumerator Respawn()
     {
-        
+        yield return new WaitForSeconds(0.5f);
+        MJOnOff = true;
     }
     
     //circle collider 추가 - is trigger 체크
