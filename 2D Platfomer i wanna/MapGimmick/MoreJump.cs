@@ -4,32 +4,32 @@ using UnityEngine;
 
 public class MoreJump : MonoBehaviour
 {
-    public GameObject MoreJumpObject;
-    public bool MJOnOff = true;
-    public float MJOnOffDeleyTime;
+    public GameObject MoreJumpObject;       //MoreJump 게임오브젝트 변수
+    public bool MJOnOff;                    //MoreJump 충돌 후 on/off
+    public float MJOnOffDeleyTime;          //재생성까지 딜레이
 
-    void Update()
+    void Start()
     {
-        if (MJOnOff == false)
+        if (MJOnOff == false)               //충돌 후 MoreJump가 off 됐을 경우
         {
-            StartCoroutine("Respawn");
-            MoreJumpObject.SetActive(true);
-        }
-        else
-        {
-            MoreJumpObject.SetActive(true);
+            InvokeRepeating("Respawn", 0.0f, MJOnOffDeleyTime);     //MJOnOffDeleyTime의 텀을 두고 Respawn을 계속 실행
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    void Update()
     {
-        if (other.gameObject.tag == "Player")
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)                 //물체 충돌 판정
+    {
+        if (other.gameObject.tag == "Player")                       //닿은 대상이 Player일 경우
         {
-            if (PlayerController.jumpCount >= 1)
+            if (PlayerController.jumpCount >= 1)                    //PlayerController 스크립트의 jumpCount가 1 이상일 경우
             {
-                PlayerController.jumpCount--;
-                MoreJumpObject.SetActive(false);
-                MJOnOff = false;
+                PlayerController.jumpCount--;                       //점프카운트 1 차감
+                MoreJumpObject.SetActive(false);                    //MoreJump을 비활성화
+                MJOnOff = false;                                    //MoreJump 충돌 후 o
             }
 
             else if (PlayerController.jumpCount == 0)
@@ -40,9 +40,8 @@ public class MoreJump : MonoBehaviour
         }
     }
 
-    IEnumerator Respawn()
+    void Respawn()
     {
-        yield return new WaitForSeconds(MJOnOffDeleyTime);
         MoreJumpObject.SetActive(true);
         MJOnOff = true;
     }
