@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class MoreJump : MonoBehaviour
 {
+    public GameObject MoreJumpObject;
     public bool MJOnOff;
     public float MJOnOffDeleyTime;
     public float accumTime;
-    
+        
     void Update()
     {
         
@@ -32,4 +33,5 @@ public class MoreJump : MonoBehaviour
     //prefab 처리
     //02.22 할일 morejump 체크 후 = 해냈다! 기분 너무 좋다. playercontroller에 있는 jumpcount를 public static로 전역변수 선언
     //invokerepeating을 이용한 재생성 처리까지 
+    //https://allaboutmakers.tistory.com/32 게임오브텍으 온오프
 }
