@@ -16,11 +16,6 @@ public class MoreJump : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-
-    }
-
     private void OnTriggerEnter2D(Collider2D other)                 //물체 충돌 판정
     {
         if (other.gameObject.tag == "Player")                       //닿은 대상이 Player일 경우
@@ -32,7 +27,7 @@ public class MoreJump : MonoBehaviour
                 MJOnOff = false;                                    //MoreJump 충돌 후 o
             }
 
-            else if (PlayerController.jumpCount == 0)
+            else if (PlayerController.jumpCount == 0)               //PlayerController 스크립트의 jumpCount 0일 경우(점프를 안함)
             {
                 MoreJumpObject.SetActive(false);
                 MJOnOff = false;
@@ -40,7 +35,7 @@ public class MoreJump : MonoBehaviour
         }
     }
 
-    void Respawn()
+    void Respawn()                                                  //Respawn 함수 
     {
         MoreJumpObject.SetActive(true);
         MJOnOff = true;
