@@ -20,12 +20,12 @@ public class MoreJump : MonoBehaviour
             if (PlayerController.jumpCount >= 1)
             {
                 PlayerController.jumpCount--;
-                MoreJumpPrefab.SetActive(false);
+                MoreJumpObject.SetActive(false);
             }
 
             else if (PlayerController.jumpCount == 0)
             {
-                MoreJumpPrefab.SetActive(false);
+                MoreJumpObject.SetActive(false);
             }
         }
     }
