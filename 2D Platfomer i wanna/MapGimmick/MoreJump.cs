@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class MoreJump : MonoBehaviour
 {
+    public bool MJOnOff;
+    public float MJOnOffDeleyTime;
+    public float accumTime;
+    
+    void Update()
+    {
+        
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
