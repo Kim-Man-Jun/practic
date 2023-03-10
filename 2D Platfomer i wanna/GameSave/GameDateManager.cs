@@ -12,12 +12,27 @@ class Data()
 
 public class GameDateManager : MonoBehaviour
 {
+  public static GameDateManager instance;
+  
   public gameObject player; 
   
   Data player = new Data(){ stage = 1, PlayerTransformX = player.transform.x, 
                             PlayerTransformY = player.transform.y}
                             
-
+  void Awake()                      //싱글톤 매서드
+  {
+    if(instance == null)
+    {
+      instance = this;
+    }
+    else if(instance != this)
+    {
+      Destroy(instance.gameObject);
+    }
+    
+    DontDestroyOnLoad(gameObject);
+  }
+  
   void Start()
   {
     string jsonData = JsonUtility.ToJson(player);
