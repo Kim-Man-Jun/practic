@@ -21,8 +21,9 @@ public class GameDateManager : MonoBehaviour
                             PlayerTransformY = player.transform.y}
   PlayerData nowPlayer = new PlayerData();
   string path;
+  string filename = "save";
 
-                            
+
   void Awake()                      //싱글톤 매서드
   {
     if(instance == null)
@@ -36,18 +37,19 @@ public class GameDateManager : MonoBehaviour
     
     DontDestroyOnLoad(gameObject);
     
-    path = Application.persistentDataPath; 
+    path = Application.persistentDataPath + "/"; 
   }
   
-  void Start()
+  void SaveData()
   {
     string Data = JsonUtility.ToJson(nowPlayer);
-    
-    File.WriteeAllText(path, data);
+    File.WriteeAllText(path + filename, data);
   }
   
-  void Update()
+  void LoadData()
   {
+    string Data = File.ReadAllText(path + filename);
+    nowPlayer = JsonUtility.FromJson<PlayerData>(data);
   }
   
 }
