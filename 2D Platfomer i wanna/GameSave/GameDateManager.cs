@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 
 class Data()
@@ -18,7 +19,8 @@ public class GameDateManager : MonoBehaviour
   
   Data player = new Data(){ stage = 1, PlayerTransformX = player.transform.x, 
                             PlayerTransformY = player.transform.y}
-  PlayerData nowPlayer = new PlayerData();                          
+  PlayerData nowPlayer = new PlayerData();
+  string path;
 
                             
   void Awake()                      //싱글톤 매서드
@@ -33,11 +35,15 @@ public class GameDateManager : MonoBehaviour
     }
     
     DontDestroyOnLoad(gameObject);
+    
+    path = Application.persistentDataPath; 
   }
   
   void Start()
   {
-    string jsonData = JsonUtility.ToJson(player);
+    string Data = JsonUtility.ToJson(nowPlayer);
+    
+    File.WriteeAllText(path, data);
   }
   
   void Update()
