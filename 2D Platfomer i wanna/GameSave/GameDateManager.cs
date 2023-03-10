@@ -18,6 +18,8 @@ public class GameDateManager : MonoBehaviour
   
   Data player = new Data(){ stage = 1, PlayerTransformX = player.transform.x, 
                             PlayerTransformY = player.transform.y}
+  PlayerData nowPlayer = new PlayerData();                          
+
                             
   void Awake()                      //싱글톤 매서드
   {
