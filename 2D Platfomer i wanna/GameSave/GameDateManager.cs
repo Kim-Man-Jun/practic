@@ -20,7 +20,7 @@ public class GameDateManager : MonoBehaviour
 
   void Start()
   {
-    
+    string jsonData = JsonUtility.ToJson(player);
   }
   
   void Update()
