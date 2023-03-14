@@ -11,3 +11,5 @@ https://medium.com/@qldrhqorhsh/unity-tutorial-6-scene-%EB%A7%B5-%EC%9D%B4%EB%8F
 결국 못 끝냄
 왔다갔다는 성공했지만 캐릭터가 계속 사라짐
 destroyonload를 쓰면 얘가 맛이 감
+-------------
+오브젝트 기반으로 왔다갔다 하는건 구현 완료 했지만 위치 정보가 이상함 이건 수정필요함
