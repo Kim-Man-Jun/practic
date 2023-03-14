@@ -11,6 +11,7 @@ public class RoomManager : MonoBehaviour
     void Start()
     {
         GameObject[] enters = GameObject.FindGameObjectsWithTag("Exit");
+        
         for (int i = 0; i < enters.Length; i++)
         {
             GameObject doorObj = enters[i];
@@ -41,12 +42,10 @@ public class RoomManager : MonoBehaviour
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
                 player.transform.position = new Vector3(x, y);
                 break;  //반복구문 해제
-
             }
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
 
