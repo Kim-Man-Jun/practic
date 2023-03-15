@@ -8,6 +8,7 @@ public class CameraManager : MonoBehaviour
     public float rightLimit = 0.0f;
     public float topLimit = 0.0f;
     public float bottomLimit = 0.0f;
+    public float yaxis = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -47,8 +48,15 @@ public class CameraManager : MonoBehaviour
                 y = topLimit;
             }
 
-            Vector3 v3 = new Vector3(x, y - 5, z);
+            Vector3 v3 = new Vector3(x, y + yaixs, z);
             transform.position = v3;
         }
     }
 }
+
+
+//씬전환처럼 하는 카메라매니저를 생각해봄
+//변수를 좀더 추가한 다음 첫번째 컷 리미트까지 걸어놓고 플레이어가 'next' 태그에 닿았을 경우
+//카메라를 xy리미트를 다시 재설정하고 카메락사 이동하는 형식으로 만들어보면 어떨까 생각함
+//'previous'로 똑같이 이전 화면으로 돌아갈 수 있음
+
