@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Die()
     {
         isDead = true;
         playerRigidbody.velocity = Vector2.zero;
