@@ -47,10 +47,15 @@ public class CameraManager : MonoBehaviour
             {
                 y = topLimit;
             }
-
+            
             Vector3 v3 = new Vector3(x, y + yaixs, z);
             transform.position = v3;
         }
+    }
+    
+    void Adjustment()
+    {
+        
     }
 }
 
