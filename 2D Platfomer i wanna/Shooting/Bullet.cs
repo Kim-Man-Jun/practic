@@ -13,13 +13,13 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        if (transform.localScale.x == 0)
+        if (transform.localScale.x >= 0)
         {
             transform.Translate(transform.right * speed * Time.deltaTime);
         }
         else if (transform.localScale.x == -1)
         {
-            transform.Translate(transform.right * -1 * speed * Time.deltaTime);
+            transform.Translate(transform.left * speed * Time.deltaTime);
         }
     }
 
