@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public gameObject player;
+    
     public float speed = 20.0f; //총알 속도
 
     void Start()
@@ -13,11 +15,11 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        if (transform.localScale.x >= 0)
+        if (player.transform.localScale.x >= 0)
         {
             transform.Translate(transform.right * speed * Time.deltaTime);
         }
-        else if (transform.localScale.x == -1)
+        else if (player.transform.localScale.x == -1)
         {
             transform.Translate(transform.left * speed * Time.deltaTime);
         }
