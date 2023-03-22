@@ -22,12 +22,15 @@ public class Fire : MonoBehaviour
                 {
                     Instantiate(Bullet, FirePos.transform.position, FirePos.transform.rotation);
                     //bullet를 FirePos.transform.position 위치에 FirePos.transform.rotation 회전값으로 복제한다
-                    Bullet.transform.Translate(transform.right * speed * Time.deltaTime);
+                    Bullet.transform.position = FirePos.transform.position;
+                    Bullet.GetComponent<Rigidbody2D>().AddForce(transform.right * speed);
                 }
                 else
                 {
                     Instantiate(Bullet, FirePos.transform.position, FirePos.transform.rotation);
-                    Bullet.transform.Translate(transform.right * -1 * speed * Time.deltaTime);
+                    //bullet를 FirePos.transform.position 위치에 FirePos.transform.rotation 회전값으로 복제한다
+                    Bullet.transform.position = FirePos.transform.position;
+                    Bullet.GetComponent<Rigidbody2D>().AddForce(transform.right * -1 * speed);
                 }
 
             }
