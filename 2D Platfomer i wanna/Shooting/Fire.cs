@@ -20,15 +20,17 @@ public class Fire : MonoBehaviour
 
                 if (Player.transform.localScale.x >= 0)
                 {
-                    Instantiate(Bullet);                                                                        //총알 생성
-                    Bullet.transform.position = FirePos.transform.position;                                     //총알 생성되는 위치는 firepos의 위치
-                    Bullet.GetComponent<Rigidbody2D>().AddForce(transform.right * speed);                       //총알에 rigidbody 부여 후 오른쪽으로 speed의 힘으로
+                    Instantiate(Bullet);                                                     //총알 생성
+                    Bullet.transform.position = FirePos.transform.position;                  //총알 생성되는 위치는 firepos의 위치
+                    Bullet.GetComponent<Rigidbody2D>();
+                    Bullet.transform.Translate(transform.right * speed * Time.deltaTime);
                 }
                 else
                 {
                     Instantiate(Bullet);
                     Bullet.transform.position = FirePos.transform.position;
-                    Bullet.GetComponent<Rigidbody2D>().AddForce(transform.right * -1 * speed);
+                    Bullet.GetComponent<Rigidbody2D>();
+                    Bullet.transform.Translate(transform.right * -1 * speed * Time.deltaTime);
                 }
 
             }
