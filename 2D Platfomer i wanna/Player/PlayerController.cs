@@ -143,3 +143,5 @@ public class PlayerController : MonoBehaviour
         isGround = false;
     }
 }
+
+//중간에 있는 애니메이션 메서드 제거한 후에 애니메이터를 이용한 캐릭터 애니메이션 구현 예정
