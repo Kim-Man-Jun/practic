@@ -24,11 +24,16 @@ public class PlayerController : MonoBehaviour
     
     float Time = 0.0f;
     public float FadeTime = 0.0f;
+    
+    private AudioSource playerjump;
+    private AudioSource playerdoublejump;
 
     void Start()
     {
         playerRigidbody = this.GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        playerjump = GetComponent<AudioSource>();
+        playerdoublejump = GetComponent<AudioSource>();
         nowAnime = IdleAnime;
         oldAnime = IdleAnime;
     }
@@ -58,10 +63,12 @@ public class PlayerController : MonoBehaviour
             jumpCount++;
             playerRigidbody.velocity = Vector2.zero;
             playerRigidbody.AddForce(new Vector2(0, jumpForce));
+            playerjump.Play();
         }
         else if (Input.GetButtonDown("Jump") && playerRigidbody.velocity.y > 0)
         {
             playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
+            playerdoublejump.Play();
         }
 
     }
