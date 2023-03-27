@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.contacts[0].normal.y > 0.7f)
+        if (collision.contacts[0].normal.y > 0.2f)
         {
             isGround = true;
             jumpCount = 0;
