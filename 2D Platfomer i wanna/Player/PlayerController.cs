@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 5.0f;
 
     public float jumpForce = 700f;
-    public int jumpCount = 0;
+    public static int jumpCount = 0;
 
     private bool isGround = false;
     private bool isDead = false;
@@ -21,10 +21,9 @@ public class PlayerController : MonoBehaviour
     public string JumpAnime = "PlayerJump";
     string nowAnime = "";
     string oldAnime = "";
-    
-    float Time = 0.0f;
-    public float FadeTime = 0.0f;
-    
+
+    public float playerDeadAddForce = 0.0f;
+
     private AudioSource playerjump;
     private AudioSource playerdoublejump;
 
@@ -75,11 +74,6 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isDead)
-        {
-            return;
-        }
-        
         if (isGround)
         {
             if (axisH == 0)
@@ -102,37 +96,21 @@ public class PlayerController : MonoBehaviour
             animator.Play(nowAnime);
         }
     }
-    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Dead" && !isDead)
         {
             Die();
         }
-        
-        if(other.gameObject.tag == "Clear")
-        {
-            GameManager.ClearGame();
-        }
     }
 
-    public void Die()
+    private void Die()
     {
         isDead = true;
         playerRigidbody.velocity = Vector2.zero;
         GetComponent<CapsuleCollider2D>().enabled = false;
-        
-        if(FadeTime < Time)
-        {
-            GetComponent<SpriteRenderer>().color = new Coloer(1, 1, 1, 1f - FadeTime/Time);
-        }
-        else
-        {
-            FadeTime = 0.0f;
-            this.gameObject.SetActive(false);
-        }
-        FadeTime += Time.deltaTime;
-        
+        playerRigidbody.AddForce(new Vector2(0, playerDeadAddForce), ForceMode2D.Impulse);
+
         GameManager.instance.OnPlayerDead();
     }
 
@@ -143,6 +121,7 @@ public class PlayerController : MonoBehaviour
             isGround = true;
             jumpCount = 0;
         }
+
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -150,5 +129,3 @@ public class PlayerController : MonoBehaviour
         isGround = false;
     }
 }
-
-//중간에 있는 애니메이션 메서드 제거한 후에 애니메이터를 이용한 캐릭터 애니메이션 구현 예정
