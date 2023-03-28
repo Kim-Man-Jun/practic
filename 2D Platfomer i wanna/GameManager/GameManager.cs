@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
   public bool isGameover = false;
   public GameObject gameoverUI;
   
+  public AudioClip GameOver;
+  
   /*------------추가부분
   static bool isClear = false;
   
@@ -55,7 +57,16 @@ public class GameManager : MonoBehaviour
   public void OnPlayerDead
   {
     isGameover = true;
+    
+    AudioSource soundPlayer = GetComponent<AudioSource>();
+    if (soundPlayer != null)
+    {
+        soundPlayer.Stop();
+        soundPlayer.PlayOneShot(GameOver);
+    }
+    
     gameoverUI.SetActive(true);
+    gamerestartUI.SetActive(true);
   }
   
   public static void clearGame()
