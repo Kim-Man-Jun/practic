@@ -20,7 +20,17 @@ public class MovingObject : MonoBehaviour
   
   void Update()
   {
+    if(leftrightmoving == false && topbottommoving == false)
+    {
+      return();
+    }
+    else if(leftrightmoving == true && topbottommoving == false)
+    {
     
+    }
+    else if(leftrightmoving == false && topbottommoving == true)
+    {
     
+    }
   }
 }
