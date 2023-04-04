@@ -123,3 +123,5 @@ public class MovingBlock : MonoBehaviour
       collision.transform.SetParent(null);                     //플레이어일 경우 이동 블록의 자식에서 아웃
   }
 }
+
+// 참고할 영상 https://www.youtube.com/watch?v=wTME3NerVk4&ab_channel=DevGomDol
