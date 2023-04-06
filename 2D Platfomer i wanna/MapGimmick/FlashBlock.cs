@@ -20,32 +20,18 @@ public class FlashBlock : MonoBehaviour
     
     void Update()
     {
-      
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Player")
+        FBLeftTime -= Time.deltaTime;
+        if(FBLeftTime <= 0)
         {
-            if (PlayerController.jumpCount >= 1)
-            {
-                PlayerController.jumpCount--;
-                MoreJumpObject.SetActive(false);
-                MJOnOff = false;
-            }
-
-            else if (PlayerController.jumpCount == 0)
-            {
-                MoreJumpObject.SetActive(false);
-                MJOnOff = false;
-            }
+            FlashBlock.SetActive(false);
+            FBOnOff = false;
         }
     }
 
     void Respawn()
     {
-        MoreJumpObject.SetActive(true);
-        MJOnOff = true;
+        FlashBlock.SetActive(true);
+        FBOnOff = true;
     }
     
 }
