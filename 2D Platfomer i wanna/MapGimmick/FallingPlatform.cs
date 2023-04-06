@@ -10,11 +10,14 @@ public class FallingPlatform : MonoBehaviour
     {
         Rigidbody2D rbody = GetComponent<Rigidbody2D>();
         rbody.bodyType = RigidbodyType2D.Static;
+        BoxCollider2D bCol = GetComponent<BoxCollider2D>();
+        bCol.isTrigger = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         Rigidbody2D rbody = GetComponent<Rigidbody2D>();
+        BoxCollider2D bCol = GetComponent<BoxCollider2D>();
 
         if (other.gameObject.tag == "Player")
         {
@@ -24,6 +27,8 @@ public class FallingPlatform : MonoBehaviour
 
                 if (RemainTime <= 0)
                 {
+                    bCol.isTrigger = true;
+
                     rbody.bodyType = RigidbodyType2D.Dynamic;
 
                     Destroy(this.gameObject, 5.0f);
