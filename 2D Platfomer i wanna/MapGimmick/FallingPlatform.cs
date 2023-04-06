@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FallingPlatform : MonoBehaviour
 {
+    public float RemainTime;
+
     void Start()
     {
         Rigidbody2D rbody = GetComponent<Rigidbody2D>();
@@ -18,9 +20,14 @@ public class FallingPlatform : MonoBehaviour
         {
             if (rbody.bodyType == RigidbodyType2D.Static)
             {
-                rbody.bodyType = RigidbodyType2D.Dynamic;
+                RemainTime -= Time.deltaTime;
 
-                Destroy(this.gameObject, 5.0f);
+                if (RemainTime <= 0)
+                {
+                    rbody.bodyType = RigidbodyType2D.Dynamic;
+
+                    Destroy(this.gameObject, 5.0f);
+                }
             }
         }
     }
