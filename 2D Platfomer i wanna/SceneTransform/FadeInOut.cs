@@ -21,6 +21,27 @@ public class FadeInOut : MonoBehaviour
   
   void Update()
   {
+    if(FadeInOut = true)
+    {
+      FadeInTime += Time.deltaTime;
+      
+      if(FadeIn > 0.0f && FadeInTime >= 0.1f)
+      {
+        FadeIn -= 0.1f;
+        fade.color = new Color (0, 0, 0, FadeIn)
+        time = 0;
+    }
     
+    if(FadeInOut = false)
+    {
+      FadeOutTime += Time.deltaTime;
+      
+      if(FadeOut > 0.0f && FadeOutTime >= 0.1f)
+      {
+        FadeOut -= 0.1f;
+        fade.color = new Color (255, 255, 255, FadeIn)
+        time = 0;
+      }
+    }
   }
 }
