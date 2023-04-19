@@ -73,14 +73,16 @@ public class PlayerController : MonoBehaviour
             playerdoublejump.Play();
         }
         
-        if(Input.GetMouseButton(1))
+        if(Input.GetMouseButton(1) && isBulletTime = false)
         {
             Time.timeScale = 0.5f;
+            isBulletTime = true;
         }
         
-        if(Input.GetMouseButtonUp(1))
+        if(Input.GetMouseButtonUp(1) && isBulletTime = true)
         {
             Time.timeScale = 1.0f;
+            isBulletTime = false;
         }
     }
 
