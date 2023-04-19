@@ -13,14 +13,16 @@ public class Fire : MonoBehaviour
 
     void Update()
     {
-      if(Input.GetMouseButton(1))   //마우스 오른쪽 버튼을 누르고 있을때
+      if(Input.GetMouseButton(1) && isBulletTime = false)   //마우스 오른쪽 버튼을 누르고 있을때
       {
         Time.timeScale = 0.5f;
+        isBulletTime = true;
       }
       
-      if(Input.GetMouseButtonUp(1)
+      if(Input.GetMouseButtonUp(1) && isBulletTime = true)
       {
         Time.timeScale = 1.0f;
+        isBulletTime = false;
       }
     }
 }
