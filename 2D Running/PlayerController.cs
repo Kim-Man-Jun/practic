@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
 
     private AudioSource playerjump;
     private AudioSource playerdoublejump;
+    
+    bool isBulletTime;
 
     void Start()
     {
@@ -35,6 +37,7 @@ public class PlayerController : MonoBehaviour
         playerdoublejump = GetComponent<AudioSource>();
         nowAnime = IdleAnime;
         oldAnime = IdleAnime;
+        isBulletTime = false;
     }
 
     void Update()
@@ -69,7 +72,16 @@ public class PlayerController : MonoBehaviour
             playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
             playerdoublejump.Play();
         }
-
+        
+        if(Input.GetMouseButton(1))
+        {
+            Time.timeScale = 0.5f;
+        }
+        
+        if(Input.GetMouseButtonUp(1))
+        {
+            Time.timeScale = 1.0f;
+        }
     }
 
     private void FixedUpdate()
@@ -128,4 +140,5 @@ public class PlayerController : MonoBehaviour
     {
         isGround = false;
     }
+    
 }
