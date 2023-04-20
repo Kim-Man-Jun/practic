@@ -47,27 +47,14 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        axisH = Input.GetAxisRaw("Horizontal");
-
-        if (axisH > 0.0f)
-        {
-            transform.localScale = new Vector2(1, 1);
-            playerRigidbody.velocity = new Vector2(speed * axisH, playerRigidbody.velocity.y);
-        }
-        else if (axisH < 0.0f)
-        {
-            transform.localScale = new Vector2(-1, 1);
-            playerRigidbody.velocity = new Vector2(speed * axisH, playerRigidbody.velocity.y);
-        }
-
-        if (Input.GetButtonDown("Jump") && jumpCount < 2)
+        if (Input.GetMouseButtonDown(0) && jumpCount < 2)
         {
             jumpCount++;
             playerRigidbody.velocity = Vector2.zero;
             playerRigidbody.AddForce(new Vector2(0, jumpForce));
             playerjump.Play();
         }
-        else if (Input.GetButtonDown("Jump") && playerRigidbody.velocity.y > 0)
+        else if (Input.GetMouseButtonDown(0) && playerRigidbody.velocity.y > 0)
         {
             playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
             playerdoublejump.Play();
