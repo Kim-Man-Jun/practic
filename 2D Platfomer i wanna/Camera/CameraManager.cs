@@ -52,11 +52,6 @@ public class CameraManager : MonoBehaviour
             transform.position = v3;
         }
     }
-    
-    void Adjustment()
-    {
-        
-    }
 }
 
 
