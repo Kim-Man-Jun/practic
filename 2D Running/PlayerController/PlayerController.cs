@@ -15,13 +15,6 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D playerRigidbody;
 
-    Animator animator;
-    public string IdleAnime = "PlayerIdle";
-    public string RunAnime = "PlayerRun";
-    public string JumpAnime = "PlayerJump";
-    string nowAnime = "";
-    string oldAnime = "";
-
     public float playerDeadAddForce = 0.0f;
 
     private AudioSource playerjump;
@@ -32,11 +25,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerRigidbody = this.GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         playerjump = GetComponent<AudioSource>();
         playerdoublejump = GetComponent<AudioSource>();
-        nowAnime = IdleAnime;
-        oldAnime = IdleAnime;
         isBulletTime = false;
     }
 
@@ -52,12 +42,10 @@ public class PlayerController : MonoBehaviour
             jumpCount++;
             playerRigidbody.velocity = Vector2.zero;
             playerRigidbody.AddForce(new Vector2(0, jumpForce));
-            playerjump.Play();
         }
         else if (Input.GetMouseButtonDown(0) && playerRigidbody.velocity.y > 0)
         {
             playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
-            playerdoublejump.Play();
         }
         
         if(Input.GetMouseButton(1) && isBulletTime = false)
@@ -73,30 +61,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        if (isGround)
-        {
-            if (axisH == 0)
-            {
-                nowAnime = IdleAnime;
-            }
-            else
-            {
-                nowAnime = RunAnime;
-            }
-        }
-        else
-        {
-            nowAnime = JumpAnime;
-        }
-
-        if (nowAnime != oldAnime)
-        {
-            oldAnime = nowAnime;
-            animator.Play(nowAnime);
-        }
-    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Dead" && !isDead)
