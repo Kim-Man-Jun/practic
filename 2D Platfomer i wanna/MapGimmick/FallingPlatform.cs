@@ -37,3 +37,7 @@ public class FallingPlatform : MonoBehaviour
         }
     }
 }
+
+// 방향을 바꿔보자
+// 스태틱에서 다이나믹으로 바꾸는건 맞나?
+// 차라리 무게를 부여하는 식으로 변경을 해봐야하나
