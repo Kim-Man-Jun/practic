@@ -12,29 +12,20 @@ public class FallingPlatform : MonoBehaviour
         rbody.bodyType = RigidbodyType2D.Static;
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionStay2D(Collision2D other)
     {
-        BoxCollider2D bCol = GetComponent<BoxCollider2D>();
-
-        RemainTime -= Time.deltaTime;
-
-        if (RemainTime <= 0)
-        {
-            bCol.isTrigger = true;
-        }
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Rigidbody2D rbody = GetComponent<Rigidbody2D>();
-
         if (other.gameObject.tag == "Player")
         {
-            if (rbody.bodyType == RigidbodyType2D.Static)
-            {
-                rbody.bodyType = RigidbodyType2D.Dynamic;
+            BoxCollider2D bCol = GetComponent<BoxCollider2D>();
+            Rigidbody2D rbody = GetComponent<Rigidbody2D>();
 
+
+            RemainTime -= Time.deltaTime;
+
+            if (RemainTime <= 0)
+            {
+                bCol.isTrigger = true;
+                rbody.bodyType = RigidbodyType2D.Dynamic;
                 Destroy(this.gameObject, 5.0f);
             }
         }
