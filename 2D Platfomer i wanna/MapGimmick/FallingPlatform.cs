@@ -44,4 +44,5 @@ public class FallingPlatform : MonoBehaviour
 }
 
 //플레이어 rigidbody2D에서 sleepingmode에서 never sleep으로 바꿔줘야지 정상적으로 작동함
+//기존에 했던 것도 정상적으로 작동하나 디버그 배운 기념으로 남겨둔다
 
