@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Compare
 {
@@ -121,8 +122,27 @@ namespace Compare
 
             Console.WriteLine("합계 : " + total);
             Console.WriteLine("{0:f2}", aver);
+            
+
+            Console.WriteLine("로딩중... 키를 입력하세요.");
+            Console.ReadKey();  //키입력 받기
+            Thread.Sleep(1000); //1000단위가 1초
+            Console.Clear();    //콘솔화면 지우기
+            Console.WriteLine("게임 시작");
+
+            ┏━━━━━━━━━┓
+            ┃      로딩중      ┃
+            ┗━━━━━━━━━┛
             */
 
+            Console.WriteLine("┏━━━━━━━━━┓");
+            Thread.Sleep(1000);
+            Console.WriteLine("┃  로딩중 ┃");
+            Thread.Sleep(1000);
+            Console.WriteLine("┗━━━━━━━━━┛");
+            Thread.Sleep(1000);
+            Console.Clear();
+            Console.WriteLine("게임 시작");
 
 
         }
