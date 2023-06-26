@@ -330,7 +330,7 @@ namespace dcsd
                         break;
                     }
             }
-            */
+            
 
             Random rnd = new Random();
             int a = rnd.Next(0, 4);
@@ -353,6 +353,72 @@ namespace dcsd
             {
                 Console.WriteLine("오른쪽 이동");
             }
+           
+
+            int[] myPos = { 20, 30, };      //자신이 있는 위치
+            int[,] enemyPos =
+            {
+                {2, 4},
+                {10, 6},
+                {25, 20},
+            };
+            int i;
+            int dx, dy;
+            double d;
+            double r = 15;      //사정거리
+            for (i = 0; i < 3; i++)
+            {
+                dx = myPos[0] - enemyPos[i, 0];
+                dy = myPos[1] - enemyPos[i, 1];
+                d = (double)(dx * dx + dy * dy);
+                if (d > r * r)
+                {
+                    Console.WriteLine("적 " + i + "은(는) " + "사정권 밖에 있음");
+                }
+                else
+                {
+                    Console.WriteLine("적 " + i + "은(는) " + "사정권 안에 있음");
+                }
+            }
+            // 삼각함수로 적 위치 구하기
+
+            */
+
+            string[] names =
+            {
+                "홍길동", "김철수", "최하니",
+                "이길상", "권태기", "장만옥"
+            };
+            int[] scores = { 48, 75, 62, 90, 84, 28 };
+            int i, j;
+            string s;
+            for (i = 0; i < 6; i++)
+            {
+                Console.Write(names[i] + " " + scores[i] + " ");
+                for (j = 0; j < scores[i] / 5; j++)
+                {
+                    Console.Write("*");
+                }
+                if (scores[i] < 50)
+                {
+                    s = "조금 부족해요.";
+                }
+                else if (scores[i] < 70)
+                {
+                    s = "보통입니다.";
+                }
+                else if (scores[i] < 90)
+                {
+                    s = "잘 했습니다.";
+                }
+                else
+                {
+                    s = "매우 잘 했습니다.";
+                }
+                Console.WriteLine(" " + s);
+            }
+
+
         }
     }
 }
