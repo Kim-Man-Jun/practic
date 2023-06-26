@@ -250,7 +250,7 @@ namespace dcsd
                     Console.WriteLine(str + "를 얻었습니다");
                     break;
             }
-            */
+            
 
             int a;
             for (a = 5; a <= 8; a++)
@@ -275,6 +275,83 @@ namespace dcsd
                         }
 
                 }
+            }
+            
+
+            int data;
+
+            data = int.Parse(Console.ReadLine());
+
+            if (data >= 90)
+            {
+                Console.WriteLine("수");
+            }
+            else if (data >= 80 && data < 90)
+            {
+                Console.WriteLine("우");
+            }
+            else if (data >= 70 && data < 80)
+            {
+                Console.WriteLine("미");
+            }
+            else if (data >= 60 && data < 70)
+            {
+                Console.WriteLine("양");
+            }
+            else
+            {
+                Console.WriteLine("가");
+            }
+
+            
+
+            int data = 2;
+
+            switch (data)
+            {
+                case 1:
+                    {
+                        Console.WriteLine("오늘의 운세는 좋은 편 입니다.");
+                        break;
+                    }
+                case 2:
+                    {
+                        Console.WriteLine("오늘의 운세는 운수대통 입니다.");
+                        break;
+                    }
+                case 3:
+                    {
+                        Console.WriteLine("오늘의 운세는 보통입니다.");
+                        break;
+                    }
+                default:
+                    {
+                        Console.WriteLine("잘못 입력하였습니다. 다시 입력하세요.");
+                        break;
+                    }
+            }
+            */
+
+            Random rnd = new Random();
+            int a = rnd.Next(0, 4);
+
+            Console.WriteLine(a);
+
+            if (a == 0)
+            {
+                Console.WriteLine("위 이동");
+            }
+            else if (a == 1)
+            {
+                Console.WriteLine("아래 이동");
+            }
+            else if (a == 2)
+            {
+                Console.WriteLine("왼쪽 이동");
+            }
+            else if (a == 3)
+            {
+                Console.WriteLine("오른쪽 이동");
             }
         }
     }
