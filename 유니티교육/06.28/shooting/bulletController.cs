@@ -33,24 +33,17 @@ public class BulletController : MonoBehaviour
     {
         if (coll.collider.tag == "Enemy")
         {
-            Debug.Log("적 충돌");
+            GameObject manager = GameObject.Find("Scoremanager");
+            manager.GetComponent<ScoreManager>().IncScore();
+
             Destroy(this.gameObject, 0.2f);
-        }
-    }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.collider.CompareTag("Enemy"))
-        {
-            Debug.Log("적 충돌 끝");
         }
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (coll.collider.tag == "Player")
         {
-            Debug.Log("트리거 충돌");
+            Rigidbody playerRd = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
+            playerRd.constraints = RigidbodyConstraints.None;        //해당 대상 rotation 고정 해제
         }
     }
 }
