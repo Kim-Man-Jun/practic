@@ -5,7 +5,7 @@ using UnityEngine;
 public class FallingPlatform : MonoBehaviour
 {
     bool chartouch = false;
-    public int RemainTime;
+    public float RemainTime;
     float curTime;
 
     void Start()
@@ -31,18 +31,15 @@ public class FallingPlatform : MonoBehaviour
         BoxCollider2D bCol = GetComponent<BoxCollider2D>();
         Rigidbody2D rbody = GetComponent<Rigidbody2D>();
 
-        Debug.Log(curTime);
-
         if (RemainTime <= curTime)
         {
             bCol.isTrigger = true;
             rbody.bodyType = RigidbodyType2D.Dynamic;
+            bCol.enabled = false;
             Destroy(this.gameObject, 5.0f);
             chartouch = false;
         }
     }
 }
-
-//플레이어 rigidbody2D에서 sleepingmode에서 never sleep으로 바꿔줘야지 정상적으로 작동함
-//기존에 했던 것도 정상적으로 작동하나 디버그 배운 기념으로 남겨둔다
-
+// 블록이 떨어질때 애니메이션이 대기상태로 되어 있는걸 remain 타임 끝나면 collider 자체를 off하는 식으로
+// 수정을 해서 떨어질때 점프 애니메이션을 on 하도록 만들었음
