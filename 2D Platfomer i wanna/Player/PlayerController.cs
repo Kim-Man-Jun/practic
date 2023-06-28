@@ -70,11 +70,12 @@ public class PlayerController : MonoBehaviour
             playerdoublejump.Play();
         }
 
+
     }
 
     private void FixedUpdate()
     {
-        if (isGround)
+        if (isGround == true)
         {
             if (axisH == 0)
             {
@@ -85,7 +86,7 @@ public class PlayerController : MonoBehaviour
                 nowAnime = RunAnime;
             }
         }
-        else
+        else if (isGround == false)
         {
             nowAnime = JumpAnime;
         }
@@ -95,6 +96,7 @@ public class PlayerController : MonoBehaviour
             oldAnime = nowAnime;
             animator.Play(nowAnime);
         }
+
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -109,6 +111,7 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         playerRigidbody.velocity = Vector2.zero;
         GetComponent<CapsuleCollider2D>().enabled = false;
+        GetComponent<BoxCollider2D>().enabled = false;
         playerRigidbody.AddForce(new Vector2(0, playerDeadAddForce), ForceMode2D.Impulse);
 
         GameManager.instance.OnPlayerDead();
@@ -116,10 +119,19 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.contacts[0].normal.y > 0.2f)
+        if (collision.contacts[0].normal.y >= 0.8f)
         {
             isGround = true;
             jumpCount = 0;
+        }
+
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.contacts[0].normal.y >= 1f)
+        {
+            isGround = true;
         }
 
     }
@@ -129,3 +141,5 @@ public class PlayerController : MonoBehaviour
         isGround = false;
     }
 }
+
+//평소에 생기던 점프 애니메이션 연속 문제 해결
