@@ -22,4 +22,16 @@ public class PlayerController : MonoBehaviour
         float distanceY = Input.GetAxis("Vertical") * speed * Time.deltaTime;
         this.gameObject.transform.Translate(0, distanceY, 0);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Instantiate(Explosion, transform.position, Quaternion.identity);
+
+            Destroy(collision.gameObject);          //collision의 게임 오브젝트 파괴
+
+            Destroy(gameObject);                    //자기자신을 파괴
+        }
+    }
 }
