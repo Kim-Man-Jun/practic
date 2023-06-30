@@ -22,7 +22,7 @@ public class MoreJump : MonoBehaviour
         {
             if (PlayerController.jumpCount >= 1)                    //PlayerController 스크립트의 jumpCount가 1 이상일 경우
             {
-                PlayerController.jumpCount--;                       //점프카운트 1 차감
+                PlayerController.jumpCount = 1;                       //점프카운트 1로 고정해야지 점프 오류가 안남
                 MoreJumpObject.SetActive(false);                    //MoreJump을 비활성화
                 MJOnOff = false;                                    //MoreJump 충돌 후 o
             }
