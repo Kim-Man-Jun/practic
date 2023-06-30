@@ -54,9 +54,10 @@ public class GameManager : MonoBehaviour
         if (i == 0)
         {
             StartText.text = "Game Start";
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1.5f);
 
             StartText.gameObject.SetActive(false);
+            yield break;
         }
     }
 }
