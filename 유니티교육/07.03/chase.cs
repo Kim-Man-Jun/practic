@@ -6,6 +6,7 @@ using UnityEngine;
 public class E : MonoBehaviour
 {
     public Transform destination;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +26,14 @@ public class E : MonoBehaviour
 
         //slerp (현재 위치, 목표 위치, 보간 간격)
         //반구를 그리면서 추격
-        transform.position = Vector3.Lerp(transform.position, destination.transform.position, 0.01f);
+        //transform.position = Vector3.Lerp(transform.position, destination.transform.position, 0.01f);
         //transform.position = Vector3.Slerp(transform.position, destination.transform.position, 0.01f);
+
+        Vector3 direction = destination.position - transform.position;         //플레이어를 바리보는 벡터
+
+        direction = direction.normalized;       //1의 크기의 플레이어를 바라보는 벡터가 생성, 단위 벡터
+
+        transform.Translate(direction * 1 * Time.deltaTime);        //플레이어를 바라보는 방향(direction)으로 1의 속도로 움직이기
+
     }
 }
