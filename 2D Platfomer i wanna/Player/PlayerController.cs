@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -27,6 +28,12 @@ public class PlayerController : MonoBehaviour
     private AudioSource playerjump;
     private AudioSource playerdoublejump;
 
+    //상하좌우로 움직이는 발판 관련 변수
+    Vector3 platformPosition;
+    Vector3 distance;
+    bool PlatformContact;
+    GameObject ContactMP;
+
     void Start()
     {
         playerRigidbody = this.GetComponent<Rigidbody2D>();
@@ -44,33 +51,85 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        axisH = Input.GetAxisRaw("Horizontal");
+        Moving();
 
-        if (axisH > 0.0f)
+        if (PlatformContact == false)
         {
-            transform.localScale = new Vector2(1, 1);
-            playerRigidbody.velocity = new Vector2(speed * axisH, playerRigidbody.velocity.y);
+            if (Input.GetButtonDown("Jump") && jumpCount < 2)
+            {
+                jumpCount++;
+                playerRigidbody.velocity = Vector2.zero;
+                playerRigidbody.AddForce(new Vector2(0, jumpForce));
+                playerjump.Play();
+            }
+            else if (Input.GetButtonDown("Jump") && playerRigidbody.velocity.y > 0)
+            {
+                playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
+                playerdoublejump.Play();
+            }
         }
-        else if (axisH < 0.0f)
+        else if (PlatformContact == true)
         {
-            transform.localScale = new Vector2(-1, 1);
-            playerRigidbody.velocity = new Vector2(speed * axisH, playerRigidbody.velocity.y);
+            if (Input.GetButtonDown("Jump") && jumpCount < 2)
+            {
+                PlatformContact = false;
+                jumpCount++;
+                playerRigidbody.velocity = Vector2.zero;
+                playerRigidbody.AddForce(new Vector2(0, jumpForce));
+                playerjump.Play();
+            }
+            else if (Input.GetButtonDown("Jump") && playerRigidbody.velocity.y > 0)
+            {
+                PlatformContact = false;
+                playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
+                playerdoublejump.Play();
+            }
         }
 
-        if (Input.GetButtonDown("Jump") && jumpCount < 2)
+        if (PlatformContact == true)
         {
-            jumpCount++;
-            playerRigidbody.velocity = Vector2.zero;
-            playerRigidbody.AddForce(new Vector2(0, jumpForce));
-            playerjump.Play();
+            if (isGround == true && axisH == 0f)
+            {
+                playerRigidbody.position = ContactMP.transform.position - distance;
+            }
         }
-        else if (Input.GetButtonDown("Jump") && playerRigidbody.velocity.y > 0)
+    }
+
+    public void Moving()
+    {
+        if (PlatformContact == false)
         {
-            playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
-            playerdoublejump.Play();
+            axisH = Input.GetAxisRaw("Horizontal");
+
+            if (axisH > 0.0f)
+            {
+                transform.localScale = new Vector2(1, 1);
+                playerRigidbody.velocity = new Vector2(speed * axisH, playerRigidbody.velocity.y);
+            }
+            else if (axisH < 0.0f)
+            {
+                transform.localScale = new Vector2(-1, 1);
+                playerRigidbody.velocity = new Vector2(speed * axisH, playerRigidbody.velocity.y);
+            }
         }
 
+        else if (PlatformContact == true)
+        {
+            axisH = Input.GetAxisRaw("Horizontal");
 
+            if (axisH > 0.0f)
+            {
+                PlatformContact = false;
+                transform.localScale = new Vector2(1, 1);
+                playerRigidbody.velocity = new Vector2(speed * axisH, playerRigidbody.velocity.y);
+            }
+            else if (axisH < 0.0f)
+            {
+                PlatformContact = false;
+                transform.localScale = new Vector2(-1, 1);
+                playerRigidbody.velocity = new Vector2(speed * axisH, playerRigidbody.velocity.y);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -125,6 +184,13 @@ public class PlayerController : MonoBehaviour
             jumpCount = 0;
         }
 
+        if (collision.gameObject.CompareTag("MovingBlock"))
+        {
+            PlatformContact = true;
+            ContactMP = collision.gameObject;
+            platformPosition = ContactMP.transform.position;
+            distance = platformPosition - transform.position;
+        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -134,12 +200,21 @@ public class PlayerController : MonoBehaviour
             isGround = true;
         }
 
+        if (collision.gameObject.CompareTag("MovingBlock"))
+        {
+            if (PlatformContact == false && axisH == 0.0f)
+            {
+                PlatformContact = true;
+                ContactMP = collision.gameObject;
+                platformPosition = ContactMP.transform.position;
+                distance = platformPosition - transform.position;
+            }
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         isGround = false;
+        PlatformContact = false;
     }
 }
-
-//평소에 생기던 점프 애니메이션 연속 문제 해결
