@@ -28,5 +28,7 @@ public class Monster : MonoBehaviour
         //transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
         //이것도 있다
 
+        //플레이어의 움직임에 따라 monster를 Flip
+        GetComponent<SpriteRenderer>().flipX = (vx < 0);
     }
 }
