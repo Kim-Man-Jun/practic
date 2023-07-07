@@ -68,7 +68,7 @@ namespace _07._07
                 Console.WriteLine();
             }
 
-            */
+
 
             for (int i = 0; i < 5; i++)
             {
@@ -85,6 +85,18 @@ namespace _07._07
                 }
                 Console.WriteLine();
             }
+
+            */
+
+            int a = 10;
+            int b = 5;
+            int t;
+
+            t = a;
+            a = b;
+            b = t;
+
+            Console.WriteLine(a + "," + b);
         }
     }
 }
