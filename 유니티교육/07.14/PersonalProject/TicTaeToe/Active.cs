@@ -15,11 +15,18 @@ namespace TicTaeToe
     {
         static void Main(string[] args)
         {
-            Field field = new Field();
             Play play = new Play();
 
-            Console.Clear();
-            field.Render();
+            int Cur = Environment.TickCount;
+
+            while (true)
+            {
+                if (Cur + 150 < Environment.TickCount)
+                {
+                    Console.Clear();
+                    play.SetField();
+                }
+            }
         }
     }
 }
