@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
@@ -31,9 +32,12 @@ namespace TicTaeToe
             {'7','8','9'},
         };
 
+        static char[] playerChars = { 'X', 'O' };
+
         public void SetField()
         {
             Console.Clear();
+
             Play play = new Play();
 
             gotoxy(0, 0);
@@ -63,10 +67,7 @@ namespace TicTaeToe
             gotoxy(0, 12);
             Console.WriteLine("■■■■■■■■■■■■■■■■");
 
-
-            Console.WriteLine("플레이어 {0}", Player);
-            Console.WriteLine("턴수 {0}", turns);
-            Console.WriteLine(playerField[0, 0]);
+            Console.WriteLine("Turns : {0}", turns);
 
             EnterOX(Player, play.input);
         }
@@ -76,7 +77,7 @@ namespace TicTaeToe
             Console.SetCursorPosition(x, y);
         }
 
-        public static void EnterOX(int player, int input)
+        static void EnterOX(int player, int input)
         {
             char playerSign = ' ';
 
@@ -107,7 +108,7 @@ namespace TicTaeToe
 
             if (turns == 10)
             {
-                Console.WriteLine("\n Draw");
+                Console.WriteLine("\nDraw");
                 Console.WriteLine("Please press Any Key to reset the Game");
                 Console.ReadKey();
                 Console.Clear();
@@ -119,6 +120,7 @@ namespace TicTaeToe
             {
                 playerField = playerFieldInitial;
                 turns = 1;
+                Player = 1;
                 Play play = new Play();
                 Console.Clear();
                 play.SetField();
@@ -277,8 +279,6 @@ namespace TicTaeToe
 
             } while (inputCorrect == false);
 
-            char[] playerChars = { 'X', 'O' };
-
             foreach (char playerChar in playerChars)
             {
                 if (((playerField[0, 0] == playerChar) && (playerField[0, 1] == playerChar) && (playerField[0, 2] == playerChar))
@@ -292,11 +292,19 @@ namespace TicTaeToe
                 {
                     if (playerChar == 'X')
                     {
-                        Console.WriteLine("Player 1 Win");
+                        Console.WriteLine("\nPlayer 1 Win");
+                        Console.WriteLine("\nPlease Press Any key to restart");
+                        Console.ReadLine();
+                        Console.Clear();
+                        ResetField();
                     }
-                    else if (playerChar == 'O')
+                    else
                     {
-                        Console.WriteLine("Player 2 Win");
+                        Console.WriteLine("\nPlayer 2 Win");
+                        Console.WriteLine("\nPlease Press Any key to restart");
+                        Console.ReadLine();
+                        Console.Clear();
+                        ResetField();
                     }
                     break;
                 }
@@ -304,7 +312,4 @@ namespace TicTaeToe
         }
     }
 }
-
-
-
 //https://wg-cy.tistory.com/127 
