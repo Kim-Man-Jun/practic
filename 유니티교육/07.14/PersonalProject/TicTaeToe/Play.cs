@@ -1,13 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TicTaeToe
 {
@@ -31,8 +22,6 @@ namespace TicTaeToe
             {'4','5','6'},
             {'7','8','9'},
         };
-
-        static char[] playerChars = { 'X', 'O' };
 
         public void SetField()
         {
@@ -70,6 +59,8 @@ namespace TicTaeToe
             Console.WriteLine("Turns : {0}", turns);
 
             EnterOX(Player, play.input);
+            PlayerWin();
+
         }
 
         public void gotoxy(int x, int y)
@@ -105,25 +96,13 @@ namespace TicTaeToe
                 case 9: playerField[2, 2] = playerSign; break;
             }
 
-
             if (turns == 10)
             {
                 Console.WriteLine("\nDraw");
-                Console.WriteLine("Please press Any Key to reset the Game");
+                Console.WriteLine("\nPlease press Any Key to Quit the Game");
                 Console.ReadKey();
                 Console.Clear();
-                ResetField();
-                play.SetField();
-            }
-
-            void ResetField()
-            {
-                playerField = playerFieldInitial;
-                turns = 1;
-                Player = 1;
-                Play play = new Play();
-                Console.Clear();
-                play.SetField();
+                Environment.Exit(0);
             }
 
             do
@@ -276,19 +255,36 @@ namespace TicTaeToe
                     inputCorrect = false;
                     if (turns == 10) { break; }
                 }
+                PlayerWin();
 
             } while (inputCorrect == false);
 
+        }
+
+        public static void ResetField()
+        {
+            Play play = new Play();
+            playerField = playerFieldInitial;
+            turns = 1;
+            Player = 1;
+            Console.Clear();
+            play.SetField();
+        }
+
+        public static void PlayerWin()
+        {
+            char[] playerChars = { 'X', 'O' };
             foreach (char playerChar in playerChars)
             {
                 if (((playerField[0, 0] == playerChar) && (playerField[0, 1] == playerChar) && (playerField[0, 2] == playerChar))
-                    || ((playerField[1, 0] == playerChar) && (playerField[1, 1] == playerChar) && (playerField[1, 2] == playerChar))
-                    || ((playerField[2, 0] == playerChar) && (playerField[2, 1] == playerChar) && (playerField[2, 2] == playerChar))
-                    || ((playerField[0, 0] == playerChar) && (playerField[1, 0] == playerChar) && (playerField[2, 0] == playerChar))
-                    || ((playerField[0, 1] == playerChar) && (playerField[1, 1] == playerChar) && (playerField[2, 1] == playerChar))
-                    || ((playerField[0, 2] == playerChar) && (playerField[1, 2] == playerChar) && (playerField[2, 2] == playerChar))
-                    || ((playerField[0, 0] == playerChar) && (playerField[1, 1] == playerChar) && (playerField[2, 2] == playerChar))
-                    || ((playerField[0, 2] == playerChar) && (playerField[1, 1] == playerChar) && (playerField[2, 0] == playerChar)))
+        || ((playerField[1, 0] == playerChar) && (playerField[1, 1] == playerChar) && (playerField[1, 2] == playerChar))
+        || ((playerField[2, 0] == playerChar) && (playerField[2, 1] == playerChar) && (playerField[2, 2] == playerChar))
+        || ((playerField[0, 0] == playerChar) && (playerField[1, 0] == playerChar) && (playerField[2, 0] == playerChar))
+        || ((playerField[0, 1] == playerChar) && (playerField[1, 1] == playerChar) && (playerField[2, 1] == playerChar))
+        || ((playerField[0, 2] == playerChar) && (playerField[1, 2] == playerChar) && (playerField[2, 2] == playerChar))
+        || ((playerField[0, 0] == playerChar) && (playerField[1, 1] == playerChar) && (playerField[2, 2] == playerChar))
+        || ((playerField[0, 2] == playerChar) && (playerField[1, 1] == playerChar) && (playerField[2, 0] == playerChar)))
+
                 {
                     if (playerChar == 'X')
                     {
