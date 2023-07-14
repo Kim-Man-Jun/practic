@@ -73,3 +73,49 @@ JSON을 불러오는 방법
 2. JSON을 데이터 형태로 변환
 3. 불러온 데이터를 이용
 */
+
+
+/*
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Save1 : MonoBehaviour
+{
+    [SerializeField]
+    public class SaveTest
+    {
+        public float PlayerX;
+        public float PlayerY;
+    }
+
+    SaveTest test = new SaveTest();
+
+    public GameObject Player;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            test.PlayerX = Player.transform.position.x;
+            test.PlayerY = Player.transform.position.y;
+            Debug.Log(test.PlayerX);
+            Debug.Log(test.PlayerY);
+        }
+    }
+}
+
+
+*/
