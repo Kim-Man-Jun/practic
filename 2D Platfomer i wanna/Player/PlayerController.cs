@@ -5,27 +5,27 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    float axisH = 0.0f;
+    float axisH = 0.0f;                         //움직임 관련 변수
     public float speed = 5.0f;
 
-    public float jumpForce = 700f;
-    public static int jumpCount = 0;
+    public float jumpForce = 700f;              //점프력
+    public static int jumpCount = 0;            //점프횟수
 
-    private bool isGround = false;
-    private bool isDead = false;
+    private bool isGround = false;              //캐릭터가 땅을 밟는지 안 밟는지
+    public bool isDead = false;                 //캐릭터가 죽은지 판단
 
     Rigidbody2D playerRigidbody;
 
-    Animator animator;
+    Animator animator;                          //플레이어 애니메이션 관련 변수
     public string IdleAnime = "PlayerIdle";
     public string RunAnime = "PlayerRun";
     public string JumpAnime = "PlayerJump";
     string nowAnime = "";
     string oldAnime = "";
 
-    public float playerDeadAddForce = 0.0f;
+    public float playerDeadAddForce = 0.0f;     //캐릭터 죽었을 때 튀어오르는 정도
 
-    private AudioSource playerjump;
+    private AudioSource playerjump;             //캐릭터 소리 관련 변수
     private AudioSource playerdoublejump;
 
     //상하좌우로 움직이는 발판 관련 변수
@@ -34,7 +34,21 @@ public class PlayerController : MonoBehaviour
     bool PlatformContact;
     GameObject ContactMP;
 
-    void Start()
+    //싱글톤 선언용
+    static PlayerController Instance;
+
+    private void Awake()                        //싱글톤 선언과 동시에 플레이어 한개로 고정
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    void Start()                                //component 가져오는 동시에 애니메이션도 초기화
     {
         playerRigidbody = this.GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -46,7 +60,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (isDead)
+        if (isDead)                             //캐릭터가 죽었을 때 아무것도 안함
         {
             return;
         }
@@ -161,19 +175,24 @@ public class PlayerController : MonoBehaviour
     {
         if (other.tag == "Dead" && !isDead)
         {
+            isDead = true;
             Die();
         }
     }
 
-    private void Die()
+    public void Die()
     {
-        isDead = true;
-        playerRigidbody.velocity = Vector2.zero;
-        GetComponent<CapsuleCollider2D>().enabled = false;
-        GetComponent<BoxCollider2D>().enabled = false;
-        playerRigidbody.AddForce(new Vector2(0, playerDeadAddForce), ForceMode2D.Impulse);
+        if (isDead == true)
+        {
+            nowAnime = JumpAnime;
+            animator.Play(nowAnime);
+            playerRigidbody.velocity = Vector2.zero;
+            GetComponent<CapsuleCollider2D>().enabled = false;
+            GetComponent<BoxCollider2D>().enabled = false;
+            playerRigidbody.AddForce(new Vector2(0, playerDeadAddForce), ForceMode2D.Impulse);
 
-        GameManager.instance.OnPlayerDead();
+            GameManager.instance.OnPlayerDead();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
