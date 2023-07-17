@@ -8,10 +8,10 @@ using Unity.VisualScripting;
 
 public class SaveManager : MonoBehaviour
 {
-    public PlayerData playerData = new PlayerData();
+    public PlayerData playerData;
     public GameObject Player;
     public Vector3 PlayerNowPos;
-    public Quaternion PlayerNowRot;
+    public Vector3 PlayerNowRot;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class SaveManager : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             PlayerNowPos = Player.transform.localPosition;
-            PlayerNowRot = Player.transform.localRotation;
+            PlayerNowRot = Player.transform.localRotation.eulerAngles;
 
             DataManager.instance.SaveData();
 
@@ -40,4 +40,4 @@ public class SaveManager : MonoBehaviour
         }
     }
 }
-https://ansohxxn.github.io/categories/#unity-lesson-3
+//https://ansohxxn.github.io/categories/#unity-lesson-3
