@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+[System.Serializable]
 public class PlayerData
 {
     public Vector3 PlayerSavePos;
-    public Quaternion PlayerSaveRot;
+    public Vector3 PlayerSaveRot;
 }
 
 public class DataManager : MonoBehaviour
 {
     public PlayerData nowPlayer = new PlayerData();
-    public SaveManager SaveManager = new SaveManager();
+    public SaveManager SaveManager;
 
     string Path;
-    string FileName = "Save";
+    string FileName = "/SaveFile.txt";
 
     //싱글톤 선언
     public static DataManager instance;
@@ -38,12 +39,11 @@ public class DataManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-    }
-
-    private void Update()
-    {
-
+        Path = Application.dataPath + "/Save/";
+        if (!Directory.Exists(Path))
+        {
+            Directory.CreateDirectory(Path);
+        }
     }
 
     public void SaveData()
@@ -65,7 +65,7 @@ public class DataManager : MonoBehaviour
         nowPlayer.PlayerSaveRot = SaveManager.PlayerNowRot;
 
         Player.transform.position = nowPlayer.PlayerSavePos;
-        Player.transform.rotation = nowPlayer.PlayerSaveRot;
+        //Player.transform.rotation = nowPlayer.PlayerSaveRot;
 
         print(LoadData);
     }
