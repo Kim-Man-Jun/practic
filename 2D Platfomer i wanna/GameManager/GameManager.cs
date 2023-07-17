@@ -1,4 +1,3 @@
-using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,15 +26,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+
+    }
+
     void Update()         //게임오버 상태에서 재시작 가능하게 만들기
     {
         if (isGameover && Input.GetKey(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            DataManager.instance.LoadData();
         }
         else if (Input.GetKey(KeyCode.R))        //그냥 일반 상태에서도 재시작 가능
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            DataManager.instance.LoadData();
         }
     }
 
@@ -45,6 +51,7 @@ public class GameManager : MonoBehaviour
         isGameover = true;
 
         AudioSource soundPlayer = GetComponent<AudioSource>();
+
         if (soundPlayer != null)
         {
             soundPlayer.Stop();
