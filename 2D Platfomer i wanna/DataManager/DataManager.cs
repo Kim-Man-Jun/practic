@@ -64,6 +64,10 @@ public class DataManager : MonoBehaviour
             thePlayer.transform.position = nowPlayer.PlayerSavePos;     //세이브 위치값을 현재 위치값으로 덮기
             thePlayer.transform.eulerAngles = nowPlayer.PlayerSaveRot;
 
+            thePlayer.isDead = false;
+            thePlayer.GetComponent<CapsuleCollider2D>().enabled = true;
+            thePlayer.GetComponent<BoxCollider2D>().enabled = true;
+
             print(LoadData);
             print("불러오기 완료");
         }
