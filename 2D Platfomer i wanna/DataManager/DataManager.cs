@@ -46,7 +46,7 @@ public class DataManager : MonoBehaviour
 
     public void SaveData()
     {
-        string Data = JsonUtility.ToJson(nowPlayer);
+        string Data = JsonUtility.ToJson(nowPlayer);    //제이슨화
         File.WriteAllText(Path + FileName, Data);
         print(Data);
         print("저장 완료");
@@ -54,14 +54,14 @@ public class DataManager : MonoBehaviour
 
     public void LoadData()
     {
-        if (File.Exists(Path + FileName))
+        if (File.Exists(Path + FileName))               //세이브 파일이 있을 경우
         {
-            string LoadData = File.ReadAllText(Path + FileName);
+            string LoadData = File.ReadAllText(Path + FileName);        //세이브 시 했던 제이슨화의 역순
             nowPlayer = JsonUtility.FromJson<PlayerData>(LoadData);
 
-            thePlayer = FindObjectOfType<PlayerController>();
+            thePlayer = FindObjectOfType<PlayerController>();           //플레이어 위치값 회전값 찾기 위한 변수 생성
 
-            thePlayer.transform.position = nowPlayer.PlayerSavePos;
+            thePlayer.transform.position = nowPlayer.PlayerSavePos;     //세이브 위치값을 현재 위치값으로 덮기
             thePlayer.transform.eulerAngles = nowPlayer.PlayerSaveRot;
 
             print(LoadData);
@@ -75,11 +75,11 @@ public class DataManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+        if (collision.gameObject.CompareTag("Bullet"))                  //아이워너 세이브기 때문에 총알 맞을 경우
         {
-            thePlayer = FindObjectOfType<PlayerController>();
+            thePlayer = FindObjectOfType<PlayerController>();           //변수 생성
 
-            nowPlayer.PlayerSavePos = thePlayer.transform.position;
+            nowPlayer.PlayerSavePos = thePlayer.transform.position;     //현재 플레이어 위치는 세이브 위치값으로
             nowPlayer.PlayerSaveRot = thePlayer.transform.rotation.eulerAngles;
 
             SaveData();
