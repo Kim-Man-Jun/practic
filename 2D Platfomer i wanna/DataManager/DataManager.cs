@@ -20,7 +20,9 @@ public class DataManager : MonoBehaviour
 
     public static DataManager instance;                 //싱글톤 선언
 
-    private PlayerController thePlayer;                 //플레리어 위치, 회전값을 가져오기 위해 선언
+    private PlayerController thePlayer;                 //플레이어 위치, 회전값을 가져오기 위해 선언
+
+    public static bool StageFirst = false;              //스테이지 첫 진입 시 위치 고정되는걸 on/off하기 위한 static 변수
 
     private void Awake()                        //싱글톤 기본
     {
@@ -67,8 +69,7 @@ public class DataManager : MonoBehaviour
             thePlayer.isDead = false;
             thePlayer.GetComponent<CapsuleCollider2D>().enabled = true;
             thePlayer.GetComponent<BoxCollider2D>().enabled = true;
-            PlayerController.jumpCount = 1;                              //static 변수를 가져오려면 클래스명을 써주면 된다.
-            
+            PlayerController.jumpCount = 1;
 
             print(LoadData);
             print("불러오기 완료");
@@ -79,16 +80,15 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void Saveprocedure()
     {
-        if (collision.gameObject.CompareTag("Bullet"))                  //아이워너 세이브기 때문에 총알 맞을 경우
-        {
-            thePlayer = FindObjectOfType<PlayerController>();           //변수 생성
+        thePlayer = FindObjectOfType<PlayerController>();           //변수 생성
 
-            nowPlayer.PlayerSavePos = thePlayer.transform.position;     //현재 플레이어 위치는 세이브 위치값으로
-            nowPlayer.PlayerSaveRot = thePlayer.transform.rotation.eulerAngles;
+        nowPlayer.PlayerSavePos = thePlayer.transform.position;     //현재 플레이어 위치는 세이브 위치값으로
+        nowPlayer.PlayerSaveRot = thePlayer.transform.rotation.eulerAngles;
 
-            SaveData();
-        }
+        StageFirst = true;
+
+        SaveData();
     }
 }
