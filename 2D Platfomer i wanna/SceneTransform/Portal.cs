@@ -5,26 +5,32 @@ using UnityEngine.SceneManagement;
 
 public class Portal : MonoBehaviour
 {
-  public string transferMapName;
-  private Player player;
-  
-  void Start()
-  {
-    if(player == null)
+    public enum PortalDirection
     {
-      player = FindObjectOfType<Player>();
+        right,
+        left,
+        down,
+        up,
     }
-  }
-  
-  private void OnTriggerEnter2D(Collider2D collision)
-  {
-    if(collision.CompareTag("Player"))
+
+    public string sceneName = "";
+    public int doorNumber = 0;
+    public PortalDirection direction = PortalDirection.down;
+
+
+    void Start()
     {
-      player.currentMapName = transferMapName;
-      SceneManager.LoadScene(transferMapName);
+
     }
-  }
-  
-  //사이트 주소 https://medium.com/@qldrhqorhsh/unity-tutorial-6-scene-%EB%A7%B5-%EC%9D%B4%EB%8F%99-e92d05840c2d 
-  //스테이지 하나를 크게 만든 다음에 씬 전환하는 것처럼 카메라 이동 제한을 두고 진행을 해보는 식으로
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            RoomManager.ChangeScene(sceneName, doorNumber);
+            //static 변수로 스테이지 첫 진입했을 때 false일 경우 시작 지점에 계속 오게
+            //true(save를 했을 때)일 경우 해당 기능을 오프시켜버릶
+            DataManager.StageFirst = false;    
+        }
+    }
 }
