@@ -67,6 +67,8 @@ public class DataManager : MonoBehaviour
             thePlayer.isDead = false;
             thePlayer.GetComponent<CapsuleCollider2D>().enabled = true;
             thePlayer.GetComponent<BoxCollider2D>().enabled = true;
+            PlayerController.jumpCount = 1;                              //static 변수를 가져오려면 클래스명을 써주면 된다.
+            
 
             print(LoadData);
             print("불러오기 완료");
