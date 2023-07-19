@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     public GameObject Bullet = null;
     public Transform pos = null;
 
+    public float CoolTime;
+    public float CoolTimeBase = 0.5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +49,11 @@ public class PlayerController : MonoBehaviour
         else
         {
             ani.SetBool("Up", false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            Instantiate(Bullet, pos.position, Quaternion.identity);
         }
 
         transform.Translate(moveX, moveY, 0);
