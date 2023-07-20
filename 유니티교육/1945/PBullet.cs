@@ -6,6 +6,7 @@ using UnityEngine;
 public class PBullet : MonoBehaviour
 {
     public float speed = 8.0f;
+    public int Attack = 10;
     public GameObject BoomEffect;
 
     // Start is called before the first frame update
@@ -29,14 +30,15 @@ public class PBullet : MonoBehaviour
     {
         if (collision.gameObject.tag == "Monster")
         {
-            Destroy(collision.gameObject);
+            //collision.gameObject.GetComponent<Monster>().ItemDrop();
             Destroy(gameObject);
+            collision.gameObject.GetComponent<Monster>().Damage(Attack);
         }
     }
 
-    private void OnDestroy()
-    {
-        GameObject go = Instantiate(BoomEffect, transform.position, Quaternion.identity);
-        Destroy(go, 0.6f);
-    }
+    //private void OnDestroy()
+    //{
+    //    GameObject go = Instantiate(BoomEffect, transform.position, Quaternion.identity);
+    //    Destroy(go, 0.6f);
+    //}
 }
