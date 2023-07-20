@@ -10,6 +10,11 @@ public class Monster : MonoBehaviour
     public Transform ms;
     public Transform ms2;
     public GameObject bullet;
+    public static int RandomPos;
+
+    public GameObject Item = null;
+
+    public GameObject BoomEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -34,5 +39,22 @@ public class Monster : MonoBehaviour
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
+    }
+
+    public void Damage(int attack)
+    {
+        HP -= attack;
+
+        if (HP <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        GameObject go = Instantiate(BoomEffect, transform.position, Quaternion.identity);
+        Destroy(go, 0.6f);
+        Instantiate(Item, transform.position, Quaternion.identity);
     }
 }
