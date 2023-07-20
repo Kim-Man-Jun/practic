@@ -1,16 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     Animator ani;
     public float MoveSpeed = 5;
-    public GameObject Bullet = null;
+
+    public GameObject[] Bullet;
+
     public Transform pos = null;
 
-    public float CoolTime;
-    public float CoolTimeBase = 0.5f;
+    public static int WeaponPower = 0;
+    public static int Bomb = 2;
+
+    PlayerController playercontroller;
+
+    public GameObject BoomEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -53,9 +62,24 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            Instantiate(Bullet, pos.position, Quaternion.identity);
+            Instantiate(Bullet[WeaponPower], pos.position, Quaternion.identity);
         }
 
         transform.Translate(moveX, moveY, 0);
+
+        if (transform.position.x <= -3.1f)
+        {
+            transform.position = new Vector3(-3.1f, transform.position.y, 0);
+        }
+        if (transform.position.x >= 3.1f)
+        {
+            transform.position = new Vector3(3.1f, transform.position.y, 0);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        GameObject go = Instantiate(BoomEffect, transform.position, Quaternion.identity);
+        Destroy(go, 0.6f);
     }
 }
