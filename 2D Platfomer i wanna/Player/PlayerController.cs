@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
                 playerRigidbody.AddForce(new Vector2(0, jumpForce));
                 playerjump.Play();
             }
-            else if (Input.GetButtonDown("Jump") && playerRigidbody.velocity.y > 0)
+            else if (Input.GetButtonDown("Jump") && playerRigidbody.velocity.y > 0 && jumpCount == 1)
             {
                 playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
                 playerdoublejump.Play();
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (PlatformContact == true)
         {
-            if (Input.GetButtonDown("Jump") && jumpCount < 2)
+            if (Input.GetButtonDown("Jump") && jumpCount < 1)
             {
                 PlatformContact = false;
                 jumpCount++;
@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
                 playerRigidbody.AddForce(new Vector2(0, jumpForce));
                 playerjump.Play();
             }
-            else if (Input.GetButtonDown("Jump") && playerRigidbody.velocity.y > 0)
+            if (Input.GetButtonDown("Jump") && playerRigidbody.velocity.y > 0 & jumpCount == 1)
             {
                 PlatformContact = false;
                 playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
@@ -236,4 +236,5 @@ public class PlayerController : MonoBehaviour
         isGround = false;
         PlatformContact = false;
     }
+
 }
