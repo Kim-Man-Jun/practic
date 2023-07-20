@@ -6,15 +6,17 @@ public class Fire : MonoBehaviour
 {
     public Rigidbody2D BulletPrefab;        //프리팹 총알의 rigid 가져옴
     public Transform firePos;               //플레이어에 붙어있는 총알 발사 지점
-    public float cooltime;                  //총알 발사 쿨타임
-    private float curtime;                  //총알 발사 후 지나가는 시간
+    public float cooltime = 0.25f;          //총알 발사 쿨타임
+    public float curtime = 0f;               //총알 발사 후 지나가는 시간
     public Vector2 PlayerVector;            //플레이어 좌우 구분을 위한 각도 구하기용 벡터값
     public Vector2 FireposVector;
-    public float BulletSpeed = 20.0f;       //총알 스피드
+    public float BulletSpeed = 30.0f;       //총알 스피드
+
+    private AudioSource playerShoot;
 
     private void Start()
     {
-
+        playerShoot = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -35,16 +37,23 @@ public class Fire : MonoBehaviour
                     //bullet를 FirePos.transform.position 위치에 FirePos.transform.rotation 회전값으로 복제한다
                     Rigidbody2D BulletPre = Instantiate(BulletPrefab, firePos.position, Quaternion.identity);
                     BulletPre.velocity = BulletSpeed * firePos.transform.right * -1;
+                    playerShoot.Play();
                 }
                 else if (angle <= 0 && angle >= -20)        //오른쪽일때
                 {
                     Rigidbody2D BulletPre = Instantiate(BulletPrefab, firePos.position, Quaternion.identity);
                     BulletPre.velocity = BulletSpeed * firePos.transform.right;
+                    playerShoot.Play();
                 }
             }
             curtime = cooltime;         //총알 발사 후 잠깐의 딜레이 타임
         }
         curtime -= Time.deltaTime;
+
+        if (curtime <= 0)
+        {
+            curtime = 0;
+        }
     }
 
 
