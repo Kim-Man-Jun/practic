@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEditor.VersionControl;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,6 +21,13 @@ public class PlayerController : MonoBehaviour
     PlayerController playercontroller;
 
     public GameObject BoomEffect;
+
+    public Image Gauge;
+
+    public float gValue = 0;
+
+    //레이저 오브젝트
+    public GameObject Lazer;
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +71,33 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z))
         {
             Instantiate(Bullet[WeaponPower], pos.position, Quaternion.identity);
+        }
+        //스페이스바를 누르고 있을 때
+        else if (Input.GetKey(KeyCode.Z))
+        {
+            gValue += 0.005f;
+
+            Gauge.fillAmount = gValue;
+
+            if (gValue >= 1)
+            {
+                gValue = 1;
+                //레이저 발사
+                GameObject go = Instantiate(Lazer, pos.position, Quaternion.identity);
+                Destroy(go, 2);
+                gValue = 0;
+            }
+        }
+        else
+        {
+            gValue -= 0.005f;
+
+            Gauge.fillAmount = gValue;
+
+            if (gValue <= 0)
+            {
+                gValue = 0;
+            }
         }
 
         transform.Translate(moveX, moveY, 0);
