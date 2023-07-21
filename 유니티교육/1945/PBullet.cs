@@ -31,8 +31,20 @@ public class PBullet : MonoBehaviour
         if (collision.gameObject.tag == "Monster")
         {
             //collision.gameObject.GetComponent<Monster>().ItemDrop();
-            Destroy(gameObject);
             collision.gameObject.GetComponent<Monster>().Damage(Attack);
+            Destroy(gameObject);
+        }
+        if (collision.gameObject.tag == "Boss")
+        {
+            collision.gameObject.GetComponent<Boss>().Damage(Attack);
+            Destroy(gameObject);
+        }
+        if (collision.gameObject.tag == "BossParts")
+        {
+            GameObject go = Instantiate(BoomEffect, transform.position, Quaternion.identity);
+            Destroy(go, 1);
+            Destroy(gameObject);
+            Destroy(collision.gameObject);
         }
     }
 
