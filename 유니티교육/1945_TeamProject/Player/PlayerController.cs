@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     Animator animator;
     public float Speed = 2f;
+    public float MaxHP = 100f;
+    public float NowHP = 100f;
+    public Image NowHPBar;
 
     public GameObject[] Bullet;
 
@@ -70,21 +74,21 @@ public class PlayerController : MonoBehaviour
         }
 
         //맵 이동제한 걸기
-        if (transform.position.x <= -2.5f)
+        if (transform.position.x <= -1.9f)
         {
-            transform.position = new Vector3(-2.5f, transform.position.y, 0);
+            transform.position = new Vector3(-1.9f, transform.position.y, 0);
         }
-        if (transform.position.x >= 2.5f)
+        if (transform.position.x >= 1.9f)
         {
-            transform.position = new Vector3(2.5f, transform.position.y, 0);
+            transform.position = new Vector3(1.9f, transform.position.y, 0);
         }
-        if (transform.position.y >= -14)
+        if (transform.position.y >= -16.18f)
         {
-            transform.position = new Vector3(transform.position.x, -14f, 0);
+            transform.position = new Vector3(transform.position.x, -16.18f, 0);
         }
-        if (transform.position.y <= -23.2f)
+        if (transform.position.y <= -23.37f)
         {
-            transform.position = new Vector3(transform.position.x, -23.2f, 0);
+            transform.position = new Vector3(transform.position.x, -23.37f, 0);
         }
 
         if (Input.GetKey(KeyCode.Z))
@@ -104,15 +108,15 @@ public class PlayerController : MonoBehaviour
                 else if (WeaponPower == 2)
                 {
                     Instantiate(Bullet[WeaponPower], pos1.position, Quaternion.identity);
-                    Instantiate(Bullet[WeaponPower - 1], pos2.position, pos2.transform.rotation);
-                    Instantiate(Bullet[WeaponPower - 1], pos3.position, pos3.transform.rotation);
+                    Instantiate(Bullet[WeaponPower], pos2.position, pos2.transform.rotation);
+                    Instantiate(Bullet[WeaponPower], pos3.position, pos3.transform.rotation);
                     CoolTime = CoolTimestatic;
                 }
                 else if (WeaponPower == 3)
                 {
                     Instantiate(Bullet[WeaponPower], pos1.position, Quaternion.identity);
-                    Instantiate(Bullet[WeaponPower - 1], pos2.position, pos2.transform.rotation);
-                    Instantiate(Bullet[WeaponPower - 1], pos3.position, pos3.transform.rotation);
+                    Instantiate(Bullet[WeaponPower], pos2.position, pos2.transform.rotation);
+                    Instantiate(Bullet[WeaponPower], pos3.position, pos3.transform.rotation);
                     CoolTime = CoolTimestatic;
                 }
             }
@@ -124,10 +128,29 @@ public class PlayerController : MonoBehaviour
                 CoolTime = 0;
             }
         }
+
+        NowHPBar.fillAmount = (float)NowHP / (float)MaxHP;
+
     }
 
+    public void Damage(int attack)
+    {
+        NowHP -= attack;
+
+        if (NowHP <= 0)
+        {
+            NowHPBar.fillAmount = 0;
+            Destroy(gameObject);
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
+    }
+
+    private void OnDestroy()
+    {
+        GameObject go = Instantiate(BoomEffect, transform.position, Quaternion.identity);
+        Destroy(go, 0.9f);
     }
 }
