@@ -19,28 +19,31 @@ public class PlayerBullet : MonoBehaviour
     void Update()
     {
         Rigidbody.AddForce(new Vector2(0, Speed * Time.deltaTime), ForceMode2D.Impulse);
-    }
 
-    private void OnBecameInvisible()
-    {
-        Destroy(gameObject);
+        if(gameObject.transform.position.y >= -16.18f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Enemy")
         {
-
+            collision.gameObject.GetComponent<EnemyController>().Damage(Attack);
+            Destroy(gameObject);
         }
 
         if (collision.gameObject.tag == "Boss")
         {
-
+            //collision.gameObject.GetComponent<BossController>().Damage(Attack);
+            Destroy(gameObject);
         }
 
         if (collision.gameObject.tag == "BossParts")
         {
-
+            //collision.gameObject.GetComponent<BossPartsController>().Damage(Attack);
+            Destroy(gameObject);
         }
     }
 }
