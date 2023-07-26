@@ -17,20 +17,58 @@ public class EnemyController : MonoBehaviour
 
     public GameObject Item = null;
 
-    public int Direction;       //1일 경우 왼쪽, 2일 경우 정면, 3일 경우 오른쪽
+    public float Direction;     //1일 경우 오른쪽, -1일 경우 왼쪽
+    float DirectionNum = 0;  //1, -1로 구성  
+    public float MovingTime;    //enmeystart가 시작되고 나서 얼마나 지났는지 체크
+    float culTime = 0;
 
     public bool EnemyStart = false;
+
+    Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("CreateBullet", 0.5f, Delay);
+        animator = GetComponent<Animator>();
+    }
+
+    void Add()
+    {
+        culTime += Time.deltaTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(new Vector2(0, -Speed * Time.deltaTime));
+        if (EnemyStart == true)
+        {
+            if (Direction == 1)
+            {
+                Add();
+
+                if (culTime >= MovingTime)
+                {
+                    DirectionNum = 1;
+                    animator.Play("Enemy_Soldier_Right");
+                    culTime = 0;
+                }
+            }
+
+            if (Direction == -1)
+            {
+                Add();
+
+                if (culTime >= MovingTime)
+                {
+                    DirectionNum = -1;
+                    animator.Play("Enemy_Soldier_Left");
+                    culTime = 0;
+                }
+            }
+        }
+
+        transform.Translate(DirectionNum * Time.deltaTime, -Speed * Time.deltaTime, 0);
 
         if (gameObject.transform.position.x > 2.6f)
         {
