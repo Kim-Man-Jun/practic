@@ -36,7 +36,7 @@ public class PlayerBullet : MonoBehaviour
 
         if (collision.gameObject.tag == "Boss")
         {
-            //collision.gameObject.GetComponent<BossController>().Damage(Attack);
+            collision.gameObject.GetComponent<BossController>().Damage(Attack);
             Destroy(gameObject);
         }
 
