@@ -61,6 +61,19 @@ public class Item : MonoBehaviour
                 Debug.Log(PlayerController.Bomb);
                 Destroy(gameObject);
             }
+
+            else if (gameObject.tag == "HpUp")
+            {
+                PlayerController.NowHP += 50;
+
+                if (PlayerController.NowHP >= 100)
+                {
+                    PlayerController.NowHP = 100;
+                }
+
+                Debug.Log(PlayerController.NowHP);
+                Destroy(gameObject);
+            }
         }
     }
 }
