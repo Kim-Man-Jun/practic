@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     public float Speed = 2f;
     public float MaxHP = 100f;
-    public float NowHP = 100f;
+    public static float NowHP = 100f;
     public Image NowHPBar;
 
     public GameObject[] Bullet;
@@ -108,15 +108,15 @@ public class PlayerController : MonoBehaviour
                 else if (WeaponPower == 2)
                 {
                     Instantiate(Bullet[WeaponPower], pos1.position, Quaternion.identity);
-                    Instantiate(Bullet[WeaponPower], pos2.position, pos2.transform.rotation);
-                    Instantiate(Bullet[WeaponPower], pos3.position, pos3.transform.rotation);
+                    Instantiate(Bullet[WeaponPower], pos2.position, Quaternion.identity);
+                    Instantiate(Bullet[WeaponPower], pos3.position, Quaternion.identity);
                     CoolTime = CoolTimestatic;
                 }
                 else if (WeaponPower == 3)
                 {
                     Instantiate(Bullet[WeaponPower], pos1.position, Quaternion.identity);
-                    Instantiate(Bullet[WeaponPower], pos2.position, pos2.transform.rotation);
-                    Instantiate(Bullet[WeaponPower], pos3.position, pos3.transform.rotation);
+                    Instantiate(Bullet[WeaponPower], pos2.position, Quaternion.identity);
+                    Instantiate(Bullet[WeaponPower], pos3.position, Quaternion.identity);
                     CoolTime = CoolTimestatic;
                 }
             }
@@ -143,6 +143,7 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
