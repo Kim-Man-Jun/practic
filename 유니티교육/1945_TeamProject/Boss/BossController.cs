@@ -187,8 +187,6 @@ public class BossController : MonoBehaviour
         {
             curTime += Time.deltaTime;
 
-            print(curTime);
-
             if (curTime >= 2f)
             {
                 List<Transform> Bullets = new List<Transform>();
