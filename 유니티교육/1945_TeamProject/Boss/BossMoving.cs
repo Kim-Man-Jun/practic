@@ -47,8 +47,8 @@ public class BossMoving : MonoBehaviour
 
         //뱀 움직임 관련
         CreateBodyParts();
-
-
+        
+        //보스 랜덤무빙 코루틴
         StartCoroutine("BossRandomMoving");
     }
 
@@ -161,6 +161,11 @@ public class BossMoving : MonoBehaviour
             transform.position, Target, BossMovingSpeed * Time.deltaTime);
         //왜 지우면 안되는지 모르겠음..
 
+        if(BossController.BossNowHp <= 0)
+        {
+            BossMoving bossMoving = GetComponent<BossMoving>();
+            Destroy(bossMoving);
+        }
     }
 
     private void FixedUpdate()
