@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,8 +15,6 @@ public class PlayerController : MonoBehaviour
     public GameObject[] Bullet;
 
     public Transform pos1 = null;
-    public Transform pos2 = null;
-    public Transform pos3 = null;
 
     public static int WeaponPower = 0;
     public static int Bomb = 3;
@@ -108,15 +107,11 @@ public class PlayerController : MonoBehaviour
                 else if (WeaponPower == 2)
                 {
                     Instantiate(Bullet[WeaponPower], pos1.position, Quaternion.identity);
-                    Instantiate(Bullet[WeaponPower], pos2.position, Quaternion.identity);
-                    Instantiate(Bullet[WeaponPower], pos3.position, Quaternion.identity);
                     CoolTime = CoolTimestatic;
                 }
                 else if (WeaponPower == 3)
                 {
                     Instantiate(Bullet[WeaponPower], pos1.position, Quaternion.identity);
-                    Instantiate(Bullet[WeaponPower], pos2.position, Quaternion.identity);
-                    Instantiate(Bullet[WeaponPower], pos3.position, Quaternion.identity);
                     CoolTime = CoolTimestatic;
                 }
             }
@@ -153,5 +148,7 @@ public class PlayerController : MonoBehaviour
     {
         GameObject go = Instantiate(BoomEffect, transform.position, Quaternion.identity);
         Destroy(go, 0.9f);
+        SceneManager.LoadScene("GameOver");
+
     }
 }
