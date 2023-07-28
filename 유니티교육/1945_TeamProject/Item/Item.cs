@@ -29,12 +29,19 @@ public class Item : MonoBehaviour
         {
             rigid.AddForce(new Vector3(-ItemVelocity, -ItemVelocity, 0f));
         }
+
+        Destroy(gameObject, 5f);
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -64,14 +71,12 @@ public class Item : MonoBehaviour
 
             else if (gameObject.tag == "HpUp")
             {
-                PlayerController.NowHP += 50;
+                PlayerController.NowHP += 30;
 
                 if (PlayerController.NowHP >= 100)
                 {
                     PlayerController.NowHP = 100;
                 }
-
-                Debug.Log(PlayerController.NowHP);
                 Destroy(gameObject);
             }
         }
