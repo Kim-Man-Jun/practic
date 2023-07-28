@@ -41,6 +41,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //몹 좌우로 움직임
         if (EnemyStart == true)
         {
             if (Direction == 1)
@@ -68,24 +69,27 @@ public class EnemyController : MonoBehaviour
             }
         }
 
+        //몹 일반적인 이동
         transform.Translate(DirectionNum * Time.deltaTime, -Speed * Time.deltaTime, 0);
 
-        if (gameObject.transform.position.x > 2.6f)
+        //몹이 맵 밖으로 나가면 죽음
+        if (gameObject.transform.position.x > 2.8f)
         {
             Destroy(gameObject);
         }
 
-        if (gameObject.transform.position.x < -2.6f)
+        if (gameObject.transform.position.x < -2.8f)
         {
             Destroy(gameObject);
         }
 
-        if (gameObject.transform.position.y < -25f)
+        if (gameObject.transform.position.y < -25.5f)
         {
             Destroy(gameObject);
         }
     }
 
+    //일반몹 총쏘기
     void CreateBullet()
     {
         if (EnemyStart == true)
@@ -102,6 +106,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    //일반몹 데미지 처리
     public void Damage(int attack)
     {
         HP -= attack;
@@ -112,10 +117,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    //일반몹 죽고 난 뒤 판정
     private void OnDestroy()
     {
         GameObject go = Instantiate(BoomEffect, transform.position, Quaternion.identity);
         Destroy(go, 0.5f);
+
+        
 
         if (Item != null)
         {
