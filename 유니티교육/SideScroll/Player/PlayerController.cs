@@ -31,6 +31,12 @@ public class PlayerController : MonoBehaviour
 
     public static string gameState = "playing";
 
+    public int Score = 0;
+
+    //터치스크린 조작
+    bool isMoving = false;
+    public GameObject InputUI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +55,12 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        axisH = Input.GetAxisRaw("Horizontal");
+        //이동
+        if (isMoving == false)
+        {
+            axisH = Input.GetAxisRaw("Horizontal");
+        }
+
         /*
         if (axisH < 0)
         {
@@ -134,6 +145,14 @@ public class PlayerController : MonoBehaviour
             GameOver();
             gameState = "gameOver";
         }
+
+        if (collision.gameObject.tag == "ScoreItem")
+        {
+            Item item = collision.gameObject.GetComponent<Item>();
+            Score += item.Score;
+            Destroy(collision.gameObject);
+            print(Score);
+        }
     }
 
     public void Jump()
@@ -146,6 +165,7 @@ public class PlayerController : MonoBehaviour
         animator.Play(goalAnime);
         gameState = "gameClear";
         GameStop();
+        InputUI.SetActive(false);
     }
 
     public void GameOver()
@@ -155,7 +175,8 @@ public class PlayerController : MonoBehaviour
 
         CapsuleCollider2D capsule = GetComponent<CapsuleCollider2D>();
         capsule.enabled = false;
-        rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
+        rbody.AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
+        InputUI.SetActive(false);
     }
 
     void GameStop()
@@ -163,5 +184,20 @@ public class PlayerController : MonoBehaviour
         Rigidbody2D rbody = GetComponent<Rigidbody2D>();
 
         rbody.velocity = new Vector2(0, 0);
+    }
+
+    //터치스크린 추가 구현
+    public void SetAxis(float h, float v)
+    {
+        axisH = h;
+        if(axisH == 0)
+        {
+            isMoving = false;
+        }
+        else
+        {
+            isMoving = true;
+        }
+
     }
 }
