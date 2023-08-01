@@ -25,8 +25,10 @@ public class PlayerController : MonoBehaviour
 
     public float playerDeadAddForce = 0.0f;     //캐릭터 죽었을 때 튀어오르는 정도
 
-    private AudioSource playerjump;             //캐릭터 소리 관련 변수
-    private AudioSource playerdoublejump;
+    //캐릭터 소리 관련 변수
+    private AudioSource JumpSound;
+    public AudioClip playerjump;
+    public AudioClip playerdoublejump;
 
     //상하좌우로 움직이는 발판 관련 변수
     Vector3 platformPosition;
@@ -52,8 +54,7 @@ public class PlayerController : MonoBehaviour
     {
         playerRigidbody = this.GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        playerjump = GetComponent<AudioSource>();
-        playerdoublejump = GetComponent<AudioSource>();
+        JumpSound = GetComponent<AudioSource>();
         nowAnime = IdleAnime;
         oldAnime = IdleAnime;
     }
@@ -74,29 +75,30 @@ public class PlayerController : MonoBehaviour
                 jumpCount++;
                 playerRigidbody.velocity = Vector2.zero;
                 playerRigidbody.AddForce(new Vector2(0, jumpForce));
-                playerjump.Play();
+                JumpSound.PlayOneShot(playerjump);
             }
             else if (Input.GetButtonDown("Jump") && playerRigidbody.velocity.y > 0 && jumpCount == 1)
             {
                 playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
-                playerdoublejump.Play();
+                JumpSound.PlayOneShot(playerdoublejump);
             }
         }
         else if (PlatformContact == true)
         {
-            if (Input.GetButtonDown("Jump") && jumpCount < 1)
+            if (Input.GetButtonDown("Jump") && jumpCount < 2)
             {
                 PlatformContact = false;
                 jumpCount++;
                 playerRigidbody.velocity = Vector2.zero;
                 playerRigidbody.AddForce(new Vector2(0, jumpForce));
-                playerjump.Play();
+                JumpSound.PlayOneShot(playerjump);
             }
             if (Input.GetButtonDown("Jump") && playerRigidbody.velocity.y > 0 & jumpCount == 1)
             {
                 PlatformContact = false;
                 playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
-                playerdoublejump.Play();
+                animator.Play(JumpAnime);
+                JumpSound.PlayOneShot(playerdoublejump);
             }
         }
 
@@ -209,6 +211,12 @@ public class PlayerController : MonoBehaviour
             ContactMP = collision.gameObject;
             platformPosition = ContactMP.transform.position;
             distance = platformPosition - transform.position;
+        }
+
+        if (collision.gameObject.tag == "Dead" && !isDead)
+        {
+            isDead = true;
+            Die();
         }
     }
 
