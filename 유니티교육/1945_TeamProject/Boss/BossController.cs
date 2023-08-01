@@ -46,6 +46,17 @@ public class BossController : MonoBehaviour
 
     public static bool BossClear = false;
 
+    //사운드 관련
+    AudioSource BS;
+    AudioSource Oneshot;
+    public AudioClip Patern1;
+    public AudioClip Patern2;
+    public AudioClip Patern3;
+    public AudioClip Patern4;
+
+    public AudioClip StageClaer;
+    public AudioClip BossBoom;
+
     private void Awake()
     {
         textBossWarning.SetActive(false);
@@ -58,6 +69,10 @@ public class BossController : MonoBehaviour
     {
         //보스 체력 설정
         BossNowHp = BossMaxHp;
+        BS = GetComponent<AudioSource>();
+        Oneshot = GetComponent<AudioSource>();
+
+        BS.Play();
     }
 
     // Update is called once per frame
@@ -86,6 +101,8 @@ public class BossController : MonoBehaviour
             {
                 BossHoming();
                 curTime = 0;
+
+                Oneshot.PlayOneShot(Patern1);
             }
 
             //2번 pos 유도미사일 발사
@@ -95,6 +112,8 @@ public class BossController : MonoBehaviour
             {
                 BossHoming();
                 curTime2 = 0;
+
+                Oneshot.PlayOneShot(Patern1);
             }
         }
 
@@ -130,6 +149,7 @@ public class BossController : MonoBehaviour
                     }
                 }
                 curTime = 0;
+                Oneshot.PlayOneShot(Patern2);
             }
 
             //FirePos 4번 발사 360도
@@ -155,6 +175,7 @@ public class BossController : MonoBehaviour
                     }
                 }
                 curTime2 = 0;
+                Oneshot.PlayOneShot(Patern2);
             }
 
         }
@@ -167,6 +188,7 @@ public class BossController : MonoBehaviour
             {
                 StartCoroutine("HpItemDrop");
             }
+
             //FirePos 3번 발사 스핀으로
             FirePos3.transform.Rotate(Vector3.forward * 300 * Time.deltaTime);
 
@@ -209,6 +231,7 @@ public class BossController : MonoBehaviour
             {
                 BossHoming();
                 curTime3 = 0;
+                Oneshot.PlayOneShot(Patern1);
             }
         }
 
@@ -243,6 +266,8 @@ public class BossController : MonoBehaviour
 
                 StartCoroutine(BulletToTarget(Bullets));
                 curTime = 0;
+
+                Oneshot.PlayOneShot(Patern4);
             }
 
             curTime2 += Time.deltaTime;
@@ -266,6 +291,8 @@ public class BossController : MonoBehaviour
 
                 StartCoroutine(BulletToTarget(Bullets));
                 curTime2 = 0;
+
+                Oneshot.PlayOneShot(Patern4);
             }
         }
     }
@@ -317,6 +344,8 @@ public class BossController : MonoBehaviour
         //보스 체력이 0일때
         if (BossNowHp <= 0)
         {
+            BS.Stop();
+
             BossClear = true;
             //보스 체력바가 남을걸 대비해 아예 없어버림
             BossNowHpBar.fillAmount = 0;
@@ -328,7 +357,7 @@ public class BossController : MonoBehaviour
 
             //노가다1번
             GameObject go = Instantiate(BoomEffect, transform.position, Quaternion.identity);
-
+            
             GameObject go1 = Instantiate(BoomEffect, new Vector3(transform.position.x + 1, transform.position.y + 1.3f),
                 Quaternion.identity);
             GameObject go2 = Instantiate(BoomEffect, new Vector3(transform.position.x - 1.1f, transform.position.y - 1.2f),
@@ -342,6 +371,8 @@ public class BossController : MonoBehaviour
             GameObject go6 = Instantiate(BoomEffect, new Vector3(transform.position.x - 2f, transform.position.y - 1.4f),
                 Quaternion.identity);
 
+            Oneshot.PlayOneShot(BossBoom);
+
             //노가다 2번
             Destroy(go, 3f);
             Destroy(go1, 3f);
@@ -350,7 +381,9 @@ public class BossController : MonoBehaviour
             Destroy(go4, 3f);
             Destroy(go5, 3f);
             Destroy(go6, 3f);
-            Destroy(gameObject, 3f);
+            Destroy(gameObject, 3.2f);
+
+            Oneshot.PlayOneShot(StageClaer);
         }
     }
 
