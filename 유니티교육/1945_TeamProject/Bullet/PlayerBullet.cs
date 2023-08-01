@@ -8,11 +8,15 @@ public class PlayerBullet : MonoBehaviour
     public int Attack;
     public GameObject BoomEffect;
     Rigidbody2D Rigidbody;
+    AudioSource PB;
 
     // Start is called before the first frame update
     void Start()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
+        PB = GetComponent<AudioSource>();
+
+        PB.Play();
     }
 
     // Update is called once per frame
