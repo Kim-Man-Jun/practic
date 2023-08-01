@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEditor.U2D;
 
 public class PlayerController : MonoBehaviour
 {
     Animator animator;
     BoxCollider2D box2D;
+    SpriteRenderer sprite;
 
     public float Speed = 2f;
     public float MaxHP = 100f;
@@ -34,6 +36,9 @@ public class PlayerController : MonoBehaviour
 
     string nowAnime = "Idle";
 
+    AudioSource SP;
+    public AudioClip PlayerDie;
+
     private void Awake()
     {
         for (int i = 0; i < SpecialAttackFire.Length; i++)
@@ -47,6 +52,8 @@ public class PlayerController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         box2D = GetComponent<BoxCollider2D>();
+        SP = GetComponent<AudioSource>();
+        sprite = GetComponent<SpriteRenderer>();
 
         for (int i = 0; i < SpecialAttackFire.Length; i++)
         {
@@ -179,6 +186,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Bomb > 0)
             {
+                SP.Play();
                 SPOn();
             }
             else if (Bomb <= 0)
@@ -234,17 +242,23 @@ public class PlayerController : MonoBehaviour
 
         if (NowHP <= 0)
         {
+            box2D.enabled = false;
             NowHPBar.fillAmount = 0;
-            Destroy(gameObject);
+
+            SP.PlayOneShot(PlayerDie);
+
+            sprite.color = new Color(1, 1, 1, 0);
+
+            GameObject go = Instantiate(BoomEffect, transform.position, Quaternion.identity);
+            Destroy(go, 1f);
+
+            Destroy(gameObject, 1.1f);
         }
     }
 
     private void OnDestroy()
     {
-        GameObject go = Instantiate(BoomEffect, transform.position, Quaternion.identity);
-        Destroy(go, 0.9f);
         SceneManager.LoadScene("GameOver");
-
     }
 
 }
