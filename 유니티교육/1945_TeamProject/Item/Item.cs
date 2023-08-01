@@ -65,6 +65,11 @@ public class Item : MonoBehaviour
             {
                 PlayerController.Bomb++;
 
+                if(PlayerController.Bomb >= 5)
+                {
+                    PlayerController.Bomb = 5;
+                }
+
                 Debug.Log(PlayerController.Bomb);
                 Destroy(gameObject);
             }
