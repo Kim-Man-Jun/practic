@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
@@ -42,6 +43,8 @@ public class BossController : MonoBehaviour
     [SerializeField] GameObject textBossWarning;
     [SerializeField] GameObject BossMaxHpBar;
     [SerializeField] GameObject Boss;
+
+    public static bool BossClear = false;
 
     private void Awake()
     {
@@ -314,6 +317,7 @@ public class BossController : MonoBehaviour
         //보스 체력이 0일때
         if (BossNowHp <= 0)
         {
+            BossClear = true;
             //보스 체력바가 남을걸 대비해 아예 없어버림
             BossNowHpBar.fillAmount = 0;
 
