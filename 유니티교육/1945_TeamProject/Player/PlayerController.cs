@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class PlayerController : MonoBehaviour
 {
     Animator animator;
+    BoxCollider2D box2D;
+
     public float Speed = 2f;
     public float MaxHP = 100f;
     public static float NowHP = 100f;
@@ -17,17 +20,38 @@ public class PlayerController : MonoBehaviour
     public Transform pos1 = null;
 
     public static int WeaponPower = 0;
-    public static int Bomb = 3;
+    public static int Bomb = 2;
 
     public GameObject BoomEffect;
 
     public float CoolTime;
     public float CoolTimestatic = 0.1f;
 
+    public GameObject[] SpecialAttackFire = new GameObject[4];
+    public GameObject[] Bullet_SP = new GameObject[4];
+    public Transform[] SpecialAttackPos = new Transform[4];
+    public bool specialAttackOnOff = false;
+
+    string nowAnime = "Idle";
+
+    private void Awake()
+    {
+        for (int i = 0; i < SpecialAttackFire.Length; i++)
+        {
+            SpecialAttackFire[i].SetActive(false);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        box2D = GetComponent<BoxCollider2D>();
+
+        for (int i = 0; i < SpecialAttackFire.Length; i++)
+        {
+            SpecialAttackFire[i].GetComponent<Animator>();
+        }
     }
 
     // Update is called once per frame
@@ -45,14 +69,17 @@ public class PlayerController : MonoBehaviour
             if (Input.GetAxis("Horizontal") >= 0.3f)
             {
                 animator.Play("Right");
+                nowAnime = "Right";
             }
             else if (Input.GetAxis("Horizontal") <= -0.3f)
             {
                 animator.Play("Left");
+                nowAnime = "Left";
             }
             else
             {
                 animator.Play("Idle");
+                nowAnime = "Idle";
             }
         }
 
@@ -61,14 +88,26 @@ public class PlayerController : MonoBehaviour
             if (Input.GetAxis("Horizontal") >= 0.3f)
             {
                 animator.Play("Left");
+                nowAnime = "Left";
             }
             else if (Input.GetAxis("Horizontal") <= -0.3f)
             {
                 animator.Play("Right");
+                nowAnime = "Right";
             }
             else
             {
                 animator.Play("Idle");
+                nowAnime = "Idle";
+            }
+        }
+
+        //분신 이동 애니메이션
+        if (specialAttackOnOff == true)
+        {
+            for (int i = 0; i < SpecialAttackFire.Length; i++)
+            {
+                SpecialAttackFire[i].GetComponent<Animator>().Play(nowAnime);
             }
         }
 
@@ -90,30 +129,41 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(transform.position.x, -23.37f, 0);
         }
 
+        //총 발사 관련
         if (Input.GetKey(KeyCode.Z))
         {
             if (CoolTime == 0)
             {
                 if (WeaponPower == 0)
                 {
-                    Instantiate(Bullet[WeaponPower], pos1.position, Quaternion.identity);
-                    CoolTime = CoolTimestatic;
+                    WeaponPower = 0;
                 }
                 else if (WeaponPower == 1)
                 {
-                    Instantiate(Bullet[WeaponPower], pos1.position, Quaternion.identity);
-                    CoolTime = CoolTimestatic;
+                    WeaponPower = 1;
                 }
                 else if (WeaponPower == 2)
                 {
-                    Instantiate(Bullet[WeaponPower], pos1.position, Quaternion.identity);
-                    CoolTime = CoolTimestatic;
+                    WeaponPower = 2;
                 }
                 else if (WeaponPower == 3)
                 {
-                    Instantiate(Bullet[WeaponPower], pos1.position, Quaternion.identity);
-                    CoolTime = CoolTimestatic;
+                    WeaponPower = 3;
                 }
+
+                Instantiate(Bullet[WeaponPower], pos1.position,
+                    Quaternion.identity);
+
+                if (specialAttackOnOff == true)
+                {
+                    for (int i = 0; i < SpecialAttackPos.Length; i++)
+                    {
+                        Instantiate(Bullet_SP[WeaponPower], SpecialAttackPos[i].position,
+                    Quaternion.identity);
+                    }
+                }
+
+                CoolTime = CoolTimestatic;
             }
 
             CoolTime -= Time.deltaTime;
@@ -124,8 +174,58 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //필살기 발동
+        if (Input.GetKey(KeyCode.X))
+        {
+            if (Bomb > 0)
+            {
+                SPOn();
+            }
+            else if (Bomb <= 0)
+            {
+                return;
+            }
+        }
+
+        //현재 HP 계산
         NowHPBar.fillAmount = (float)NowHP / (float)MaxHP;
 
+    }
+
+    //폭탄 사용 코루틴 시작
+    void SPOn()
+    {
+        if (specialAttackOnOff == false)
+        {
+            StartCoroutine(SPFire());
+        }
+
+        else
+        {
+            return;
+        }
+    }
+
+    //폭탄 사용 코루틴
+    IEnumerator SPFire()
+    {
+        specialAttackOnOff = true;
+        Bomb--;
+        box2D.enabled = false;
+
+        for (int i = 0; i < SpecialAttackFire.Length; i++)
+        {
+            SpecialAttackFire[i].SetActive(true);
+        }
+
+        yield return new WaitForSeconds(5);
+
+        specialAttackOnOff = false;
+        box2D.enabled = true;
+        for (int i = 0; i < SpecialAttackFire.Length; i++)
+        {
+            SpecialAttackFire[i].SetActive(false);
+        }
     }
 
     public void Damage(int attack)
@@ -139,11 +239,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-
-    }
-
     private void OnDestroy()
     {
         GameObject go = Instantiate(BoomEffect, transform.position, Quaternion.identity);
@@ -151,4 +246,5 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene("GameOver");
 
     }
+
 }
