@@ -7,6 +7,10 @@ public class ButtonAction : MonoBehaviour
 {
     AudioSource GameOver;
 
+    private void Awake()
+    {
+        Screen.SetResolution(620, 1920, true);
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +26,7 @@ public class ButtonAction : MonoBehaviour
 
     public void Restart()
     {
-        PlayerController.Bomb = 3;
+        PlayerController.Bomb = 2;
         PlayerController.WeaponPower = 0;
         PlayerController.NowHP = 100;
         BossController.BossAppear = 0;
