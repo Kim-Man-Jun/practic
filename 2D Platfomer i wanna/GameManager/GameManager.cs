@@ -26,11 +26,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-
-    }
-
     void Update()         //게임오버 상태에서 재시작 가능하게 만들기
     {
         if (isGameover && Input.GetKey(KeyCode.R))
