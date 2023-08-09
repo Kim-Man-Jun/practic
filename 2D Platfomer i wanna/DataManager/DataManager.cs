@@ -9,6 +9,7 @@ public class PlayerData                         //저장되는 플레이어 위�
 {
     public Vector3 PlayerSavePos;
     public Vector3 PlayerSaveRot;
+    public int PlayernowRoomSave;
 }
 
 public class DataManager : MonoBehaviour
@@ -21,6 +22,7 @@ public class DataManager : MonoBehaviour
     public static DataManager instance;                 //싱글톤 선언
 
     private PlayerController thePlayer;                 //플레이어 위치, 회전값을 가져오기 위해 선언
+    private MapTransform MapTransform;
 
     public static bool StageFirst = false;              //스테이지 첫 진입 시 위치 고정되는걸 on/off하기 위한 static 변수
 
@@ -48,6 +50,7 @@ public class DataManager : MonoBehaviour
 
     public void SaveData()
     {
+        StageFirst = true;
         string Data = JsonUtility.ToJson(nowPlayer);    //제이슨화
         File.WriteAllText(Path + FileName, Data);
         print(Data);
@@ -56,26 +59,43 @@ public class DataManager : MonoBehaviour
 
     public void LoadData()
     {
-        if (File.Exists(Path + FileName))               //세이브 파일이 있을 경우
+        if (StageFirst == true)
         {
-            string LoadData = File.ReadAllText(Path + FileName);        //세이브 시 했던 제이슨화의 역순
-            nowPlayer = JsonUtility.FromJson<PlayerData>(LoadData);
+            if (File.Exists(Path + FileName))               //세이브 파일이 있을 경우
+            {
+                string LoadData = File.ReadAllText(Path + FileName);        //세이브 시 했던 제이슨화의 역순
+                nowPlayer = JsonUtility.FromJson<PlayerData>(LoadData);
 
-            thePlayer = FindObjectOfType<PlayerController>();           //플레이어 위치값 회전값 찾기 위한 변수 생성
+                thePlayer = FindObjectOfType<PlayerController>();           //플레이어 위치값 회전값 찾기 위한 변수 생성
 
-            thePlayer.transform.position = nowPlayer.PlayerSavePos;     //세이브 위치값을 현재 위치값으로 덮기
-            thePlayer.transform.eulerAngles = nowPlayer.PlayerSaveRot;
+                thePlayer.transform.position = nowPlayer.PlayerSavePos;     //세이브 위치값을 현재 위치값으로 덮기
+                thePlayer.transform.eulerAngles = nowPlayer.PlayerSaveRot;
+                thePlayer.PlayerNowRoom = nowPlayer.PlayernowRoomSave;
+
+                MapTransform = FindObjectOfType<MapTransform>();
+                MapTransform.ChangeRoom();
+
+                thePlayer.isDead = false;
+                thePlayer.GetComponent<CapsuleCollider2D>().enabled = true;
+                thePlayer.GetComponent<BoxCollider2D>().enabled = true;
+                PlayerController.jumpCount = 1;
+
+                print(LoadData);
+                print("불러오기 완료");
+            }
+        }
+        else
+        {
+            thePlayer = FindObjectOfType<PlayerController>();
 
             thePlayer.isDead = false;
             thePlayer.GetComponent<CapsuleCollider2D>().enabled = true;
             thePlayer.GetComponent<BoxCollider2D>().enabled = true;
             PlayerController.jumpCount = 1;
 
-            print(LoadData);
-            print("불러오기 완료");
-        }
-        else
-        {
+            MapTransform = FindObjectOfType<MapTransform>();
+            MapTransform.ChangeRoom();
+
             print("파일이 없어용");
         }
     }
@@ -86,9 +106,7 @@ public class DataManager : MonoBehaviour
 
         nowPlayer.PlayerSavePos = thePlayer.transform.position;     //현재 플레이어 위치는 세이브 위치값으로
         nowPlayer.PlayerSaveRot = thePlayer.transform.rotation.eulerAngles;
-
-        StageFirst = true;
-
+        nowPlayer.PlayernowRoomSave = thePlayer.PlayerNowRoom;
         SaveData();
     }
 }
