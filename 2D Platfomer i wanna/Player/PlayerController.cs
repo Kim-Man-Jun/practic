@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public string JumpAnime = "PlayerJump";
     string nowAnime = "";
     string oldAnime = "";
+    public ParticleSystem Blood;
 
     public float playerDeadAddForce = 0.0f;     //캐릭터 죽었을 때 튀어오르는 정도
 
@@ -38,6 +39,9 @@ public class PlayerController : MonoBehaviour
 
     //싱글톤 선언용
     static PlayerController Instance;
+
+    //현재 플레이어가 있는 방 번호
+    public int PlayerNowRoom = 0;
 
     private void Awake()                        //싱글톤 선언과 동시에 플레이어 한개로 고정
     {
@@ -186,6 +190,11 @@ public class PlayerController : MonoBehaviour
     {
         if (isDead == true)
         {
+            if (Blood.isPlaying == false)
+            {
+                Blood.Play();
+            }
+
             nowAnime = JumpAnime;
             animator.Play(nowAnime);
             playerRigidbody.velocity = Vector2.zero;
@@ -243,6 +252,7 @@ public class PlayerController : MonoBehaviour
     {
         isGround = false;
         PlatformContact = false;
+        jumpCount = 1;
     }
 
 }
