@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMoveState : PlayerState
+public class PlayerMoveState : PlayerGroundedState
 {
-    public PlayerMoveState(Player _player, PlayerStateMachine _stateMachine, 
+    public PlayerMoveState(Player _player, PlayerStateMachine _stateMachine,
         string _animBoolName) : base(_player, _stateMachine, _animBoolName)
     {
 
@@ -18,11 +18,23 @@ public class PlayerMoveState : PlayerState
     public override void Update()
     {
         base.Update();
-        
-        if (Input.GetKeyDown(KeyCode.N))
+
+        if (xInput == 0 || player.isWallDetected())
         {
             player.stateMachine.ChangeState(player.idleState);
         }
+
+        //else if (xInput > 0)
+        //{
+        //    player.sr.flipX = false;
+        //}
+
+        //else if (xInput < 0)
+        //{
+        //    player.sr.flipX = true;
+        //}
+        
+        player.SetVelocity(xInput * player.moveSpeed, rb.velocity.y);
     }
 
     public override void Exit()
