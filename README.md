@@ -13,3 +13,5 @@ https://www.slideshare.net/devcatpublications/ndc2019-142896444
 프롤로그 작성 완료 ------04.10
 
 1장 작성중
+
+https://www.bfxr.net 음향 효과 만들 수 있는 사이트
