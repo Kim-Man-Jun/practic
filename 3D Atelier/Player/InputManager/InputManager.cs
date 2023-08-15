@@ -37,6 +37,10 @@ public class InputManager : MonoBehaviour
 
                     Player.GetComponent<PlayerFSM>().MoveTo(hit.point);
                 }
+                else if(hit.collider.gameObject.tag == "Enemy")     //클릭한 대상이 적일 경우
+                {
+                    Player.GetComponent<PlayerFSM>().AttackEnemy(hit.collider.gameObject);
+                }
             }
         }
     }
