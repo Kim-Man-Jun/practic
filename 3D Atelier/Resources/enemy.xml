@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rows>
+  <row>
+    <name>babySlime</name>
+    <level>1</level>
+    <maxHp>20</maxHp>
+    <attackMin>2</attackMin>
+    <attackMax>4</attackMax>
+    <defense>1</defense>
+    <exp>5</exp>
+    <rewardMoney>10</rewardMoney>
+  </row>
+  <row>
+    <name>Slime</name>
+    <level>2</level>
+    <maxHp>30</maxHp>
+    <attackMin>3</attackMin>
+    <attackMax>7</attackMax>
+    <defense>2</defense>
+    <exp>10</exp>
+    <rewardMoney>20</rewardMoney>
+  </row>
+  <row>
+    <name>kingSlime</name>
+    <level>3</level>
+    <maxHp>40</maxHp>
+    <attackMin>5</attackMin>
+    <attackMax>10</attackMax>
+    <defense>3</defense>
+    <exp>15</exp>
+    <rewardMoney>50</rewardMoney>
+  </row>
+</rows>
