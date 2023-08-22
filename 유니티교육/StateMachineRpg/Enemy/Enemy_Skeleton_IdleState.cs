@@ -14,8 +14,6 @@ public class Enemy_Skeleton_IdleState : Enemy_Skeleton_GroundedState
     {
         base.Enter();
 
-        enemy.Flip();
-
         stateTimer = enemy.idleTime;
     }
 
