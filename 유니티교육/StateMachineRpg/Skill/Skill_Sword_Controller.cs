@@ -36,7 +36,7 @@ public class Skill_Sword_Controller : MonoBehaviour
 
             if (Vector2.Distance(transform.position, player.transform.position) < 1)
             {
-                player.ClearTheSword();
+                player.CatchTheSword();
             }
         }
     }
@@ -52,7 +52,8 @@ public class Skill_Sword_Controller : MonoBehaviour
 
     public void ReturnSword()
     {
-        rb.isKinematic = false;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        //rb.isKinematic = false;
         transform.parent = null;
         isReturning = true;
     }
@@ -60,6 +61,11 @@ public class Skill_Sword_Controller : MonoBehaviour
     //검이 어딘가에 닿았을 때 붙게만드는 메서드
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(isReturning)
+        {
+            return;
+        }
+
         anim.SetBool("Rotation", false);
         canRotate = false;
         cd.enabled = false;
