@@ -39,4 +39,14 @@ public class MonsterController : MonoBehaviour
             }
         }
     }
+
+    public void Damage(float _Attack)
+    {
+        Hp -= _Attack;
+        
+        if(Hp <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 }
