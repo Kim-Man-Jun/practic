@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 
     public string hitCheck;
 
-    public float Hp = 100;
+    public float Hp = 10;
     public float Attack = 10;
 
     // Start is called before the first frame update
@@ -71,7 +71,15 @@ public class Player : MonoBehaviour
                 anim.SetInteger("aniNum", 1);
             }
         }
+    }
 
+    public void Damage(float _Attack)
+    {
+        Hp -= _Attack;
 
+        if (Hp <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
