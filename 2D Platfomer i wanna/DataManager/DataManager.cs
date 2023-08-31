@@ -72,13 +72,16 @@ public class DataManager : MonoBehaviour
                 thePlayer.transform.eulerAngles = nowPlayer.PlayerSaveRot;
                 thePlayer.PlayerNowRoom = nowPlayer.PlayernowRoomSave;
 
-                MapTransform = FindObjectOfType<MapTransform>();
-                MapTransform.ChangeRoom();
-
                 thePlayer.isDead = false;
                 thePlayer.GetComponent<CapsuleCollider2D>().enabled = true;
                 thePlayer.GetComponent<BoxCollider2D>().enabled = true;
                 PlayerController.jumpCount = 1;
+
+                if (MapTransform != null)
+                {
+                    MapTransform = FindObjectOfType<MapTransform>();
+                    MapTransform.ChangeRoom();
+                }
 
                 print(LoadData);
                 print("불러오기 완료");
@@ -93,8 +96,11 @@ public class DataManager : MonoBehaviour
             thePlayer.GetComponent<BoxCollider2D>().enabled = true;
             PlayerController.jumpCount = 1;
 
-            MapTransform = FindObjectOfType<MapTransform>();
-            MapTransform.ChangeRoom();
+            if (MapTransform != null)
+            {
+                MapTransform = FindObjectOfType<MapTransform>();
+                MapTransform.ChangeRoom();
+            }
 
             print("파일이 없어용");
         }
