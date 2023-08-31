@@ -61,20 +61,45 @@ public class MapTransform : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
-            if (player.PlayerNowRoom < RoomNum)
+            //if (player.PlayerNowRoom < RoomNum)
+            //{
+            //    player.PlayerNowRoom++;
+            //    ChangeRoom();
+            //}
+
+            //else if (player.PlayerNowRoom > RoomNum)
+            //{
+            //    player.PlayerNowRoom--;
+            //    ChangeRoom();
+            //}
+
+            if (RoomNum == 0)
             {
-                player.PlayerNowRoom++;
+                player.PlayerNowRoom = 0;
                 ChangeRoom();
             }
 
-            else if (player.PlayerNowRoom > RoomNum)
+            else if (RoomNum == 1)
             {
-                player.PlayerNowRoom--;
+                player.PlayerNowRoom = 1;
+                ChangeRoom();
+            }
+
+            else if (RoomNum == 2)
+            {
+                player.PlayerNowRoom = 2;
+                ChangeRoom();
+            }
+
+            else if (RoomNum == 3)
+            {
+                player.PlayerNowRoom = 3;
                 ChangeRoom();
             }
 
             else if (player.PlayerNowRoom == RoomNum)
             {
+
             }
         }
     }
