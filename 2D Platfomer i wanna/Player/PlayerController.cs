@@ -252,7 +252,5 @@ public class PlayerController : MonoBehaviour
     {
         isGround = false;
         PlatformContact = false;
-        jumpCount = 1;
     }
-
 }
