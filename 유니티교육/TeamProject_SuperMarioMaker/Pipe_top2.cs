@@ -128,6 +128,7 @@ public class Pipe_top2 : MonoBehaviour
 
     IEnumerator pipeOutMovement()
     {
+        Debug.Log("실행");
         switch (pipeOutDir)
         {
             //입구 위
@@ -135,7 +136,7 @@ public class Pipe_top2 : MonoBehaviour
                 for (int i = 0; i < 4; i++)
                 {
                     rb.velocity = Vector2.zero;
-                    new WaitForSeconds(0.2f);
+                    yield return new WaitForSeconds(0.2f);
                     Player[playerNum].transform.Translate(new Vector2(0, +0.4f));
                 }
                 break;
@@ -145,7 +146,7 @@ public class Pipe_top2 : MonoBehaviour
                 for (int i = 0; i < 4; i++)
                 {
                     rb.velocity = Vector2.zero;
-                    new WaitForSeconds(0.2f);
+                    yield return new WaitForSeconds(0.2f);
                     Player[playerNum].transform.Translate(new Vector2(-0.4f, 0));
                 }
                 break;
@@ -155,7 +156,7 @@ public class Pipe_top2 : MonoBehaviour
                 for (int i = 0; i < 4; i++)
                 {
                     rb.velocity = Vector2.zero;
-                    new WaitForSeconds(0.2f);
+                    yield return new WaitForSeconds(0.2f);
                     Player[playerNum].transform.Translate(new Vector2(+0.4f, 0));
                 }
                 break;
@@ -165,7 +166,7 @@ public class Pipe_top2 : MonoBehaviour
                 for (int i = 0; i < 4; i++)
                 {
                     rb.velocity = Vector2.zero;
-                    new WaitForSeconds(0.2f);
+                    yield return new WaitForSeconds(0.2f);
                     Player[playerNum].transform.Translate(new Vector2(0, -0.4f));
                 }
                 break;
@@ -176,8 +177,6 @@ public class Pipe_top2 : MonoBehaviour
         rb.gravityScale = 3;
         cc.enabled = true;
         sr.sortingOrder = 1;
-
-        yield return new WaitForSeconds(0.1f);
     }
 
     #region slowDir_pipeIn
