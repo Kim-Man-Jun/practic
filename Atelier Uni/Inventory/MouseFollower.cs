@@ -49,8 +49,6 @@ public class MouseFollower : MonoBehaviour
         //transform.position = canvas.transform.TransformPoint(position);
 
         transform.position = Input.mousePosition;
-
-        Debug.Log(canvas.name);
     }
 
     public void Toggle(bool val)
