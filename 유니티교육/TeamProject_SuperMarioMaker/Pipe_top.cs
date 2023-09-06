@@ -1,5 +1,7 @@
+using Cinemachine.Utility;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -10,6 +12,7 @@ public class Pipe_top : MonoBehaviour
     public Transform MyTransform;
     public Transform myTransform { get { return MyTransform; } }
     public Vector3 linkObjectPos { get; set; } = new Vector3(0, 0, -100);
+
     public GameObject linkObject;
     public bool lineActive { get; set; } = false;
 
@@ -18,30 +21,27 @@ public class Pipe_top : MonoBehaviour
     public int dirInfo = 0;     //(위 : 0, 오른 : 1, 아래 : 2, 왼 : 3)
 
     Rigidbody2D rb;
-    CapsuleCollider2D cc;
+    BoxCollider2D bc;
     SpriteRenderer sr;
 
-    //전체 플레이어 배열로
-    GameObject[] Player;
+    GameObject Player;
     //플레이어 숫자 변수
     int playerNum;
     //기존 파이프 vector2값
-    public Vector2 oriPipeVec;
+    public Vector3 oriPipeVec;
     //이어진 파이프 vector2값
-    public Vector2 connectPipeVec;
+    public Vector3 connectPipeVec;
 
     private void Awake()
     {
-        if (Player != null)
-        {
-            Player = GameObject.FindGameObjectsWithTag("Player");
-            rb = Player[playerNum].GetComponent<Rigidbody2D>();
-            cc = Player[playerNum].GetComponent<CapsuleCollider2D>();
-            sr = Player[playerNum].GetComponent<SpriteRenderer>();
+        Player = GameObject.FindGameObjectWithTag("Player");
 
-            Player[playerNum].GetComponent<Transform>();
-            Player[playerNum].GetComponent<Animator>();
-        }
+        rb = Player.GetComponent<Rigidbody2D>();
+        bc = GetComponent<BoxCollider2D>();
+        sr = GetComponentInChildren<SpriteRenderer>();
+
+        Player.GetComponent<Transform>();
+        Player.GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -52,7 +52,6 @@ public class Pipe_top : MonoBehaviour
         lineRenderer.endWidth = lineWidth;
         lineRenderer.SetPosition(0, myTransform.position);
         lineRenderer.SetPosition(1, myTransform.position);
-
     }
 
     // Update is called once per frame
@@ -67,9 +66,6 @@ public class Pipe_top : MonoBehaviour
             if (linkObjectPos == new Vector3(0, 0, -100))
             {
                 lineRenderer.SetPosition(1, mousePos);
-
-                connectPipeVec = lineRenderer.GetPosition(1);
-                oriPipeVec = lineRenderer.GetPosition(0);
             }
             else
             {
@@ -103,125 +99,66 @@ public class Pipe_top : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject == Player[playerNum])
+        if (collision.gameObject.CompareTag("Player"))
         {
-            switch (dirInfo)
+            if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                //입구 위
-                case 0:
-                    if (Input.GetKeyDown(KeyCode.DownArrow))
-                    {
-                        pipeDir("Down");
-                    }
-                    break;
-
-                //입구 오른쪽
-                case 1:
-                    if (Input.GetKeyDown(KeyCode.LeftArrow))
-                    {
-                        pipeDir("Left");
-                    }
-                    break;
-
-                //입구 왼쪽
-                case 3:
-                    if (Input.GetKeyDown(KeyCode.RightArrow))
-                    {
-                        pipeDir("Right");
-                    }
-                    break;
-
-                //입구 아래
-                case 2:
-                    if (Input.GetKeyDown(KeyCode.UpArrow))
-                    {
-                        pipeDir("Up");
-                    }
-                    break;
-
-                default: break;
+                StartCoroutine("moveDown");
             }
         }
     }
 
-    private void pipeDir(string Dir)
+    IEnumerator moveDown()
     {
-        StartCoroutine($"slow{Dir}");
-
-        rb.gravityScale = 0;
-        cc.enabled = false;
-        sr.sortingOrder = -1;
-    }
-
-    IEnumerator slowDown()
-    {
-        for (int i = 0; i < 4; i++)
+        if (bc.isTrigger == false)
         {
-            rb.velocity = Vector2.zero;
-            yield return new WaitForSeconds(0.2f);
-            Player[playerNum].transform.Translate(new Vector2(0, -0.01f));
+            bc.isTrigger = true;
         }
+        sr.sortingOrder = 2;
 
-        pipeMovement();
-    }
+        rb.velocity = Vector2.zero;
 
-    IEnumerator slowUp()
-    {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 8; i++)
         {
-            rb.velocity = Vector2.zero;
-            yield return new WaitForSeconds(0.2f);
-            Player[playerNum].transform.Translate(new Vector2(0, 0.01f));
+            Player.transform.Translate(Vector3.down * 0.1f);
         }
-        pipeMovement();
-    }
-
-    IEnumerator slowLeft()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            rb.velocity = Vector2.zero;
-            yield return new WaitForSeconds(0.2f);
-            Player[playerNum].transform.Translate(new Vector2(-0.01f, 0));
-        }
-        pipeMovement();
-    }
-
-    IEnumerator slowRight()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            rb.velocity = Vector2.zero;
-            yield return new WaitForSeconds(0.2f);
-            Player[playerNum].transform.Translate(new Vector2(0.01f, 0));
-        }
+        yield return new WaitForSeconds(0.6f);
 
         pipeMovement();
     }
 
     private void pipeMovement()
     {
-        if (Player[playerNum].transform.position.x - oriPipeVec.x < 1.2f
-            && Player[playerNum].transform.position.x - oriPipeVec.x > -1.2f)
+        StartCoroutine("moveUp");
+
+    }
+
+    IEnumerator moveUp()
+    {
+        if (Player.transform.position.x - myTransform.position.x < 1.2f
+    && Player.transform.position.x - myTransform.position.x > -1.2f)
         {
-            new WaitForSeconds(0.3f);
-            Player[playerNum].transform.position = connectPipeVec;
-
-            rb.gravityScale = 3;
-            cc.enabled = true;
-            sr.sortingOrder = 1;
-
+            Player.transform.position = linkObjectPos;
         }
 
-        else if (Player[playerNum].transform.position.x - connectPipeVec.x < 1.2f
-            && Player[playerNum].transform.position.x - connectPipeVec.x > -1.2f)
+        else if (Player.transform.position.x - linkObjectPos.x < 1.2f
+    && Player.transform.position.x - linkObjectPos.x > -1.2f)
         {
-            new WaitForSeconds(0.3f);
-            Player[playerNum].transform.position = oriPipeVec;
-
-            rb.gravityScale = 3;
-            sr.sortingOrder = 1;
-            cc.enabled = true;
+            Player.transform.position = myTransform.position;
         }
+
+        yield return new WaitForSeconds(0.6f);
+
+        for (int i = 0; i < 8; i++)
+        {
+            Player.transform.Translate(Vector3.up * 0.1f);
+        }
+
+        if (bc.isTrigger == true)
+        {
+            bc.isTrigger = false;
+        }
+        sr.sortingOrder = 1;
+
     }
 }
