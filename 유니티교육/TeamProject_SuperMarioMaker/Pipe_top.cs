@@ -32,6 +32,7 @@ public class Pipe_top : MonoBehaviour
     //이어진 파이프 vector2값
     public Vector3 connectPipeVec;
 
+    int num;
     private void Awake()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
@@ -101,9 +102,10 @@ public class Pipe_top : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKeyDown(KeyCode.DownArrow) && num == 0)
             {
                 StartCoroutine("moveDown");
+                num++;
             }
         }
     }
@@ -158,7 +160,8 @@ public class Pipe_top : MonoBehaviour
         {
             bc.isTrigger = false;
         }
-        sr.sortingOrder = 1;
 
+        sr.sortingOrder = 2;
+        num--;
     }
 }
