@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    int bulletDamage = 2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,8 +20,14 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Field" || collision.gameObject.tag == "Dead")
+        if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Dead")
         {
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.tag == "Boss")
+        {
+            collision.gameObject.GetComponent<bossController>().Damaged(bulletDamage);
             Destroy(gameObject);
         }
     }
