@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,37 +6,39 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Move Info")]
     float axisH = 0.0f;                         //움직임 관련 변수
     public float speed = 5.0f;
 
+    [Header("Jump Info")]
     public float jumpForce = 700f;              //점프력
     public static int jumpCount = 0;            //점프횟수
-
-    private bool isGround = false;              //캐릭터가 땅을 밟는지 안 밟는지
-    public bool isDead = false;                 //캐릭터가 죽은지 판단
-
-    Rigidbody2D playerRigidbody;
-
-    Animator animator;                          //플레이어 애니메이션 관련 변수
-    public string IdleAnime = "PlayerIdle";
-    public string RunAnime = "PlayerRun";
-    public string JumpAnime = "PlayerJump";
-    string nowAnime = "";
-    string oldAnime = "";
-    public ParticleSystem Blood;
-
     public float playerDeadAddForce = 0.0f;     //캐릭터 죽었을 때 튀어오르는 정도
 
+    [Header("ground Check")]
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundDistance;
+    [SerializeField] private LayerMask groundLayer;
+
+    [Header("treadable Check")]
+    [SerializeField] private Transform treadableCheck;
+    [SerializeField] private float treadableDistance;
+    [SerializeField] private LayerMask treadableLayer;
+
+    public bool isDead = false;                 //캐릭터가 죽은지 판단
+
+    string nowAnima;
+    string oldAnima;
+
+    //component 가져오기
+    Rigidbody2D rb;
+    Animator anima;
+    SpriteRenderer sr;
+
     //캐릭터 소리 관련 변수
-    private AudioSource JumpSound;
+    private AudioSource sd;
     public AudioClip playerjump;
     public AudioClip playerdoublejump;
-
-    //상하좌우로 움직이는 발판 관련 변수
-    Vector3 platformPosition;
-    Vector3 distance;
-    bool PlatformContact;
-    GameObject ContactMP;
 
     //싱글톤 선언용
     static PlayerController Instance;
@@ -43,7 +46,10 @@ public class PlayerController : MonoBehaviour
     //현재 플레이어가 있는 방 번호
     public int PlayerNowRoom = 0;
 
-    private void Awake()                        //싱글톤 선언과 동시에 플레이어 한개로 고정
+    public float secondJump;
+
+    //싱글톤 선언과 동시에 플레이어 한개로 고정
+    private void Awake()
     {
         if (Instance != null)
         {
@@ -54,203 +60,170 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start()                                //component 가져오는 동시에 애니메이션도 초기화
+    private void Start()
     {
-        playerRigidbody = this.GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        JumpSound = GetComponent<AudioSource>();
-        nowAnime = IdleAnime;
-        oldAnime = IdleAnime;
+        rb = this.GetComponent<Rigidbody2D>();
+        anima = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
+        sd = GetComponent<AudioSource>();
+
+        nowAnima = "Idle";
+        oldAnima = "Idle";
     }
 
-    void Update()
+    private void Update()
     {
-        if (isDead)                             //캐릭터가 죽었을 때 아무것도 안함
-        {
-            return;
-        }
+        //죽었을 경우 update 실행 안함
+        if (isDead) return;
 
-        Moving();
-
-        if (PlatformContact == false)
-        {
-            if (Input.GetButtonDown("Jump") && jumpCount < 2)
-            {
-                jumpCount++;
-                playerRigidbody.velocity = Vector2.zero;
-                playerRigidbody.AddForce(new Vector2(0, jumpForce));
-                JumpSound.PlayOneShot(playerjump);
-            }
-            else if (Input.GetButtonDown("Jump") && playerRigidbody.velocity.y > 0 && jumpCount == 1)
-            {
-                playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
-                JumpSound.PlayOneShot(playerdoublejump);
-            }
-        }
-        else if (PlatformContact == true)
-        {
-            if (Input.GetButtonDown("Jump") && jumpCount < 2)
-            {
-                PlatformContact = false;
-                jumpCount++;
-                playerRigidbody.velocity = Vector2.zero;
-                playerRigidbody.AddForce(new Vector2(0, jumpForce));
-                JumpSound.PlayOneShot(playerjump);
-            }
-            if (Input.GetButtonDown("Jump") && playerRigidbody.velocity.y > 0 & jumpCount == 1)
-            {
-                PlatformContact = false;
-                playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
-                animator.Play(JumpAnime);
-                JumpSound.PlayOneShot(playerdoublejump);
-            }
-        }
-
-        if (PlatformContact == true)
-        {
-            if (isGround == true && axisH == 0f)
-            {
-                playerRigidbody.position = ContactMP.transform.position - distance;
-            }
-        }
+        PlayerMovement();
+        AnimationController();
     }
 
-    public void Moving()
+    //Player 전체적인 움직임 관련 메서드
+    public void PlayerMovement()
     {
-        if (PlatformContact == false)
-        {
-            axisH = Input.GetAxisRaw("Horizontal");
+        //움직임 변수
+        axisH = Input.GetAxisRaw("Horizontal");
 
+        //좌우로 움직일때
+        if (axisH != 0)
+        {
             if (axisH > 0.0f)
             {
                 transform.localScale = new Vector2(1, 1);
-                playerRigidbody.velocity = new Vector2(speed * axisH, playerRigidbody.velocity.y);
+                rb.velocity = new Vector2(speed * axisH, rb.velocity.y);
             }
             else if (axisH < 0.0f)
             {
                 transform.localScale = new Vector2(-1, 1);
-                playerRigidbody.velocity = new Vector2(speed * axisH, playerRigidbody.velocity.y);
+                rb.velocity = new Vector2(speed * axisH, rb.velocity.y);
             }
         }
 
-        else if (PlatformContact == true)
+        //점프할때
+        if (Input.GetKeyDown(KeyCode.X))
         {
-            axisH = Input.GetAxisRaw("Horizontal");
-
-            if (axisH > 0.0f)
+            //기본 점프
+            if (jumpCount == 0 && (isGroundDetected() == true || istreadableDetected() == true))
             {
-                PlatformContact = false;
-                transform.localScale = new Vector2(1, 1);
-                playerRigidbody.velocity = new Vector2(speed * axisH, playerRigidbody.velocity.y);
+                //애니메이션이나 가속도 조절하기 위해 Vector2.zero 사용
+                rb.velocity = Vector2.zero;
+                rb.AddForce(new Vector2(0, jumpForce));
+                sd.PlayOneShot(playerjump);
             }
-            else if (axisH < 0.0f)
+            //이단 점프
+            else if (jumpCount == 1)
             {
-                PlatformContact = false;
-                transform.localScale = new Vector2(-1, 1);
-                playerRigidbody.velocity = new Vector2(speed * axisH, playerRigidbody.velocity.y);
+                rb.velocity = Vector2.zero;
+                sd.PlayOneShot(playerdoublejump);
+                rb.velocity = new Vector2(0, jumpForce * secondJump);
+                jumpCount = 0;
+            }
+            //jumpcount 2는 morejump 먹었을 때만 사용함
+            else if (jumpCount == 2)
+            {
+                rb.velocity = Vector2.zero;
+                sd.PlayOneShot(playerdoublejump);
+                rb.velocity = new Vector2(0, jumpForce * secondJump);
+                jumpCount = 0;
             }
         }
     }
 
-    private void FixedUpdate()
+    //Player Animation 관련 메서드
+    public void AnimationController()
     {
-        if (isGround == true)
+        //Idle, Run 관련
+        if (isGroundDetected() || istreadableDetected())
         {
             if (axisH == 0)
             {
-                nowAnime = IdleAnime;
+                nowAnima = "Idle";
             }
-            else
+
+            else if (axisH != 0)
             {
-                nowAnime = RunAnime;
+                nowAnima = "Run";
             }
         }
-        else if (isGround == false)
+
+        //점프 상태나 이단 점프 상태일때 애니메이션 처리
+        else if (isGroundDetected() == false || istreadableDetected() == false)
         {
-            nowAnime = JumpAnime;
+            nowAnima = "Jump";
+            anima.SetFloat("yVelocity", rb.velocity.y);
+
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                nowAnima = "DoubleJump";
+                anima.SetFloat("DouyVelocity", rb.velocity.y);
+            }
         }
 
-        if (nowAnime != oldAnime)
+        //Animation 교체
+        if (nowAnima != oldAnima)
         {
-            oldAnime = nowAnime;
-            animator.Play(nowAnime);
+            anima.SetBool(oldAnima, false);
+            oldAnima = nowAnima;
+            anima.SetBool(nowAnima, true);
         }
-
     }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "Dead" && !isDead)
-        {
-            isDead = true;
-            Die();
-        }
-    }
 
+    //Player가 가시나 총알 등에 맞아 죽었을 때
     public void Die()
     {
         if (isDead == true)
         {
-            if (Blood.isPlaying == false)
-            {
-                Blood.Play();
-            }
+            //죽는 animation 설정
+            nowAnima = "Jump";
+            anima.SetBool(nowAnima, true);
 
-            nowAnime = JumpAnime;
-            animator.Play(nowAnime);
-            playerRigidbody.velocity = Vector2.zero;
+            //움직임 멈추기
+            rb.velocity = Vector2.zero;
+            //모든 물체 관통하기
             GetComponent<CapsuleCollider2D>().enabled = false;
-            GetComponent<BoxCollider2D>().enabled = false;
-            playerRigidbody.AddForce(new Vector2(0, playerDeadAddForce), ForceMode2D.Impulse);
+
+            rb.AddForce(new Vector2(0, playerDeadAddForce), ForceMode2D.Impulse);
 
             GameManager.instance.OnPlayerDead();
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    //플레이어 사망 판정
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.contacts[0].normal.y >= 0.8f)
-        {
-            isGround = true;
-            jumpCount = 0;
-        }
-
-        if (collision.gameObject.CompareTag("MovingBlock"))
-        {
-            PlatformContact = true;
-            ContactMP = collision.gameObject;
-            platformPosition = ContactMP.transform.position;
-            distance = platformPosition - transform.position;
-        }
-
-        if (collision.gameObject.tag == "Dead" && !isDead)
+        if ((other.tag == "Dead" || other.tag == "Boss") && !isDead)
         {
             isDead = true;
             Die();
         }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    //Player가 발판 등에서 잠깐 떨어질 때 바로 이단 점프 못하도록 막음
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.contacts[0].normal.y >= 1f)
+        if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Treadable")
         {
-            isGround = true;
-        }
-
-        if (collision.gameObject.CompareTag("MovingBlock"))
-        {
-            if (PlatformContact == false && axisH == 0.0f)
-            {
-                PlatformContact = true;
-                ContactMP = collision.gameObject;
-                platformPosition = ContactMP.transform.position;
-                distance = platformPosition - transform.position;
-            }
+            jumpCount = 1;
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    //Ground bool값 반환
+    public bool isGroundDetected() => Physics2D.Raycast(groundCheck.position,
+        Vector2.down, groundDistance, groundLayer);
+    public bool istreadableDetected() => Physics2D.Raycast(treadableCheck.position,
+        Vector2.down, treadableDistance, treadableLayer);
+
+    //editor 모드에서 보기 편하게 gizmos 사용
+    private void OnDrawGizmos()
     {
-        isGround = false;
-        PlatformContact = false;
+        Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x,
+            groundCheck.position.y - groundDistance));
+        Gizmos.color = Color.red;
+
+        Gizmos.DrawLine(treadableCheck.position, new Vector3(treadableCheck.position.x,
+            treadableCheck.position.y - treadableDistance));
+        Gizmos.color = Color.yellow;
     }
 }
