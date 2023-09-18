@@ -74,7 +74,6 @@ public class DataManager : MonoBehaviour
 
                 thePlayer.isDead = false;
                 thePlayer.GetComponent<CapsuleCollider2D>().enabled = true;
-                thePlayer.GetComponent<BoxCollider2D>().enabled = true;
                 PlayerController.jumpCount = 1;
 
                 if (MapTransform != null)
@@ -93,7 +92,6 @@ public class DataManager : MonoBehaviour
 
             thePlayer.isDead = false;
             thePlayer.GetComponent<CapsuleCollider2D>().enabled = true;
-            thePlayer.GetComponent<BoxCollider2D>().enabled = true;
             PlayerController.jumpCount = 1;
 
             if (MapTransform != null)
