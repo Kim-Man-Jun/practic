@@ -8,35 +8,22 @@ using Unity.VisualScripting;
 
 public class SaveManager : MonoBehaviour
 {
-    public PlayerData playerData;
-    public GameObject Player;
-    public Vector3 PlayerNowPos;
-    public Vector3 PlayerNowRot;
+    private AudioSource audio;
+    public AudioClip saveSound;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        audio = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+        if (collision.gameObject.CompareTag("Bullet"))                  //아이워너 세이브기 때문에 총알 맞을 경우
         {
-            PlayerNowPos = Player.transform.localPosition;
-            PlayerNowRot = Player.transform.localRotation.eulerAngles;
+            DataManager dataManager = FindObjectOfType<DataManager>();  //객체 생성
+            dataManager.Saveprocedure();
 
-            DataManager.instance.SaveData();
-
-            Debug.Log(PlayerNowPos);
-            Debug.Log(PlayerNowRot);
-
+            audio.PlayOneShot(saveSound);
         }
     }
 }
